@@ -1,0 +1,380 @@
+{
+  "schema": "kunumi.visual-pattern-index/v1",
+  "source": {
+    "name": "presentation-ksequence-cambio",
+    "slidesReviewed": 36,
+    "status": "Extracted visual reference; not a replacement for approved brand foundations."
+  },
+  "patternCount": 17,
+  "patterns": [
+    {
+      "id": "dark-hero-orbit",
+      "mode": "dark",
+      "sourceSlides": [
+        1,
+        2
+      ],
+      "purpose": "Open with one large claim and one luminous focal object",
+      "mediums": [
+        "slides",
+        "web",
+        "social"
+      ],
+      "tags": [
+        "cover",
+        "hero",
+        "orbit",
+        "gradient"
+      ],
+      "recipe": "Use a 55/45 split, oversized left-aligned Figtree, restrained grid, peripheral red-violet glow, and thin orbital rings.",
+      "motion": "Float only the focal object on a slow loop; keep copy and chrome still."
+    },
+    {
+      "id": "dual-pillar",
+      "mode": "dark",
+      "sourceSlides": [
+        3
+      ],
+      "purpose": "Contrast two foundations, principles, or strategic pillars",
+      "mediums": [
+        "slides",
+        "web"
+      ],
+      "tags": [
+        "comparison",
+        "pillars",
+        "diagram"
+      ],
+      "recipe": "Use two equal dark fields with a thin accent rail, one micro-diagram, and no more than one paragraph per field.",
+      "motion": "Build diagrams in 400-700 ms with a short stagger; loop only a simple signal."
+    },
+    {
+      "id": "typed-interlude",
+      "mode": "light",
+      "sourceSlides": [
+        4
+      ],
+      "purpose": "Create a brief narrative reset before a new chapter",
+      "mediums": [
+        "slides",
+        "web",
+        "motion"
+      ],
+      "tags": [
+        "interlude",
+        "typewriter",
+        "terminal"
+      ],
+      "recipe": "Place one short monospaced message inside a generous light window over a faint grid.",
+      "motion": "Type at a readable pace, pause after the opening phrase, then use a single high-impact transition."
+    },
+    {
+      "id": "lineage-branching",
+      "mode": "dark",
+      "sourceSlides": [
+        6
+      ],
+      "purpose": "Show one origin becoming several connected initiatives",
+      "mediums": [
+        "slides",
+        "web",
+        "diagram"
+      ],
+      "tags": [
+        "lineage",
+        "branching",
+        "team",
+        "process"
+      ],
+      "recipe": "Place the origin left, a division core near center, and ordered descendants right; use gradient connectors and aligned portraits or icons.",
+      "motion": "Draw connectors first, migrate markers second, reveal destinations last."
+    },
+    {
+      "id": "people-orbit",
+      "mode": "light",
+      "sourceSlides": [
+        7,
+        8,
+        10,
+        18,
+        20
+      ],
+      "purpose": "Introduce a team or person through an orbital portrait system",
+      "mediums": [
+        "slides",
+        "social",
+        "web"
+      ],
+      "tags": [
+        "people",
+        "portrait",
+        "orbit",
+        "chapter"
+      ],
+      "recipe": "Use a quiet light field, circular portraits, thin orbital rules, and one small red plus one violet marker.",
+      "motion": "Use only slow 4-5 second portrait drift and a much slower orbit rotation."
+    },
+    {
+      "id": "cinematic-photo-chapter",
+      "mode": "dark",
+      "sourceSlides": [
+        11,
+        12,
+        13,
+        15,
+        16,
+        22
+      ],
+      "purpose": "Build an immersive image-led chapter with concise copy",
+      "mediums": [
+        "slides",
+        "social",
+        "video"
+      ],
+      "tags": [
+        "photo",
+        "cinematic",
+        "chapter",
+        "overlay"
+      ],
+      "recipe": "Use one full-bleed photograph, a directional black overlay, an eyebrow, a large claim, and minimal metadata.",
+      "motion": "Allow gentle image drift or grain; never animate essential copy."
+    },
+    {
+      "id": "editorial-gallery",
+      "mode": "mixed",
+      "sourceSlides": [
+        9,
+        14,
+        21
+      ],
+      "purpose": "Tell a human story through one collage or structured gallery",
+      "mediums": [
+        "slides",
+        "social",
+        "documents"
+      ],
+      "tags": [
+        "gallery",
+        "collage",
+        "photo",
+        "editorial"
+      ],
+      "recipe": "Choose either a composed editorial collage or a clean asymmetric image grid; keep crops and borders consistent.",
+      "motion": "Use entry reveals only when order matters; otherwise keep the gallery static."
+    },
+    {
+      "id": "light-operating-system",
+      "mode": "light",
+      "sourceSlides": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "purpose": "Explain practices, channels, systems, or operating principles",
+      "mediums": [
+        "slides",
+        "documents",
+        "web"
+      ],
+      "tags": [
+        "workflow",
+        "rows",
+        "diagram",
+        "editorial"
+      ],
+      "recipe": "Use warm Gelo paper, Chumbo type, hairline rules, disciplined rows, and compact diagrams instead of decorative cards.",
+      "motion": "Reveal rows or connectors in reading order with 80-150 ms staggers."
+    },
+    {
+      "id": "story-wall",
+      "mode": "light",
+      "sourceSlides": [
+        27
+      ],
+      "purpose": "Present a set of anecdotes, decisions, or cases as an editorial wall",
+      "mediums": [
+        "slides",
+        "web",
+        "social"
+      ],
+      "tags": [
+        "stories",
+        "cards",
+        "editorial"
+      ],
+      "recipe": "Use varied paper fields with very small rotations, tape details, one dominant story, and clear author markers.",
+      "motion": "Use subtle hover or opening motion only; preserve legibility over playfulness."
+    },
+    {
+      "id": "cosmic-scale-map",
+      "mode": "dark",
+      "sourceSlides": [
+        29
+      ],
+      "purpose": "Compare a family of objects whose scale is meaningful",
+      "mediums": [
+        "slides",
+        "web",
+        "data-viz"
+      ],
+      "tags": [
+        "scale",
+        "universe",
+        "orbit",
+        "interactive",
+        "data-viz"
+      ],
+      "recipe": "Map area to quantity, separate families by hue, provide a scale rail, and let labels stay outside the objects.",
+      "motion": "Stagger object arrival, pulse the core gently, and make filters settle in under 600 ms."
+    },
+    {
+      "id": "parallel-sequences",
+      "mode": "dark",
+      "sourceSlides": [
+        30
+      ],
+      "purpose": "Explain an analogy by aligning two step-by-step sequences",
+      "mediums": [
+        "slides",
+        "documents",
+        "web"
+      ],
+      "tags": [
+        "sequence",
+        "comparison",
+        "explainer"
+      ],
+      "recipe": "Stack two parallel rails with matching grammar, highlight the predicted output, and place the shared logic between them.",
+      "motion": "Reveal tokens in order, draw the connector, then reveal the outcome."
+    },
+    {
+      "id": "claim-demo-split",
+      "mode": "dark",
+      "sourceSlides": [
+        31
+      ],
+      "purpose": "Pair a strong claim with several views of one reusable context",
+      "mediums": [
+        "slides",
+        "web",
+        "data-viz"
+      ],
+      "tags": [
+        "demo",
+        "tabs",
+        "metrics",
+        "scenario",
+        "data-viz"
+      ],
+      "recipe": "Keep the claim in the left third and the interactive or scenario panel in the right two-thirds; reuse the same frame for every scenario.",
+      "motion": "Switch scenarios with a 350-500 ms lateral or opacity transition; animate only the changed measure."
+    },
+    {
+      "id": "before-after-system",
+      "mode": "dark",
+      "sourceSlides": [
+        32
+      ],
+      "purpose": "Contrast a fragmented current state with a connected future state",
+      "mediums": [
+        "slides",
+        "web",
+        "diagram"
+      ],
+      "tags": [
+        "before-after",
+        "transformation",
+        "system"
+      ],
+      "recipe": "Use symmetric outer fields, a small transformation engine at center, muted current-state nodes, and a clearer future-state system.",
+      "motion": "Let one data point traverse the center; keep ambient orbits slow."
+    },
+    {
+      "id": "results-comparison",
+      "mode": "light",
+      "sourceSlides": [
+        33
+      ],
+      "purpose": "Present model or option results with an explicit takeaway",
+      "mediums": [
+        "slides",
+        "documents",
+        "data-viz"
+      ],
+      "tags": [
+        "results",
+        "table",
+        "bubbles",
+        "comparison",
+        "data-viz"
+      ],
+      "recipe": "Lead with the conclusion, use one or two disciplined tables, bold the winner, and add a short directional note such as higher or lower is better.",
+      "motion": "Use a quick panel change only when tabs expose alternate result families."
+    },
+    {
+      "id": "process-orbit",
+      "mode": "dark",
+      "sourceSlides": [
+        34
+      ],
+      "purpose": "Show an iterative cycle plus version or maturity progression",
+      "mediums": [
+        "slides",
+        "web",
+        "diagram"
+      ],
+      "tags": [
+        "process",
+        "orbit",
+        "timeline",
+        "iteration"
+      ],
+      "recipe": "Combine a few top milestones, one large loop with labeled stages, and a separate version rail.",
+      "motion": "Move one runner around the loop slowly; reveal nodes once and keep sparks sparse."
+    },
+    {
+      "id": "capability-triptych",
+      "mode": "dark",
+      "sourceSlides": [
+        35
+      ],
+      "purpose": "Summarize three capabilities and connect them to a wider ecosystem",
+      "mediums": [
+        "slides",
+        "web",
+        "documents"
+      ],
+      "tags": [
+        "capabilities",
+        "triptych",
+        "integration",
+        "diagram"
+      ],
+      "recipe": "Use three equal capability scenes with cropped diagram-atlas art, then a full-width integration band underneath.",
+      "motion": "Float decorative atlas art 3-7 px over 6-8 seconds; keep labels still."
+    },
+    {
+      "id": "case-board",
+      "mode": "dark",
+      "sourceSlides": [
+        36
+      ],
+      "purpose": "Turn a sequence, investigation, or decision into an evidence-based case",
+      "mediums": [
+        "slides",
+        "web",
+        "interactive"
+      ],
+      "tags": [
+        "case",
+        "timeline",
+        "choices",
+        "evidence"
+      ],
+      "recipe": "Pair a narrative claim with an evidence timeline, bounded options, and a response area; distinguish known facts from hypotheses.",
+      "motion": "Reveal evidence before choices and use a restrained selected state rather than celebration effects."
+    }
+  ]
+}

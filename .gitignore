@@ -9,9 +9,8 @@ output/
 *.skill
 
 # Kunumi: canonical/raw Drive exports stay remote; local-first bundle is tracked.
-skills/Kunumi-*.zip
-plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/Ativos de Marca/
-plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/Canais e Redes Sociais/
-plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/Templates/
-plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/local/templates/*.pptx.inspect.ndjson
-plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/local/templates/*.manifest.json
+skills/kunumi-identity-design/assets/Ativos de Marca/
+skills/kunumi-identity-design/assets/Canais e Redes Sociais/
+skills/kunumi-identity-design/assets/Templates/
+skills/kunumi-identity-design/assets/local/templates/*.pptx.inspect.ndjson
+skills/kunumi-identity-design/assets/local/templates/*.manifest.json

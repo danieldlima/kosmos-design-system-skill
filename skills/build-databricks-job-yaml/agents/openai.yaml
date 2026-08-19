@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Databricks Job YAML"
+  short_description: "Create validated Databricks job YAML"
+  default_prompt: "Use $build-databricks-job-yaml to create a Databricks job cluster YAML for this pipeline."

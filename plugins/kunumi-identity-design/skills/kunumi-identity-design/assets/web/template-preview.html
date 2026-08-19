@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1c2127" />
+    <title>Kunumi — template system preview</title>
+    <link rel="stylesheet" href="./kunumi-tokens.css" />
+    <style>
+      :root {
+        --stage-ratio: 16 / 9;
+      }
+
+      body {
+        min-height: 100svh;
+        overflow-x: hidden;
+        background: #11151a;
+      }
+
+      button {
+        color: inherit;
+        font: inherit;
+      }
+
+      .viewer {
+        display: grid;
+        min-height: 100svh;
+        grid-template-rows: auto 1fr auto;
+        gap: clamp(0.75rem, 2vw, 1.5rem);
+        padding: clamp(0.75rem, 2vw, 1.5rem);
+        color: var(--kunumi-gelo);
+      }
+
+      .viewer__bar,
+      .viewer__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: min(100%, 88rem);
+        margin-inline: auto;
+      }
+
+      .viewer__identity {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .viewer__identity::before {
+        width: 0.7rem;
+        aspect-ratio: 1;
+        content: "";
+        background: var(--kunumi-urucum);
+      }
+
+      .viewer__hint,
+      .viewer__count {
+        color: color-mix(in srgb, var(--kunumi-gelo) 60%, transparent);
+        font-size: 0.75rem;
+      }
+
+      .stage-shell {
+        display: grid;
+        min-height: 0;
+        place-items: center;
+      }
+
+      .stage {
+        position: relative;
+        width: min(100%, calc((100svh - 9.5rem) * 16 / 9));
+        aspect-ratio: var(--stage-ratio);
+        overflow: hidden;
+        border-radius: 0.25rem;
+        background: var(--kunumi-gelo);
+        box-shadow: 0 2.2rem 7rem rgb(0 0 0 / 0.42);
+        isolation: isolate;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        visibility: hidden;
+        padding: clamp(1.35rem, 4.7vw, 5.4rem);
+        color: var(--kunumi-chumbo);
+        background: var(--kunumi-gelo);
+        opacity: 0;
+        transform: translateX(2.5%);
+        transition:
+          opacity var(--kunumi-base) var(--kunumi-ease),
+          transform var(--kunumi-base) var(--kunumi-ease),
+          visibility 0s linear var(--kunumi-base);
+      }
+
+      .slide.is-active {
+        visibility: visible;
+        opacity: 1;
+        transform: none;
+        transition-delay: 0s;
+      }
+
+      .slide.is-leaving {
+        visibility: visible;
+        opacity: 0;
+        transform: translateX(-2.5%);
+      }
+
+      .slide__logo {
+        position: absolute;
+        top: clamp(1rem, 2.1vw, 2.35rem);
+        right: clamp(1rem, 2.2vw, 2.5rem);
+        width: clamp(3.9rem, 7.2vw, 8.2rem);
+        max-height: 2.2rem;
+        object-fit: contain;
+        object-position: right center;
+      }
+
+      .slide__micro-mark {
+        position: absolute;
+        top: clamp(1rem, 2.1vw, 2.35rem);
+        left: clamp(1rem, 2.2vw, 2.5rem);
+        width: clamp(1.4rem, 2.7vw, 3rem);
+        aspect-ratio: 1;
+        object-fit: contain;
+      }
+
+      .slide__date {
+        position: absolute;
+        right: clamp(1rem, 2.2vw, 2.5rem);
+        bottom: clamp(0.9rem, 1.8vw, 2rem);
+        color: var(--kunumi-grafite);
+        font-size: clamp(0.48rem, 0.75vw, 0.85rem);
+      }
+
+      .slide__rail {
+        position: absolute;
+        right: clamp(1rem, 2.2vw, 2.5rem);
+        bottom: clamp(2.1rem, 4.4vw, 5rem);
+        width: min(42%, 31rem);
+        height: clamp(2px, 0.2vw, 4px);
+        overflow: hidden;
+        background: var(--kunumi-black);
+      }
+
+      .slide__rail::after {
+        display: block;
+        width: 64%;
+        height: 100%;
+        content: "";
+        background: linear-gradient(90deg, var(--kunumi-indigo), var(--kunumi-urucum));
+        transform: translateX(-100%);
+      }
+
+      .is-active .slide__rail::after {
+        animation: rail-in 900ms 220ms var(--kunumi-ease) forwards;
+      }
+
+      .cover {
+        grid-template-columns: 44% 56%;
+        align-items: end;
+      }
+
+      .cover__mark {
+        width: min(16vw, 12rem);
+        max-width: 54%;
+        align-self: end;
+        margin-bottom: 0.6rem;
+      }
+
+      .cover__copy {
+        align-self: center;
+        max-width: 40rem;
+      }
+
+      .cover__copy p {
+        margin: 1.1rem 0 0;
+      }
+
+      .cover .kunumi-display {
+        font-size: clamp(2rem, 5vw, 5.5rem);
+      }
+
+      .content {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: clamp(1.4rem, 5vw, 6.5rem);
+      }
+
+      .content__copy {
+        position: relative;
+        z-index: 2;
+      }
+
+      .content__copy > * {
+        opacity: 0;
+        transform: translateY(1rem);
+      }
+
+      .is-active .content__copy > * {
+        animation: rise 650ms var(--kunumi-ease) forwards;
+      }
+
+      .is-active .content__copy > :nth-child(2) {
+        animation-delay: 100ms;
+      }
+
+      .is-active .content__copy > :nth-child(3) {
+        animation-delay: 180ms;
+      }
+
+      .metric-grid {
+        display: grid;
+        align-self: stretch;
+        border-left: var(--kunumi-rule);
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .metric {
+        display: grid;
+        align-content: end;
+        min-width: 0;
+        padding: clamp(1rem, 3vw, 3rem);
+        border-top: var(--kunumi-rule);
+        border-right: var(--kunumi-rule);
+      }
+
+      .metric:first-child {
+        border-top: 0;
+      }
+
+      .metric:nth-child(2) {
+        align-content: start;
+      }
+
+      .metric__value {
+        font-size: clamp(2.4rem, 7.5vw, 8.4rem);
+        font-weight: 500;
+        letter-spacing: -0.065em;
+        line-height: 0.88;
+      }
+
+      .metric__label {
+        max-width: 18ch;
+        margin-top: 0.8rem;
+        color: var(--kunumi-grafite);
+        font-size: clamp(0.6rem, 1vw, 1rem);
+        line-height: 1.3;
+      }
+
+      .instituto-cover {
+        align-items: end;
+        color: var(--kunumi-gelo);
+        background-color: var(--kunumi-black);
+        background-image:
+          linear-gradient(180deg, rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.22)),
+          url("../local/instituto/static/kunuminst_gradiente_01.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .instituto-cover::before {
+        position: absolute;
+        inset: -8%;
+        z-index: -1;
+        content: "";
+        background: inherit;
+        background-position: 50% 50%;
+        background-size: cover;
+        transform: scale(1.05);
+      }
+
+      .instituto-cover.is-active::before {
+        animation: background-drift 9s ease-in-out infinite alternate;
+      }
+
+      .instituto-cover .slide__logo {
+        filter: brightness(0) invert(1);
+      }
+
+      .instituto-cover .slide__date {
+        color: color-mix(in srgb, var(--kunumi-gelo) 72%, transparent);
+      }
+
+      .instituto-cover__mark {
+        width: min(19vw, 14rem);
+        margin-bottom: 0.5rem;
+      }
+
+      .instituto-cover__copy {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+
+      .instituto-cover__copy .kunumi-display {
+        margin-left: auto;
+        max-width: 12ch;
+        font-size: clamp(2.2rem, 4.8vw, 5.4rem);
+        text-align: right;
+      }
+
+      .pixel-slide {
+        grid-template-columns: 49% 51%;
+        padding: 0;
+        color: var(--kunumi-gelo);
+        background: var(--kunumi-black);
+      }
+
+      .pixel-field {
+        position: relative;
+        overflow: hidden;
+        background-image: url("../local/instituto/static/kunuminst_assets_pixels.png");
+        background-position: left center;
+        background-size: cover;
+      }
+
+      .pixel-field::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background: linear-gradient(90deg, transparent 65%, var(--kunumi-black));
+      }
+
+      .pixel-slide.is-active .pixel-field {
+        animation: pixel-breathe 8s ease-in-out infinite alternate;
+      }
+
+      .pixel-mark {
+        position: absolute;
+        left: clamp(1.4rem, 4.5vw, 5rem);
+        bottom: clamp(1.4rem, 4.5vw, 5rem);
+        z-index: 2;
+        width: min(19vw, 14rem);
+      }
+
+      .pixel-copy {
+        display: grid;
+        align-content: center;
+        padding: clamp(2.6rem, 6.5vw, 7rem);
+      }
+
+      .pixel-copy .kunumi-display {
+        max-width: 13ch;
+        font-size: clamp(2rem, 4.2vw, 4.8rem);
+      }
+
+      .pixel-copy p {
+        max-width: 36ch;
+        color: color-mix(in srgb, var(--kunumi-gelo) 68%, transparent);
+      }
+
+      .viewer__nav {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-button,
+      .nav-dot {
+        border: 1px solid rgb(240 240 240 / 0.22);
+        background: transparent;
+        cursor: pointer;
+        transition:
+          border-color var(--kunumi-fast),
+          background var(--kunumi-fast),
+          transform var(--kunumi-fast);
+      }
+
+      .nav-button {
+        display: grid;
+        width: 2.35rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        place-items: center;
+      }
+
+      .nav-button:hover,
+      .nav-button:focus-visible {
+        border-color: var(--kunumi-urucum);
+        background: rgb(240 78 68 / 0.16);
+        outline: none;
+        transform: translateY(-1px);
+      }
+
+      .viewer__dots {
+        display: flex;
+        gap: 0.4rem;
+      }
+
+      .nav-dot {
+        width: 1.85rem;
+        height: 0.22rem;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: rgb(240 240 240 / 0.2);
+      }
+
+      .nav-dot[aria-current="true"] {
+        background: var(--kunumi-urucum);
+      }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @keyframes rail-in {
+        to {
+          transform: none;
+        }
+      }
+
+      @keyframes background-drift {
+        from {
+          transform: scale(1.05) translate3d(-0.8%, -0.4%, 0);
+        }
+        to {
+          transform: scale(1.11) translate3d(0.8%, 0.5%, 0);
+        }
+      }
+
+      @keyframes pixel-breathe {
+        from {
+          background-size: 100% auto;
+        }
+        to {
+          background-size: 106% auto;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .viewer__hint {
+          display: none;
+        }
+
+        .slide {
+          padding: 1.15rem;
+        }
+
+        .slide__logo,
+        .slide__micro-mark {
+          top: 0.72rem;
+        }
+
+        .cover__copy p,
+        .kunumi-body {
+          font-size: 0.66rem;
+        }
+
+        .pixel-copy {
+          padding: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="viewer" aria-label="Prévia animada dos templates Kunumi">
+      <header class="viewer__bar">
+        <div class="viewer__identity">Template system · local preview</div>
+        <div class="viewer__hint">Use ← →, clique ou deslize</div>
+      </header>
+
+      <div class="stage-shell">
+        <section class="stage" aria-live="polite">
+          <article class="slide cover is-active" data-title="Kunumi · capa">
+            <img
+              class="slide__logo"
+              src="../local/brand-marks/core/kunumi_logotipo_positivo_rgb.png"
+              alt="Kunumi"
+            />
+            <img
+              class="cover__mark"
+              src="../local/brand-marks/shared/kunumi_icone_positivo_rgb.png"
+              alt=""
+            />
+            <div class="cover__copy content__copy">
+              <span class="kunumi-kicker">Kunumi · apresentação</span>
+              <h1 class="kunumi-display">Inteligência para o que ainda não tem nome.</h1>
+              <p class="kunumi-body">
+                Uma capa mínima, com respiro amplo, hierarquia curta e a marca
+                trabalhando como estrutura — não como decoração.
+              </p>
+            </div>
+            <div class="slide__rail" aria-hidden="true"></div>
+            <time class="slide__date">29 · 07 · 2026</time>
+          </article>
+
+          <article class="slide content" data-title="Kunumi · dados">
+            <img
+              class="slide__logo"
+              src="../local/brand-marks/core/kunumi_logotipo_positivo_rgb.png"
+              alt="Kunumi"
+            />
+            <div class="content__copy">
+              <span class="kunumi-kicker">Sinal acima de ruído</span>
+              <h2 class="kunumi-display">Duas medidas. Uma conclusão.</h2>
+              <p class="kunumi-body">
+                Números grandes entram como argumento. Rótulos são curtos,
+                alinhamentos são rígidos e Urucum marca apenas a leitura essencial.
+              </p>
+            </div>
+            <div class="metric-grid" aria-label="Exemplo de métricas">
+              <div class="metric">
+                <strong class="metric__value">64</strong>
+                <span class="metric__label">hipóteses testadas no ciclo</span>
+              </div>
+              <div class="metric">
+                <strong class="metric__value kunumi-accent">12×</strong>
+                <span class="metric__label">mais rápido até a evidência</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="slide instituto-cover" data-title="Instituto · gradiente">
+            <img
+              class="slide__logo"
+              src="../local/brand-marks/instituto/kunumi_inst_logotipo_negativo_rgb.png"
+              alt="Instituto Kunumi"
+            />
+            <div class="instituto-cover__copy">
+              <img
+                class="instituto-cover__mark"
+                src="../local/brand-marks/instituto/kunumi_inst_negativo_rgb.png"
+                alt=""
+              />
+              <h2 class="kunumi-display">O futuro informa o presente.</h2>
+            </div>
+            <time class="slide__date">Instituto Kunumi · 2026</time>
+          </article>
+
+          <article class="slide pixel-slide" data-title="Instituto · pixels">
+            <div class="pixel-field" aria-hidden="true">
+              <img
+                class="pixel-mark"
+                src="../local/brand-marks/instituto/kunumi_inst_negativo_rgb.png"
+                alt=""
+              />
+            </div>
+            <div class="pixel-copy content__copy">
+              <span class="kunumi-kicker">Instituto Kunumi</span>
+              <h2 class="kunumi-display">Conhecimento que se move em rede.</h2>
+              <p class="kunumi-body">
+                Pixels, ondas e espectro pertencem ao repertório Instituto. O movimento
+                é lento, atmosférico e nunca disputa atenção com o texto.
+              </p>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <footer class="viewer__footer">
+        <div class="viewer__count"><span id="current">01</span> / 04 · <span id="title">Kunumi · capa</span></div>
+        <div class="viewer__nav">
+          <button class="nav-button" id="previous" type="button" aria-label="Slide anterior">←</button>
+          <div class="viewer__dots" id="dots" aria-label="Escolher slide"></div>
+          <button class="nav-button" id="next" type="button" aria-label="Próximo slide">→</button>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const slides = [...document.querySelectorAll(".slide")];
+      const dots = document.querySelector("#dots");
+      const current = document.querySelector("#current");
+      const title = document.querySelector("#title");
+      let index = 0;
+      let startX = 0;
+
+      slides.forEach((slide, slideIndex) => {
+        const dot = document.createElement("button");
+        dot.className = "nav-dot";
+        dot.type = "button";
+        dot.setAttribute("aria-label", `Mostrar slide ${slideIndex + 1}: ${slide.dataset.title}`);
+        dot.addEventListener("click", () => show(slideIndex));
+        dots.append(dot);
+      });
+
+      function show(nextIndex) {
+        const normalized = (nextIndex + slides.length) % slides.length;
+        if (normalized === index) return;
+
+        const outgoing = slides[index];
+        outgoing.classList.remove("is-active");
+        outgoing.classList.add("is-leaving");
+        window.setTimeout(() => outgoing.classList.remove("is-leaving"), 520);
+
+        index = normalized;
+        slides[index].classList.add("is-active");
+        updateUi();
+      }
+
+      function updateUi() {
+        current.textContent = String(index + 1).padStart(2, "0");
+        title.textContent = slides[index].dataset.title;
+        [...dots.children].forEach((dot, dotIndex) => {
+          dot.setAttribute("aria-current", String(dotIndex === index));
+        });
+      }
+
+      document.querySelector("#previous").addEventListener("click", () => show(index - 1));
+      document.querySelector("#next").addEventListener("click", () => show(index + 1));
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") show(index - 1);
+        if (event.key === "ArrowRight" || event.key === " ") show(index + 1);
+      });
+
+      document.querySelector(".stage").addEventListener("pointerdown", (event) => {
+        startX = event.clientX;
+      });
+      document.querySelector(".stage").addEventListener("pointerup", (event) => {
+        const distance = event.clientX - startX;
+        if (Math.abs(distance) > 45) show(index + (distance < 0 ? 1 : -1));
+      });
+
+      updateUi();
+    </script>
+  </body>
+</html>

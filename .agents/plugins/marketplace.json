@@ -1,0 +1,20 @@
+{
+  "name": "personal",
+  "interface": {
+    "displayName": "Personal"
+  },
+  "plugins": [
+    {
+      "name": "kunumi-identity-design",
+      "source": {
+        "source": "local",
+        "path": "./plugins/kunumi-identity-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Design"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/local/templates/*.pptx filter=lfs diff=lfs merge=lfs -text

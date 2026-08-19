@@ -1,0 +1,148 @@
+@font-face {
+  font-family: "Figtree";
+  src: url("../local/fonts/Figtree/Figtree-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("../local/fonts/Figtree/Figtree-Italic-VariableFont_wght.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Institutional palette from the supplied templates. */
+  --kunumi-urucum: #f04e44;
+  --kunumi-chumbo: #1c2127;
+  --kunumi-grafite: #5e5e5e;
+  --kunumi-concreto: #b4ada4;
+  --kunumi-gelo: #f0f0f0;
+  --kunumi-white: #ffffff;
+  --kunumi-black: #000000;
+
+  /* Support palette. Use sparingly; Urucum remains the primary accent. */
+  --kunumi-amarelo: #ff931e;
+  --kunumi-laranja: #f26638;
+  --kunumi-magenta: #d73e5f;
+  --kunumi-violeta: #9355a0;
+  --kunumi-indigo: #5a61b6;
+
+  /* Template-local spectrum stops used by Instituto graphics. */
+  --kunumi-spectrum-orange: #ff9516;
+  --kunumi-spectrum-coral: #ff6330;
+
+  /* Chart-only extended palette. */
+  --kunumi-chart-yellow-900: #481f00;
+  --kunumi-chart-yellow-700: #7d470a;
+  --kunumi-chart-yellow-100: #ffdfc1;
+  --kunumi-chart-indigo-900: #1a2052;
+  --kunumi-chart-indigo-600: #3a2fdf;
+  --kunumi-chart-indigo-100: #d6e0ff;
+  --kunumi-chart-green-900: #103c1f;
+  --kunumi-chart-green-700: #246a3c;
+  --kunumi-chart-green-400: #43f085;
+  --kunumi-chart-green-100: #adf3be;
+
+  --kunumi-font: "Figtree", Arial, sans-serif;
+  --kunumi-weight-light: 300;
+  --kunumi-weight-regular: 400;
+  --kunumi-weight-medium: 500;
+  --kunumi-weight-semibold: 600;
+  --kunumi-weight-extrabold: 800;
+
+  --kunumi-space-1: 0.25rem;
+  --kunumi-space-2: 0.5rem;
+  --kunumi-space-3: 0.75rem;
+  --kunumi-space-4: 1rem;
+  --kunumi-space-6: 1.5rem;
+  --kunumi-space-8: 2rem;
+  --kunumi-space-12: 3rem;
+  --kunumi-space-16: 4rem;
+  --kunumi-radius-sm: 0.25rem;
+  --kunumi-rule: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  --kunumi-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --kunumi-fast: 180ms;
+  --kunumi-base: 480ms;
+  --kunumi-slow: 1200ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--kunumi-font);
+  color: var(--kunumi-chumbo);
+  background: var(--kunumi-gelo);
+}
+
+body {
+  margin: 0;
+  font-family: inherit;
+}
+
+.kunumi-theme-dark {
+  color: var(--kunumi-gelo);
+  background: var(--kunumi-chumbo);
+}
+
+.kunumi-kicker {
+  color: var(--kunumi-urucum);
+  font-size: 0.78rem;
+  font-weight: var(--kunumi-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kunumi-display {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2.7rem, 7vw, 6.8rem);
+  font-weight: var(--kunumi-weight-semibold);
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.kunumi-body {
+  max-width: 58ch;
+  color: var(--kunumi-grafite);
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  line-height: 1.45;
+}
+
+.kunumi-theme-dark .kunumi-body {
+  color: color-mix(in srgb, var(--kunumi-gelo) 72%, transparent);
+}
+
+.kunumi-accent {
+  color: var(--kunumi-urucum);
+}
+
+.kunumi-rule-spectrum {
+  height: 3px;
+  background:
+    linear-gradient(
+      90deg,
+      var(--kunumi-black) 0 22%,
+      var(--kunumi-indigo) 22% 48%,
+      var(--kunumi-magenta) 48% 72%,
+      var(--kunumi-urucum) 72% 100%
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

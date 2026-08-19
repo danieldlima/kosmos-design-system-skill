@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.env
+.env.*
+.venv/
+node_modules/
+output/
+*.skill
+
+# Kunumi: canonical/raw Drive exports stay remote; local-first bundle is tracked.
+skills/Kunumi-*.zip
+plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/Ativos de Marca/
+plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/Canais e Redes Sociais/
+plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/Templates/
+plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/local/templates/*.pptx.inspect.ndjson
+plugins/kunumi-identity-design/skills/kunumi-identity-design/assets/local/templates/*.manifest.json

@@ -1,0 +1,39 @@
+{
+  "name": "kunumi-identity-design",
+  "version": "0.1.0+codex.20260729142158",
+  "description": "Create and review artifacts with the approved Kunumi, Instituto Kunumi, and Kunumi Unlimited visual systems, using local-first assets and optional canonical Google Drive sources.",
+  "author": {
+    "name": "Kunumi"
+  },
+  "keywords": [
+    "kunumi",
+    "brand",
+    "identity",
+    "design",
+    "slides",
+    "templates"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Kunumi Identity Design",
+    "shortDescription": "Create with approved Kunumi identities and assets",
+    "longDescription": "Apply Kunumi, Instituto Kunumi, or Kunumi Unlimited identity rules to slides, sites, documents, charts, social assets, and UI. Logos, Figtree, static artwork, compact source decks, and a web preview work locally; Google Drive is optional for canonical full decks and heavy media.",
+    "developerName": "Kunumi",
+    "category": "Design",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Create this artifact in the correct Kunumi identity using local assets first.",
+      "Build a presentation from the Kunumi or Instituto source templates.",
+      "Find the approved logo, background, or channel template for this task."
+    ],
+    "brandColor": "#F04E44",
+    "composerIcon": "./assets/kunumi-icon.png",
+    "logo": "./assets/kunumi-icon.png",
+    "logoDark": "./assets/kunumi-icon-dark.png",
+    "screenshots": []
+  },
+  "apps": "./.app.json"
+}

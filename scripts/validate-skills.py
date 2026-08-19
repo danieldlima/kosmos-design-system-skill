@@ -66,12 +66,6 @@ def validate_skill(skill_dir: Path) -> list[str]:
     if "TODO" in text:
         errors.append(f"{skill_file}: contains TODO placeholder text")
 
-    agent_file = skill_dir / "agents" / "openai.yaml"
-    if agent_file.exists():
-        agent_text = agent_file.read_text(encoding="utf-8")
-        if "default_prompt:" in agent_text and f"${name}" not in agent_text:
-            errors.append(f"{agent_file}: default_prompt should mention ${name}")
-
     return errors
 
 

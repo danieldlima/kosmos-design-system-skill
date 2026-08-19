@@ -1,5 +1,0 @@
-interface:
-  display_name: "Kunumi Identity Design"
-  short_description: "Create polished work in Kunumi's visual system"
-  default_prompt: "Use $kunumi-identity-design to create this artifact with the correct Kunumi identity, assets, layout, colors, typography, and final visual QA."
-  brand_color: "#F04E44"

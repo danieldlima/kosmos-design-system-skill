@@ -1,9 +1,9 @@
 ---
-name: kunumi-identity-design
+name: kosmos-design-system
 description: Apply approved Kunumi, Instituto Kunumi, and Kunumi Unlimited identity guidance to documents, slides, sites, apps, UI mockups, social assets, profile images, templates, and written materials. Use when work must select or place Kunumi logos, use Kunumi colors or Figtree typography, reuse branded backgrounds or motion assets, follow LinkedIn or profile-photo templates, or review an artifact for Kunumi brand fidelity.
 ---
 
-# Kunumi Identity Design
+# Kosmos Design System
 
 Create the artifact from the smallest relevant context set. The original templates and assets remain the source of truth.
 

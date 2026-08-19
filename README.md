@@ -1,8 +1,8 @@
 <img src="assets/kunumi-icon.png" alt="Kunumi" width="72">
 
-# Kunumi Identity Design
+# Kosmos Design System
 
-Claude Code plugin that ships a single skill, [`kunumi-identity-design`](skills/kunumi-identity-design/SKILL.md),
+Claude Code plugin that ships a single skill, [`kosmos-design-system`](skills/kosmos-design-system/SKILL.md),
 for creating and reviewing artifacts in the approved Kunumi, Instituto Kunumi, and Kunumi Unlimited
 visual systems. Local-first: approved assets are bundled, and Google Drive is optional.
 
@@ -14,7 +14,7 @@ visual systems. Local-first: approved assets are bundled, and Google Drive is op
   marketplace.json            # single-plugin marketplace, source "./"
 assets/                       # plugin icons
 skills/
-  kunumi-identity-design/
+  kosmos-design-system/
     SKILL.md                  # routing instructions (required)
     references/               # brand standards, loaded only when relevant
     scripts/                  # kunumi_lookup.py and index/template utilities
@@ -36,7 +36,7 @@ scripts/
 - CSS tokens and the animated HTML template preview;
 - semantic source lookup.
 
-The two source decks under `skills/kunumi-identity-design/assets/local/templates/` are stored with
+The two source decks under `skills/kosmos-design-system/assets/local/templates/` are stored with
 Git LFS. A clone without LFS leaves them as 133-byte pointer files:
 
 ```bash
@@ -56,23 +56,23 @@ The Kunumi workspace Drive connector used for these sources is
 ## Install
 
 Local development — symlink the repository into the skills directory so it auto-loads as
-`kunumi-identity-design@skills-dir`:
+`kosmos-design-system@skills-dir`:
 
 ```bash
-ln -s "$PWD" ~/.claude/skills/kunumi-identity-design
+ln -s "$PWD" ~/.claude/skills/kosmos-design-system
 ```
 
 Shareable install through the bundled marketplace:
 
 ```bash
 claude plugin marketplace add .
-claude plugin install kunumi-identity-design@kunumi-identity-design
+claude plugin install kosmos-design-system@kosmos-design-system
 ```
 
 Start a new session after installing so the skill is discovered. Verify with:
 
 ```bash
-claude plugin details kunumi-identity-design
+claude plugin details kosmos-design-system
 ```
 
 ## Use
@@ -95,7 +95,7 @@ python scripts/kunumi_lookup.py patterns --medium slides --tag data-viz
 ```
 
 The primary brand accent is Urucum `#F04E44`. Full tokens live in
-`skills/kunumi-identity-design/assets/web/kunumi-tokens.css` and
+`skills/kosmos-design-system/assets/web/kunumi-tokens.css` and
 `references/brand-foundations.md`.
 
 ## Standalone Bundle
@@ -103,7 +103,7 @@ The primary brand accent is Urucum `#F04E44`. Full tokens live in
 Build a self-contained copy outside the repository when publishing or sharing:
 
 ```bash
-python scripts/build_bundle.py --bundle-dir /tmp/kunumi-identity-design-plugin
+python scripts/build_bundle.py --bundle-dir /tmp/kosmos-design-system-plugin
 ```
 
 Raw Drive exports, inspection artifacts, and repository metadata are excluded.

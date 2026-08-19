@@ -9,8 +9,8 @@ output/
 *.skill
 
 # Kunumi: canonical/raw Drive exports stay remote; local-first bundle is tracked.
-skills/kunumi-identity-design/assets/Ativos de Marca/
-skills/kunumi-identity-design/assets/Canais e Redes Sociais/
-skills/kunumi-identity-design/assets/Templates/
-skills/kunumi-identity-design/assets/local/templates/*.pptx.inspect.ndjson
-skills/kunumi-identity-design/assets/local/templates/*.manifest.json
+skills/kosmos-design-system/assets/Ativos de Marca/
+skills/kosmos-design-system/assets/Canais e Redes Sociais/
+skills/kosmos-design-system/assets/Templates/
+skills/kosmos-design-system/assets/local/templates/*.pptx.inspect.ndjson
+skills/kosmos-design-system/assets/local/templates/*.manifest.json

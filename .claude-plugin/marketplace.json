@@ -1,12 +1,12 @@
 {
-  "name": "kunumi-identity-design",
+  "name": "kosmos-design-system",
   "description": "Kunumi identity and design system skill for Claude Code",
   "owner": {
     "name": "Kunumi"
   },
   "plugins": [
     {
-      "name": "kunumi-identity-design",
+      "name": "kosmos-design-system",
       "description": "Apply approved Kunumi, Instituto Kunumi, and Kunumi Unlimited identity guidance to slides, docs, web, UI, and social assets.",
       "source": "./",
       "version": "0.1.0",

@@ -1,10 +1,10 @@
 # Repository Instructions
 
 This repository is a single-purpose Claude Code plugin holding one skill,
-`skills/kunumi-identity-design/`. Keep the skill package focused on instructions and resources an
+`skills/kosmos-design-system/`. Keep the skill package focused on instructions and resources an
 agent needs at execution time.
 
-- Keep the skill at `skills/kunumi-identity-design/` and keep `SKILL.md` present and authoritative.
+- Keep the skill at `skills/kosmos-design-system/` and keep `SKILL.md` present and authoritative.
 - Keep frontmatter to `name` and `description`; the description must say when the skill should trigger.
 - Keep `SKILL.md` short and procedural. Put detailed standards, schemas, examples, and brand rules in one-level-deep `references/` files.
 - Put reusable deterministic utilities in `scripts/` and executable output resources in `assets/`.

@@ -1,0 +1,17 @@
+{
+  "name": "kunumi-identity-design",
+  "description": "Create and review artifacts with the approved Kunumi, Instituto Kunumi, and Kunumi Unlimited visual systems, using local-first assets and optional canonical Google Drive sources.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Kunumi"
+  },
+  "repository": "https://github.com/danieldlima/kosmos-design-system-skill",
+  "keywords": [
+    "kunumi",
+    "brand",
+    "identity",
+    "design",
+    "slides",
+    "templates"
+  ]
+}

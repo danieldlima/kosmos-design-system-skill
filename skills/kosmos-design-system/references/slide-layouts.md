@@ -2,12 +2,9 @@
 
 The canonical Kunumi deck contains 76 slides and the canonical Instituto deck contains 75 slides, both at 1920×1080 (16:9). Use either as a source deck: duplicate the closest source slide and edit inherited elements. Do not rebuild layouts from screenshots or approximate their brand furniture.
 
-For zero-auth execution, begin with:
+No source deck is bundled. Ask the user for the approved Kunumi or Instituto deck before building slides, then duplicate the closest source slide from it.
 
-- `assets/local/templates/Kunumi-Agent-Template.pptx`
-- `assets/local/templates/Instituto-Agent-Template.pptx`
-
-Each local edition contains 20 unchanged representative source slides. Use `python scripts/kunumi_lookup.py resolve "Kunumi slide template"` to obtain the local path and canonical Drive ID. Fetch the full deck only when the required source layout is not present.
+This reference catalogs every source layout, so use it to identify the exact slide you need and to specify the work before a deck is supplied. Do not rebuild a missing layout from this description alone.
 
 ## Contents
 

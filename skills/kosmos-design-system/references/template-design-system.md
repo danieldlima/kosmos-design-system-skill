@@ -33,12 +33,13 @@ Instituto shares the grid but adds an expressive spectrum:
 
 ## Source Decks
 
-| System | Canonical Drive deck | Local agent edition | Source layout coverage |
-| --- | --- | --- | --- |
-| Kunumi | 76 slides | 20 slides | cover, agenda, gradient/pixel transitions, text, photo, bars, media grid, metrics, chart, timeline, table, dark variants, closing, marks, icons, static assets |
-| Instituto | 75 slides | 20 slides | Instituto cover, minimal/gradient/pixel covers, agenda, text, photo, bars, media grid, metrics, chart, timeline, table, dark variants, closing, marks, graphic resources, static assets |
+| System | Canonical deck | Source layout coverage |
+| --- | --- | --- |
+| Kunumi | 76 slides | cover, agenda, gradient/pixel transitions, text, photo, bars, media grid, metrics, chart, timeline, table, dark variants, closing, marks, icons, static assets |
+| Instituto | 75 slides | Instituto cover, minimal/gradient/pixel covers, agenda, text, photo, bars, media grid, metrics, chart, timeline, table, dark variants, closing, marks, graphic resources, static assets |
 
-The local editions are adoption-first subsets. They are not replacements for the canonical Drive decks.
+Neither deck is bundled. Ask the user for the approved source deck, and use `slide-layouts.md` to
+identify the exact layout to duplicate.
 
 ## Web Motion Translation
 

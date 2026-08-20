@@ -4,8 +4,9 @@ Read this reference for AI-assisted portraits, profile photos, avatars, or the K
 
 Source authority:
 
-- `../assets/Canais e Redes Sociais/Foto de Perfil Kunumi IA/Guia - Fotos de Perfil Kunumi IA.docx`
-- `../assets/Canais e Redes Sociais/Foto de Perfil Kunumi IA/marca.png`
+- `../assets/local/channels/profile/marca.png`
+- The Kunumi IA profile-photo guide is not bundled. Ask the user for it when the task needs a
+  ruling this reference does not already record.
 
 ## Input Photo
 

@@ -27,7 +27,7 @@ Avoid invented gradients, pseudo-logos, generic neon AI styling, excessive cards
 
 ## Slides
 
-Use the supplied PPTX as a source deck and follow `slide-layouts.md`.
+Ask the user for the approved PPTX source deck and follow `slide-layouts.md`.
 
 1. Query by narrative job:
 

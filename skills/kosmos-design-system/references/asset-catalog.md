@@ -1,6 +1,6 @@
 # Kunumi Asset Catalog
 
-Use approved files from the local-first bundle or the exact Drive objects in `semantic-index.json`; keep source files unchanged. Query the indexes rather than loading them wholesale.
+Use approved files from the local-first bundle recorded in `semantic-index.json`; keep source files unchanged. Query the indexes rather than loading them wholesale.
 
 ## Find an Asset
 
@@ -10,11 +10,11 @@ Run the compact query tool from the skill directory:
 python scripts/kunumi_lookup.py assets --identity core --kind wordmark
 python scripts/kunumi_lookup.py resolve "Instituto gradient"
 python scripts/kunumi_lookup.py resolve "Kunumi positive wordmark"
-python scripts/kunumi_lookup.py sources --access drive --kind motion
+python scripts/kunumi_lookup.py sources --kind wordmark
 python scripts/kunumi_lookup.py sources --search "linkedin"
 ```
 
-Prefer the returned local path. Use the recorded Drive ID when the source is remote-only or canonical full fidelity is required.
+Use the returned local path. When nothing resolves, ask the user for the approved file.
 
 ## Preferred Identity Assets
 
@@ -51,24 +51,22 @@ Place essential text in calm, high-contrast regions. Do not reconstruct, recolor
 ## Motion Selector
 
 - Use the three local lightweight GIFs for simple embedded loops.
-- Fetch MP4 from Drive for efficient web, presentation, or video playback.
-- Fetch the high-quality MOV source when alpha or editing quality matters.
-- Fetch `kunuminst_gradiente_marca_small.gif`, `_medium.gif`, or `_large.gif` only when square symbol-led motion is required; medium and large are deliberately Drive-only.
-- Use the portrait photographic GIF only when its actual subject fits the story.
+- For efficient web, presentation, or video playback, or when alpha and editing quality matter, ask the user for the approved MP4 or high-quality MOV source.
+- Square symbol-led motion and the portrait photographic GIF are not bundled; ask for the approved file, and use the portrait GIF only when its actual subject fits the story.
 - Do not capture a random motion frame as a new canonical asset. If motion is unsupported, choose the closest approved static family without claiming a frame-for-frame match.
 
 ## Channel Sources
 
 - LinkedIn header: `assets/local/channels/linkedin/[modelo]Cabeçalho_Linkedin-kunumi.png` — use as supplied.
 - Profile-photo mark: `assets/local/channels/profile/marca.png` — specialized near-Urucum export; use only with `profile-photo-system.md`.
-- Slide templates: `assets/local/templates/` — preserve and duplicate source slides; resolve canonical full decks through `semantic-index.json`.
-- Slack guide: use only as a document-design reference; do not copy its operational policy.
-- Profile-photo guide: authoritative for the profile-photo workflow.
+- Slide decks: not bundled; ask the user for the approved Kunumi or Instituto deck, then preserve and duplicate its source slides.
+- Slack guide: not bundled; when the user supplies it, use it only as a document-design reference and do not copy its operational policy.
+- Profile-photo guide: not bundled; when the user supplies it, it is authoritative for the profile-photo workflow.
 
 ## Conversion Rules
 
 - Keep SVG as SVG where supported.
 - Preserve PNG transparency.
 - Copy only assets required by the deliverable; do not duplicate the motion library.
-- Keep raw Drive exports and canonical full decks out of Git unless the user explicitly changes the local-bundle policy.
+- Keep user-supplied canonical full decks out of Git unless the user explicitly changes the local-bundle policy.
 - Never rename, recompress, convert, crop, or adapt a source unless the output medium requires it.

@@ -17,7 +17,7 @@ Create the artifact from the smallest relevant context set. The original templat
 | --- | --- |
 | Slides or presentations | `references/slide-layouts.md` + `references/medium-playbooks.md` + `references/visual-patterns.md` |
 | Charts, documents, reports, web, apps, UI, images, social, GIF, video | `references/medium-playbooks.md` + `references/visual-patterns.md` |
-| Logo, background, motion, template, or Drive source selection | `references/content-map.md` + `references/asset-catalog.md` |
+| Logo, background, motion, template, or source selection | `references/content-map.md` + `references/asset-catalog.md` |
 | Kunumi/Instituto slide or web-system fidelity | `references/template-design-system.md` |
 | Profile photo, portrait, or avatar | `references/profile-photo-system.md` |
 
@@ -26,9 +26,7 @@ Do not load index JSON files wholesale. Query their compact views:
 ```bash
 python scripts/kunumi_lookup.py tokens
 python scripts/kunumi_lookup.py resolve "Instituto gradient"
-python scripts/kunumi_lookup.py resolve "Kunumi slide template"
-python scripts/kunumi_lookup.py folders --search "profile portrait"
-python scripts/kunumi_lookup.py sources --access drive --kind motion
+python scripts/kunumi_lookup.py sources --identity instituto
 python scripts/kunumi_lookup.py slides --tag chart
 python scripts/kunumi_lookup.py patterns --medium slides --tag data-viz
 ```
@@ -36,13 +34,12 @@ python scripts/kunumi_lookup.py patterns --medium slides --tag data-viz
 ## Source Order
 
 1. Source or version named by the user.
-2. Matching approved local file in `assets/local/`.
-3. Exact canonical Drive object recorded in `references/semantic-index.json`.
-4. Extracted rules in `references/`.
+2. Matching approved local file in `assets/local/`, resolved through `references/semantic-index.json`.
+3. Extracted rules in `references/`.
 
 If sources conflict, use the highest applicable source. Do not average rules or invent a compromise.
 
-Use the local agent-ready Kunumi/Instituto decks by default. Connect to Google Drive only for a canonical full deck, an unrepresented source slide, heavy motion/video, a channel guide, portraits, historical/client material, or the annual report. Fetch Drive sources by recorded ID and cache them outside the repository.
+No slide deck is bundled. When a task needs a source deck, heavy motion/video, a channel guide, portraits, or historical/client material, ask the user to supply the approved file and cache it outside the repository. Use `references/slide-layouts.md` to identify the exact source layout to duplicate once a deck is supplied.
 
 ## Nonnegotiables
 

@@ -12,37 +12,79 @@ from typing import Any
 SKILL_DIR = Path(__file__).resolve().parents[1]
 REFERENCES_DIR = SKILL_DIR / "references"
 
-TOKENS = {
-    "primary": {
-        "urucum": "#F04E44",
-        "chumbo": "#1C2127",
-        "grafite": "#5E5E5E",
-        "concreto": "#B4ADA4",
-        "gelo": "#F0F0F0",
-    },
-    "support": {
-        "amarelo": "#FF931E",
-        "laranja": "#F26638",
-        "magenta": "#D73E5F",
-        "violeta": "#9355A0",
-        "indigo": "#5A61B6",
-        "preto": "#000000",
-    },
-    "extended_chart_only": {
-        "amarelo": ["#481F00", "#7D470A", "#FFDFC1"],
-        "indigo": ["#1A2052", "#3A2FDF", "#D6E0FF"],
-        "verde": ["#103C1F", "#246A3C", "#43F085", "#ADF3BE"],
-    },
-    "typography": {
-        "family": "Figtree",
-        "fallback": "Arial",
-        "weights": ["ExtraBold", "SemiBold", "Medium", "Regular", "Light"],
-    },
-}
-
-
 def load(name: str) -> dict[str, Any]:
     return json.loads((REFERENCES_DIR / name).read_text(encoding="utf-8"))
+
+
+def load_tokens() -> dict[str, Any]:
+    """Read the token source of truth.
+
+    `references/tokens.json` is the single source for color and typography. The palette used to
+    be duplicated here, in `brand-foundations.md`, and in `assets/web/kunumi-tokens.css`, with
+    nothing keeping the three in sync.
+
+    Returns:
+        The parsed contents of `references/tokens.json`.
+    """
+    return load("tokens.json")
+
+
+def tokens_summary(tokens: dict[str, Any]) -> str:
+    """Render the compact human view of the token set.
+
+    Args:
+        tokens: The parsed `tokens.json` mapping.
+
+    Returns:
+        A printable summary covering the institutional palette, the chart palette, the
+        black-and-white prohibition, and the two type families.
+    """
+    lines: list[str] = [f"source: {tokens['source']}", ""]
+
+    color = tokens["color"]
+    lines.append("institutional (PALETA PRINCIPAL)")
+    for entry in color["institutional"]["entries"]:
+        lines.append(
+            f"  {entry['name']:<9} {entry['hex']}  {entry['pantoneC']:<34} {entry['role']}"
+        )
+
+    lines.append("")
+    lines.append("prohibition")
+    lines.append(f"  {color['prohibition']['rule']}")
+    lines.append(f"  exception: {color['prohibition']['observedException']['reading']}")
+
+    lines.append("")
+    lines.append("chart (PALETA PARA GRAFICOS) - data only")
+    for entry in color["chart"]["entries"]:
+        lines.append(f"  {entry['token']:<13} {entry['hex']}")
+
+    typo = tokens["typography"]
+    lines.append("")
+    lines.append("typography")
+    lines.append(
+        f"  display: {typo['display']['family']} {typo['display']['preferredStyle']}"
+        f" / alternate {typo['display']['alternate']}"
+        f" / tracking +{typo['display']['letterSpacingPercent']}% / ALWAYS UPPERCASE"
+        f" / bundled={typo['display']['bundled']}"
+    )
+    lines.append(
+        f"  text:    {typo['text']['family']}"
+        f" / tracking {typo['text']['letterSpacingPercent']}%"
+        f" / body leading {typo['lineHeightRanges']['body']}"
+        f" / bundled={typo['text']['bundled']}"
+    )
+    lines.append(f"  fallback: {' -> '.join(typo['display']['fallbackOrder'])}")
+
+    lines.append("")
+    lines.append("variables")
+    for entry in typo["variables"]:
+        lines.append(
+            f"  {entry['name']:<27} {entry['family']} {entry['style']:<18}"
+            f" {entry['size']:>5} / lh {entry['lineHeight']:<5}"
+            f" / ls {entry['letterSpacingPercent']}% / {entry['case']}"
+        )
+
+    return "\n".join(lines)
 
 
 def text_matches(entry: dict[str, Any], query: str | None) -> bool:
@@ -254,7 +296,11 @@ def main() -> None:
 
     args = parser.parse_args()
     if args.command == "tokens":
-        print(json.dumps(TOKENS, indent=2))
+        tokens = load_tokens()
+        if args.json:
+            print(json.dumps(tokens, indent=2, ensure_ascii=False))
+        else:
+            print(tokens_summary(tokens))
         return
     if args.command == "assets":
         entries = select_assets(args)

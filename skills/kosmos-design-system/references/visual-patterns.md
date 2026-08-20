@@ -2,6 +2,10 @@
 
 These patterns were extracted from all 36 rendered slides, transitions, and key interactive states in `presentation-ksequence-cambio`. They extend the visual vocabulary; they do not replace `brand-foundations.md` or authorize Ksequence product claims, personal imagery, third-party motifs, or new logos.
 
+**This is a deck-derived expressive layer, subordinate to the 2025 brandbook.** Its dark canvases
+and expressive ramp are product-storytelling devices, not brand colors, and none of them are in
+`tokens.json`. Where this file and the brandbook disagree, the brandbook wins.
+
 ## Contents
 
 - [Find a Pattern](#find-a-pattern)
@@ -59,7 +63,14 @@ Useful gradient recipes:
 - Subtle dark grid: 1 px white at 3.5% opacity every 44–68 px; mask it toward the focal area.
 - Subtle light grid: 1 px Chumbo at 2.5–4% opacity every 32–44 px.
 
-Use Figtree for all primary copy. The deck uses DM Mono as a technical secondary voice for eyebrows, slide numbers, units, source notes, navigation, and terminal moments. Use DM Mono only when already available; otherwise use a neutral monospace fallback without downloading a font.
+Typography follows `typography.md`, not this file: the display face uppercase for titles, Figtree
+for body. This deck predates the 2025 brandbook and sets its own titles in Figtree — do not copy
+that as a rule.
+
+The deck also uses **DM Mono** as a technical secondary voice for eyebrows, slide numbers, units,
+source notes, navigation, and terminal moments. DM Mono is **deck-local and not bundled**, and the
+brandbook does not name it. Use it only when already available and only inside Ksequence-style
+work; otherwise use a neutral monospace fallback without downloading a font.
 
 ## Pattern Families
 
@@ -93,13 +104,14 @@ Do not combine more than two major pattern families on one page or slide.
 
 ## Reusable Assets
 
-The globally useful source assets were copied into the skill; personal photos, product-specific art, nostalgic interfaces, and third-party imagery were not.
+**None of these files are bundled.** They exist only in the source deck. Ask the user to supply
+the approved file and cache it outside the repository; do not recreate the artwork.
 
-| Asset | Use |
+| Asset (not bundled) | Use |
 | --- | --- |
-| `assets/Global Visual Patterns/Ksequence/habits-background-art.png` | Transparent 2×2 atlas for collaboration, organic evolution, multidimensional work, and hub-and-spoke principles |
-| `assets/Global Visual Patterns/Ksequence/capability-background-art.png` | Transparent 2×2 atlas for speed, zero-shot/reuse, sequence, and integration capability scenes |
-| `assets/Global Visual Patterns/Ksequence/kunumi-dark-gradient.gif` | 1280×800, 12-frame, 1.2-second dark Urucum-violet ambient loop |
+| `habits-background-art.png` | Transparent 2×2 atlas for collaboration, organic evolution, multidimensional work, and hub-and-spoke principles |
+| `capability-background-art.png` | Transparent 2×2 atlas for speed, zero-shot/reuse, sequence, and integration capability scenes |
+| `kunumi-dark-gradient.gif` | 1280×800, 12-frame, 1.2-second dark Urucum-violet ambient loop |
 
 For either atlas, crop one quadrant using a 2×2 background grid; do not display all four quadrants as one graphic unless creating a deliberate four-principle overview. On dark surfaces, use screen-like blending or increased brightness only when the exact medium supports it and labels remain legible.
 

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -35,6 +36,104 @@ def parse_frontmatter(path: Path) -> tuple[dict[str, str], list[str]]:
         frontmatter[key.strip()] = value.strip().strip('"').strip("'")
 
     return frontmatter, errors
+
+
+def validate_tokens(skill_dir: Path) -> list[str]:
+    """Check that the token source of truth agrees with everything derived from it.
+
+    The palette used to be duplicated across `tokens.json`, `kunumi-tokens.css`, and
+    `brand-foundations.md` with nothing keeping them in sync. This check fails the build when
+    they drift, and when a prohibited color reappears.
+
+    Args:
+        skill_dir: Path to the skill package directory.
+
+    Returns:
+        A list of human-readable error strings; empty when the token layer is consistent.
+    """
+    errors: list[str] = []
+    tokens_path = skill_dir / "references" / "tokens.json"
+    css_path = skill_dir / "assets" / "web" / "kunumi-tokens.css"
+    foundations_path = skill_dir / "references" / "brand-foundations.md"
+
+    if not tokens_path.exists():
+        return [f"{skill_dir.name}: missing references/tokens.json"]
+
+    try:
+        tokens = json.loads(tokens_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{skill_dir.name}: tokens.json is not valid JSON: {exc}"]
+
+    css = css_path.read_text(encoding="utf-8") if css_path.exists() else ""
+    foundations = (
+        foundations_path.read_text(encoding="utf-8") if foundations_path.exists() else ""
+    )
+
+    color = tokens.get("color", {})
+    groups = ("institutional", "chart")
+    for group in groups:
+        for entry in color.get(group, {}).get("entries", []):
+            hex_value = entry["hex"]
+            css_var = entry["cssVar"]
+            if css and f"{css_var}: {hex_value.lower()}" not in css.lower():
+                errors.append(
+                    f"{skill_dir.name}: {css_var} missing or mismatched in kunumi-tokens.css "
+                    f"(tokens.json says {hex_value})"
+                )
+            if foundations and hex_value.upper() not in foundations.upper():
+                errors.append(
+                    f"{skill_dir.name}: {hex_value} ({group}) absent from brand-foundations.md"
+                )
+
+    # Black is prohibited outright; white survives only as the documented raised surface.
+    if css:
+        for banned in ("#000000", "#000 ", "#000;"):
+            if banned in css.lower():
+                errors.append(
+                    f"{skill_dir.name}: prohibited pure black {banned.strip()} in kunumi-tokens.css"
+                )
+        surface = "--kunumi-surface-raised"
+        white_hits = css.lower().count("#ffffff")
+        if white_hits and surface not in css:
+            errors.append(
+                f"{skill_dir.name}: white used in kunumi-tokens.css without the documented "
+                f"{surface} exception"
+            )
+        if white_hits > 1:
+            errors.append(
+                f"{skill_dir.name}: white appears {white_hits} times in kunumi-tokens.css; "
+                "only the raised-surface token may use it"
+            )
+
+    # The display face must never carry negative tracking.
+    if css and "letter-spacing: -" in css:
+        errors.append(
+            f"{skill_dir.name}: negative letter-spacing in kunumi-tokens.css; the display face "
+            "is tracked +3%"
+        )
+
+    return errors
+
+
+def validate_reference_links(skill_dir: Path) -> list[str]:
+    """Check that every `references/<file>` path named in SKILL.md exists.
+
+    Args:
+        skill_dir: Path to the skill package directory.
+
+    Returns:
+        A list of error strings for referenced files that are missing on disk.
+    """
+    skill_md = skill_dir / "SKILL.md"
+    if not skill_md.exists():
+        return []
+
+    errors: list[str] = []
+    text = skill_md.read_text(encoding="utf-8")
+    for name in sorted(set(re.findall(r"references/([A-Za-z0-9._-]+)", text))):
+        if not (skill_dir / "references" / name).exists():
+            errors.append(f"{skill_dir.name}: SKILL.md references missing references/{name}")
+    return errors
 
 
 def validate_skill(skill_dir: Path) -> list[str]:
@@ -82,6 +181,8 @@ def main() -> int:
     errors: list[str] = []
     for skill_dir in skill_dirs:
         errors.extend(validate_skill(skill_dir))
+        errors.extend(validate_reference_links(skill_dir))
+        errors.extend(validate_tokens(skill_dir))
 
     if errors:
         for error in errors:

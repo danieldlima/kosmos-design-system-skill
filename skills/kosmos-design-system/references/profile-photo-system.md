@@ -37,6 +37,11 @@ Use the supplied `marca.png`; do not redraw or approximate the icon.
 
 Use the exact background, shirt, and mark combination. Do not substitute a near-match.
 
+> These are **source-exact values from the approved channel template**, which is why `#000000`
+> and `#FFFFFF` appear here even though the brandbook prohibits black and white as brand
+> colors. Reproduce the combination as given; do not "correct" it to Chumbo or Gelo, and do
+> not carry these two values into any other artifact.
+
 | Background family | Reference name | Background | Shirt | Mark |
 | --- | --- | --- | --- | --- |
 | Urucum | Marie Curie | `#F04E44` | `#000000` | `#F04E44` |

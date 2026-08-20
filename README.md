@@ -3,8 +3,12 @@
 # Kosmos Design System
 
 Claude Code plugin that ships a single skill, [`kosmos-design-system`](skills/kosmos-design-system/SKILL.md),
-for creating and reviewing artifacts in the approved Kunumi, Instituto Kunumi, and Kunumi Unlimited
-visual systems. Local-first: every approved asset the skill uses is bundled in the repository.
+for designing and reviewing artifacts in the approved Kunumi, Instituto Kunumi, and Kunumi
+Unlimited visual **and verbal** systems — web and UI, slides, charts, social assets, and copy.
+
+Authority is the **Brandbook Kunumi Final (2025)**; colors and type were read from that file's own
+design variables. Local-first: every approved asset the skill uses is bundled in the repository, so
+it works with no network and no Figma access.
 
 ## Layout
 
@@ -17,11 +21,17 @@ skills/
   kosmos-design-system/
     SKILL.md                  # routing instructions (required)
     references/               # brand standards, loaded only when relevant
+      tokens.json             # single source of truth for color and type
+      brand-foundations.md    # always read; identity, color, composition
+      typography.md           # the two-family type system
+      logo-governance.md      # clear space, minimum size, co-branding, misuse
+      brand-voice.md          # messages, tone axes, DOs/DON'Ts, naming
+      visual-behavior.md      # brand architecture, formats, Versus symbol
     scripts/                  # kunumi_lookup.py and the index builder
-    assets/local/             # marks, Figtree, Instituto artwork
+    assets/local/             # marks, Figtree, Space Grotesk, Instituto artwork
     assets/web/               # CSS tokens and animated template preview
 scripts/
-  validate-skills.py          # frontmatter and naming checks
+  validate-skills.py          # frontmatter, reference links, token consistency
   build_bundle.py             # self-contained bundle for publishing
 ```
 
@@ -30,7 +40,7 @@ scripts/
 ## What Works Offline
 
 - approved marks;
-- Figtree;
+- Figtree (body) and Space Grotesk (display);
 - Instituto static artwork and lightweight motion;
 - CSS tokens and the animated HTML template preview;
 - the extracted slide-layout, visual-pattern, and design-token references;
@@ -43,6 +53,15 @@ guide, portraits, historical/client material, and the annual report are all outs
 When a task needs one, the skill asks for the approved file instead of substituting or
 reconstructing it. `references/slide-layouts.md` still carries the full extracted layout system,
 so the skill can specify slide work precisely before a deck is supplied.
+
+**PP Neue Machina Inktrap**, the brandbook's first-choice display face, is commercial software from
+Pangram Pangram and is not redistributed here. Space Grotesk — the alternate the brandbook itself
+names — is bundled under the SIL OFL and is the offline default. If PP Neue Machina is licensed and
+installed locally, the CSS display stack picks it up automatically.
+
+Two chapters of the brandbook, the Instituto and Colab deep dives, were not reachable through the
+Figma MCP page enumeration and are therefore not extracted. **Kunumi Colab** consequently has a
+documented name but no documented mark; the skill asks rather than inventing one.
 
 ## Install
 
@@ -84,9 +103,12 @@ python scripts/kunumi_lookup.py slides --tag chart
 python scripts/kunumi_lookup.py patterns --medium slides --tag data-viz
 ```
 
-The primary brand accent is Urucum `#F04E44`. Full tokens live in
-`skills/kosmos-design-system/assets/web/kunumi-tokens.css` and
-`references/brand-foundations.md`.
+The primary brand accent is Urucum `#F04E44`. Chumbo `#1C2127` and Gelo `#F0F0F0` replace black
+and white, which the brandbook prohibits as brand colors. Titles are set in the display face,
+**always uppercase**, tracked **+3%**; body is Figtree at 140–175% line height.
+
+`references/tokens.json` is the single source of truth. `assets/web/kunumi-tokens.css` mirrors it
+for web work, and `validate-skills.py` fails the build if the two drift.
 
 ## Standalone Bundle
 
@@ -101,5 +123,9 @@ Repository metadata is excluded.
 ## Development Workflow
 
 - Keep `SKILL.md` short and procedural; put standards, schemas, and examples in `references/`.
-- Run `python scripts/validate-skills.py` before opening or merging a branch.
+- Edit `references/tokens.json` first when a token changes, then mirror it into
+  `assets/web/kunumi-tokens.css` and `references/brand-foundations.md`.
+- Run `python scripts/validate-skills.py` before opening or merging a branch. It checks frontmatter,
+  that every `references/` path named in `SKILL.md` exists, and that the token layer is consistent
+  and free of prohibited colors.
 - Use short-lived branches, Conventional Commits in English, and squash merges into `main`.

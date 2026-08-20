@@ -77,7 +77,7 @@
         overflow: hidden;
         border-radius: 0.25rem;
         background: var(--kunumi-gelo);
-        box-shadow: 0 2.2rem 7rem rgb(0 0 0 / 0.42);
+        box-shadow: 0 2.2rem 7rem rgb(28 33 39 / 0.42);
         isolation: isolate;
       }
 
@@ -95,6 +95,13 @@
           opacity var(--kunumi-base) var(--kunumi-ease),
           transform var(--kunumi-base) var(--kunumi-ease),
           visibility 0s linear var(--kunumi-base);
+      }
+
+      /* The stage is a fixed 16:9 replica of a 1920x1080 slide, so display type inside it scales
+         with the stage rather than stopping at the readable rem floor the global token uses for
+         real pages. Declared before the per-slide overrides so those still win. */
+      .slide .kunumi-display {
+        font-size: clamp(1rem, 5vw, 5.5rem);
       }
 
       .slide.is-active {
@@ -144,7 +151,7 @@
         width: min(42%, 31rem);
         height: clamp(2px, 0.2vw, 4px);
         overflow: hidden;
-        background: var(--kunumi-black);
+        background: var(--kunumi-chumbo);
       }
 
       .slide__rail::after {
@@ -182,7 +189,7 @@
       }
 
       .cover .kunumi-display {
-        font-size: clamp(2rem, 5vw, 5.5rem);
+        font-size: clamp(0.95rem, 5vw, 5.5rem);
       }
 
       .content {
@@ -238,10 +245,11 @@
       }
 
       .metric__value {
-        font-size: clamp(2.4rem, 7.5vw, 8.4rem);
-        font-weight: 500;
-        letter-spacing: -0.065em;
-        line-height: 0.88;
+        font-family: var(--kunumi-font-display);
+        font-size: clamp(1.2rem, 7.5vw, 8.4rem);
+        font-weight: var(--kunumi-weight-semibold);
+        letter-spacing: var(--kunumi-track-display);
+        line-height: 1.1;
       }
 
       .metric__label {
@@ -255,9 +263,9 @@
       .instituto-cover {
         align-items: end;
         color: var(--kunumi-gelo);
-        background-color: var(--kunumi-black);
+        background-color: var(--kunumi-chumbo);
         background-image:
-          linear-gradient(180deg, rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.22)),
+          linear-gradient(180deg, rgb(28 33 39 / 0.1), rgb(28 33 39 / 0.22)),
           url("../local/instituto/static/kunuminst_gradiente_01.png");
         background-position: center;
         background-size: cover;
@@ -301,7 +309,7 @@
       .instituto-cover__copy .kunumi-display {
         margin-left: auto;
         max-width: 12ch;
-        font-size: clamp(2.2rem, 4.8vw, 5.4rem);
+        font-size: clamp(0.9rem, 4.8vw, 5.4rem);
         text-align: right;
       }
 
@@ -309,7 +317,7 @@
         grid-template-columns: 49% 51%;
         padding: 0;
         color: var(--kunumi-gelo);
-        background: var(--kunumi-black);
+        background: var(--kunumi-chumbo);
       }
 
       .pixel-field {
@@ -324,7 +332,7 @@
         position: absolute;
         inset: 0;
         content: "";
-        background: linear-gradient(90deg, transparent 65%, var(--kunumi-black));
+        background: linear-gradient(90deg, transparent 65%, var(--kunumi-chumbo));
       }
 
       .pixel-slide.is-active .pixel-field {
@@ -347,7 +355,7 @@
 
       .pixel-copy .kunumi-display {
         max-width: 13ch;
-        font-size: clamp(2rem, 4.2vw, 4.8rem);
+        font-size: clamp(0.85rem, 4.2vw, 4.8rem);
       }
 
       .pixel-copy p {
@@ -458,6 +466,30 @@
 
         .pixel-copy {
           padding: 1.3rem;
+        }
+      }
+
+      /* A 16:9 replica of a 1920x1080 slide is only ~200px tall at phone width, so the copy is
+         tightened further to stay inside the stage. Production pages translate the hierarchy
+         instead of preserving the stage - see references/template-design-system.md. */
+      @media (max-width: 480px) {
+        .cover__copy p,
+        .kunumi-body {
+          font-size: 0.58rem;
+          line-height: 1.45;
+        }
+
+        .cover__copy p {
+          margin: 0.5rem 0 0;
+        }
+
+        .content__copy,
+        .cover__copy {
+          gap: 0.3rem;
+        }
+
+        .pixel-copy {
+          padding: 0.7rem;
         }
       }
     </style>

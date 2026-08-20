@@ -13,10 +13,13 @@ Use this file after choosing the identity in `brand-foundations.md`. Query asset
 - [Motion, GIF, and Video](#motion-gif-and-video)
 - [Delivery Gate](#delivery-gate)
 
+For any copy inside these artifacts — headings, labels, captions, empty states, error
+messages — follow `brand-voice.md`.
+
 ## Universal Recipe
 
 1. Select core Kunumi, Kunumi Unlimited, or Instituto Kunumi.
-2. Set Figtree, Gelo/White canvas, Chumbo text, and Urucum emphasis unless a supplied asset or source layout establishes another mode.
+2. Set the type system from `typography.md` — display face uppercase for titles, Figtree for body — on a Gelo canvas with Chumbo text and Urucum emphasis, unless a supplied asset or source layout establishes another mode.
 3. Query approved assets with `python scripts/kunumi_lookup.py assets ...`.
 4. Query a Ksequence-derived composition when an expressive treatment helps: `python scripts/kunumi_lookup.py patterns ...`.
 5. Build on the two-by-two grid: two major horizontal blocks, two vertical blocks, then subdivisions.
@@ -48,13 +51,14 @@ Ask the user for the approved PPTX source deck and follow `slide-layouts.md`.
 
 ### Default visual grammar
 
-- Background: Gelo `#F0F0F0` or White `#FFFFFF`.
+- Background: Gelo `#F0F0F0`. Not white — Gelo replaces white.
 - Text and axes: Chumbo `#1C2127`.
 - Grid, rules, and inactive values: Concreto `#B4ADA4`.
 - Primary series or key finding: Urucum `#F04E44`.
-- Secondary series: use the support palette only when distinctions are necessary.
-- Extended palette: charts and diagrams only; use exact values from `brand-foundations.md`.
-- Type: Figtree; use direct labels and sentence-case titles.
+- Series colors: the brandbook chart palette, **data only** — `#4392D2` blue, `#2FB7CF` cyan,
+  `#62CCA3` green, `#A0C068` olive, `#F0D449` yellow. This supersedes the older ten-step
+  extended palette, which now exists only to read legacy template charts.
+- Type: Figtree for labels, axes, and notes. A chart title in the display face is uppercase.
 
 ### Construction
 
@@ -64,7 +68,9 @@ Ask the user for the approved PPTX source deck and follow `slide-layouts.md`.
 4. Highlight one comparison with Urucum; mute context in Chumbo, Grafite, or Concreto.
 5. Put labels close to the data. Use a legend only when direct labels would collide.
 6. Add a compact source note for external data or non-trivial claims.
-7. For dense categorical sets, use exact support colors; for sequential or diverging values, use an approved extended family without inventing intermediate colors.
+7. For categorical sets, use the five chart colors in order and stop there. The brandbook defines
+   no sequential or diverging ramp — do not invent intermediate steps. If five categories are not
+   enough, group the tail or change the chart form.
 8. Verify color contrast and ensure meaning is not encoded by color alone.
 
 Use flat lines and fills by default. Instituto artwork may frame a chart, but do not place essential labels over a busy gradient, wave, pixel, kaleidoscope, or gamma-map region.
@@ -81,11 +87,17 @@ Use flat lines and fills by default. Instituto artwork may frame a chart, but do
 
 ## Web, Apps, and UI
 
-- Use Figtree with Arial or a neutral system sans fallback.
-- Default to Gelo/White surfaces, Chumbo text, and selective Urucum actions or emphasis.
+- Titles in the display face, uppercase, tracked +3%. Body in Figtree at 140-175% line height,
+  tracking 0. Arial is a body fallback only, never display. See `typography.md`.
+- Default to a Gelo ground with Chumbo text and selective Urucum actions or emphasis. White is
+  available only as an elevated card surface on Gelo.
+- Prefer the semantic tokens in `assets/web/kunumi-tokens.css` (`--kunumi-ground`,
+  `--kunumi-ink`, `--kunumi-ink-muted`, `--kunumi-border`, `--kunumi-accent`) over literal hexes.
 - Use the two-by-two grid as a page-composition principle, not as four mandatory cards.
 - Keep navigation and operational interfaces dense, legible, and scannable.
-- Use rounded corners, elevation, and animation only when they clarify hierarchy or state.
+- Use rounded corners, elevation, and animation only when they clarify hierarchy or state. When a
+  card is warranted, the brandbook radius is **10 px** (`--kunumi-radius-card`); hairline rules
+  and precise edge alignment remain the default language.
 - For technical storytelling, selectively use the dark Ksequence-derived canvas, orbital systems, claim/demo splits, and expressive Urucum-orange-violet ramp from `visual-patterns.md`.
 - Pair color with text, icon, shape, or position. Meet the product's required contrast and accessibility standards.
 - Use supplied Instituto motion as a hero or transition layer, with a calm text-safe region and a static fallback.
@@ -126,4 +138,5 @@ Preview the full loop, not only its opening frame. Check flashes, seams, crop ch
 
 ## Delivery Gate
 
-Verify identity, exact asset, logo variant, color values, Figtree hierarchy, two-by-two grid, contrast, text fit, output dimensions, source notes, accessibility, and placeholder removal. For motion, inspect every phase of the loop; for multi-page or multi-slide work, inspect every page or slide.
+Verify identity, exact asset, logo variant and clear space, color values, type hierarchy (family,
+case, tracking, line height), two-by-two grid, contrast, text fit, output dimensions, source notes, accessibility, and placeholder removal. For motion, inspect every phase of the loop; for multi-page or multi-slide work, inspect every page or slide.

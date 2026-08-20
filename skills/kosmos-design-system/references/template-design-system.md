@@ -1,10 +1,15 @@
 # Template Design System
 
-The 2026 Kunumi and Instituto source decks were inspected slide by slide. They are parallel 16:9 systems built on Figtree, a two-by-two spatial grid, inherited brand furniture, and disciplined light/dark modes.
+The 2026 Kunumi and Instituto source decks were inspected slide by slide. They are parallel 16:9 systems built on a two-by-two spatial grid, inherited brand furniture, and disciplined light/dark modes.
+
+**Note on typography.** These decks predate the 2025 brandbook and set everything in Figtree. New
+work follows `typography.md`: the display face uppercase for titles, Figtree for body. When editing
+an existing deck, preserve the source slide's inherited type rather than restyling it mid-deck.
 
 ## Shared Essence
 
-- Use **Figtree** throughout. Keep titles short, left aligned, and structurally dominant.
+- Keep titles short, left aligned, and structurally dominant. In the source decks they are Figtree;
+  in new work they are the display face, uppercase. Body copy is Figtree either way.
 - Compose on a **two-by-two grid** with generous breathing space. Alignment and empty space carry more identity than decoration.
 - Use **Gelo** as the default paper field and **Chumbo** for dark chapters. Urucum is the reading accent, not a fill-everything color.
 - Keep the identity mark small in page furniture. Allow the symbol to become large only on covers, identity stories, and resource slides.
@@ -55,8 +60,8 @@ identify the exact layout to duplicate.
 `assets/web/kunumi-tokens.css` is the reusable implementation:
 
 - institutional and support color tokens;
-- chart-only extended colors;
-- local Figtree variable font faces;
+- the brandbook chart palette for data, plus the superseded extended colors for legacy charts;
+- local Figtree and Space Grotesk variable font faces;
 - typography weights, spacing, timing, and reduced-motion behavior.
 
 Use these tokens as a foundation, then follow the target medium’s composition rules. CSS tokens do not authorize recoloring supplied logos or Instituto art.

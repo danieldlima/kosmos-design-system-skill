@@ -5,7 +5,7 @@ This is the human routing view of the approved Kunumi material bundled with the 
 
 ## Access Model
 
-- **Local by default:** approved marks, Figtree, Instituto static backgrounds, three lightweight
+- **Local by default:** approved marks, Figtree and Space Grotesk, Instituto static backgrounds, three lightweight
   GIFs, LinkedIn/profile support files, and the CSS/HTML preview. All of it runs without
   authentication.
 - **Ask when missing:** slide decks, heavy GIF/video, detailed channel guides, named-person
@@ -32,6 +32,7 @@ assets/local/
 │   ├── unlimited/
 │   └── shared/
 ├── fonts/Figtree/
+├── fonts/SpaceGrotesk/
 ├── instituto/
 │   ├── static/
 │   └── motion-lightweight/

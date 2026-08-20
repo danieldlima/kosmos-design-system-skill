@@ -123,7 +123,7 @@ Slides 1–6 are template instructions and extracted design references. In the c
 2. Inspect the chosen source slide at full size.
 3. Duplicate the source slide; preserve master → layout → slide inheritance.
 4. Edit identified inherited placeholders and media frames. Do not add an unrelated overlay composition.
-5. Keep Figtree family, size, weight, line spacing, text insets, alignment, and vertical anchoring from the source element.
+5. Keep the source element's font family, size, weight, line spacing, text insets, alignment, and vertical anchoring. Do not restyle inherited type to the newer display face mid-deck.
 6. Preserve header/footer brand furniture, page markers, grid, asset proportions, and source-slide contrast mode.
 7. Use source slide 42 for external raster/vector charts and source slide 43 for native simple charts. Apply `medium-playbooks.md` chart rules.
 8. Use exact supplied Instituto backgrounds and motion assets. Do not rebuild them from sampled colors.

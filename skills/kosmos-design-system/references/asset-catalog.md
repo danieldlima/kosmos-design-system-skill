@@ -16,6 +16,13 @@ python scripts/kunumi_lookup.py sources --search "linkedin"
 
 Use the returned local path. When nothing resolves, ask the user for the approved file.
 
+Placement rules — clear space, minimum size, co-branding order, and the seven prohibitions —
+live in `logo-governance.md`. Read it before placing any mark.
+
+**PP Neue Machina Inktrap** is the brandbook's first-choice display face. It is commercial
+(Pangram Pangram) and is not bundled; Space Grotesk is the bundled alternate. See
+`typography.md` for the resolution order.
+
 ## Preferred Identity Assets
 
 | Need | Source |
@@ -28,6 +35,8 @@ Use the returned local path. When nothing resolves, ask the user for the approve
 | Unlimited lockup on dark | `assets/local/brand-marks/unlimited/kunumi_unltd_negativo_rgb.png` |
 | Instituto full lockup on light | `assets/local/brand-marks/instituto/kunumi_inst_positivo_rgb.svg` |
 | Instituto full lockup on dark | `assets/local/brand-marks/instituto/kunumi_inst_negativo_rgb.svg` |
+| Body typeface | `assets/local/fonts/Figtree/Figtree-VariableFont_wght.ttf` |
+| Display typeface (titles) | `assets/local/fonts/SpaceGrotesk/SpaceGrotesk[wght].ttf` |
 | Instituto wordmark only | `assets/local/brand-marks/instituto/` |
 
 `positivo` means Chumbo for core/icon/Instituto and Urucum for Unlimited. `negativo` means Gelo. Preview transparent art on the intended ground.

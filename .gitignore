@@ -7,10 +7,4 @@ __pycache__/
 node_modules/
 output/
 *.skill
-
-# Kunumi: canonical/raw Drive exports stay remote; local-first bundle is tracked.
-skills/kosmos-design-system/assets/Ativos de Marca/
-skills/kosmos-design-system/assets/Canais e Redes Sociais/
-skills/kosmos-design-system/assets/Templates/
-skills/kosmos-design-system/assets/local/templates/*.pptx.inspect.ndjson
-skills/kosmos-design-system/assets/local/templates/*.manifest.json
+.idea

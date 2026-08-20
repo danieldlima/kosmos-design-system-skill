@@ -26,11 +26,6 @@ def build_standalone_bundle(destination: Path) -> None:
         ignore=shutil.ignore_patterns(
             ".git",
             ".github",
-            "Ativos de Marca",
-            "Canais e Redes Sociais",
-            "Templates",
-            "*.inspect.ndjson",
-            "*.manifest.json",
             ".DS_Store",
             "__pycache__",
             "*.pyc",

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "policy": {
     "default": "local-first",
-    "local": "Approved marks, Figtree, static Instituto backgrounds, lightweight motion, and social previews work without authentication.",
+    "local": "Approved marks, Figtree and Space Grotesk, static Instituto backgrounds, lightweight motion, social previews, and the web token layer work without authentication.",
     "missing": "When a required source is not in the local bundle, ask the user to supply the approved file."
   },
   "featuredSources": [
@@ -106,6 +106,381 @@
         "linkedin",
         "social",
         "header",
+        "local-first"
+      ]
+    },
+    {
+      "key": "figtree-italic-variable",
+      "localPath": "assets/local/fonts/Figtree/Figtree-Italic-VariableFont_wght.ttf",
+      "identity": "shared",
+      "kind": "font",
+      "use": "Italic companion to the Figtree variable face.",
+      "tags": [
+        "font",
+        "figtree",
+        "italic",
+        "local-first"
+      ]
+    },
+    {
+      "key": "space-grotesk-variable",
+      "localPath": "assets/local/fonts/SpaceGrotesk/SpaceGrotesk[wght].ttf",
+      "identity": "shared",
+      "kind": "font",
+      "use": "Bundled display face for titles. The brandbook's stated alternate to PP Neue Machina, which is commercial and not bundled. Always uppercase, tracked +3%.",
+      "tags": [
+        "font",
+        "space-grotesk",
+        "display",
+        "title",
+        "local-first"
+      ]
+    },
+    {
+      "key": "kunumi-icon-positive",
+      "localPath": "assets/local/brand-marks/shared/kunumi_icone_positivo_rgb.png",
+      "identity": "shared",
+      "kind": "icon",
+      "use": "Shared Kunumi symbol, positive, for light grounds.",
+      "tags": [
+        "mark",
+        "icon",
+        "positive",
+        "local-first"
+      ]
+    },
+    {
+      "key": "kunumi-icon-negative",
+      "localPath": "assets/local/brand-marks/shared/kunumi_icone_negativo_rgb.png",
+      "identity": "shared",
+      "kind": "icon",
+      "use": "Shared Kunumi symbol, negative, for dark grounds.",
+      "tags": [
+        "mark",
+        "icon",
+        "negative",
+        "local-first"
+      ]
+    },
+    {
+      "key": "unlimited-positive-lockup",
+      "localPath": "assets/local/brand-marks/unlimited/kunumi_unltd_positivo_rgb.png",
+      "identity": "unlimited",
+      "kind": "lockup",
+      "use": "Kunumi Unlimited positive lockup. Positive means URUCUM for this identity, not Chumbo. Minimum 28 px / 10 mm height.",
+      "tags": [
+        "mark",
+        "lockup",
+        "positive",
+        "urucum",
+        "local-first"
+      ]
+    },
+    {
+      "key": "unlimited-negative-lockup",
+      "localPath": "assets/local/brand-marks/unlimited/kunumi_unltd_negativo_rgb.png",
+      "identity": "unlimited",
+      "kind": "lockup",
+      "use": "Kunumi Unlimited negative lockup in Gelo, for dark grounds.",
+      "tags": [
+        "mark",
+        "lockup",
+        "negative",
+        "local-first"
+      ]
+    },
+    {
+      "key": "instituto-positive-full-lockup",
+      "localPath": "assets/local/brand-marks/instituto/kunumi_inst_logotipo_positivo_rgb.png",
+      "identity": "instituto",
+      "kind": "lockup",
+      "use": "Instituto Kunumi full lockup, positive, raster.",
+      "tags": [
+        "mark",
+        "lockup",
+        "positive",
+        "raster",
+        "local-first"
+      ]
+    },
+    {
+      "key": "instituto-negative-full-lockup",
+      "localPath": "assets/local/brand-marks/instituto/kunumi_inst_logotipo_negativo_rgb.png",
+      "identity": "instituto",
+      "kind": "lockup",
+      "use": "Instituto Kunumi full lockup, negative, raster.",
+      "tags": [
+        "mark",
+        "lockup",
+        "negative",
+        "raster",
+        "local-first"
+      ]
+    },
+    {
+      "key": "instituto-positive-complete-png",
+      "localPath": "assets/local/brand-marks/instituto/kunumi_inst_positivo_rgb.png",
+      "identity": "instituto",
+      "kind": "complete-mark",
+      "use": "Instituto complete mark, positive, raster. Prefer the SVG.",
+      "tags": [
+        "mark",
+        "complete-mark",
+        "positive",
+        "raster",
+        "local-first"
+      ]
+    },
+    {
+      "key": "instituto-negative-complete-png",
+      "localPath": "assets/local/brand-marks/instituto/kunumi_inst_negativo_rgb.png",
+      "identity": "instituto",
+      "kind": "complete-mark",
+      "use": "Instituto complete mark, negative, raster. Prefer the SVG.",
+      "tags": [
+        "mark",
+        "complete-mark",
+        "negative",
+        "raster",
+        "local-first"
+      ]
+    },
+    {
+      "key": "instituto-gradient-static-02",
+      "localPath": "assets/local/instituto/static/kunuminst_gradiente_02.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Full-bleed gradient field for covers.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "gradient"
+      ]
+    },
+    {
+      "key": "instituto-gradient-static-03",
+      "localPath": "assets/local/instituto/static/kunuminst_gradiente_03.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Full-bleed gradient field for covers.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "gradient"
+      ]
+    },
+    {
+      "key": "instituto-gradient-static-04",
+      "localPath": "assets/local/instituto/static/kunuminst_gradiente_04.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Full-bleed gradient field for covers.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "gradient"
+      ]
+    },
+    {
+      "key": "instituto-gradient-wide-01",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_gradiente_01.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Wide horizontal gradient for covers and heroes.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "gradient",
+        "wide"
+      ]
+    },
+    {
+      "key": "instituto-gradient-wide-02",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_gradiente_02.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Wide horizontal gradient for covers and heroes.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "gradient",
+        "wide"
+      ]
+    },
+    {
+      "key": "instituto-gamma-waves-01",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_ondas_gama_01.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Gamma wave field for section openers and data/science moments.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "waves"
+      ]
+    },
+    {
+      "key": "instituto-gamma-waves-02",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_ondas_gama_02.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Gamma wave field for section openers and data/science moments.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "waves"
+      ]
+    },
+    {
+      "key": "instituto-gamma-waves-03",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_ondas_gama_03.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Gamma wave field for section openers and data/science moments.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "waves"
+      ]
+    },
+    {
+      "key": "instituto-gamma-waves-04",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_ondas_gama_04.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Gamma wave field for section openers and data/science moments.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "waves"
+      ]
+    },
+    {
+      "key": "instituto-bars-static",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_barras.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Bar motif for edge accents and section markers.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "bars"
+      ]
+    },
+    {
+      "key": "instituto-kaleido-static",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_kaleido.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Kaleidoscope artwork for high-energy institutional moments.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "kaleidoscope"
+      ]
+    },
+    {
+      "key": "instituto-gamma-map-static",
+      "localPath": "assets/local/instituto/static/kunuminst_assets_mapa_gama.png",
+      "identity": "instituto",
+      "kind": "background",
+      "use": "Gamma map for scientific and research contexts.",
+      "tags": [
+        "background",
+        "static",
+        "local-first",
+        "gamma-map"
+      ]
+    },
+    {
+      "key": "instituto-gradient-motion",
+      "localPath": "assets/local/instituto/motion-lightweight/kunuminst_assets_gradiente.gif",
+      "identity": "instituto",
+      "kind": "motion",
+      "use": "Lightweight gradient loop for simple motion moments. Ask for an approved MP4/MOV when efficient playback or alpha is needed.",
+      "tags": [
+        "motion",
+        "gif",
+        "loop",
+        "local-first",
+        "gradient"
+      ]
+    },
+    {
+      "key": "instituto-bars-motion",
+      "localPath": "assets/local/instituto/motion-lightweight/kunuminst_assets_barras.gif",
+      "identity": "instituto",
+      "kind": "motion",
+      "use": "Lightweight bar loop for simple motion moments. Ask for an approved MP4/MOV when efficient playback or alpha is needed.",
+      "tags": [
+        "motion",
+        "gif",
+        "loop",
+        "local-first",
+        "bars"
+      ]
+    },
+    {
+      "key": "instituto-pixels-motion",
+      "localPath": "assets/local/instituto/motion-lightweight/kunuminst_assets_pixels.gif",
+      "identity": "instituto",
+      "kind": "motion",
+      "use": "Lightweight pixel loop for digital/computational moments. Ask for an approved MP4/MOV when efficient playback or alpha is needed.",
+      "tags": [
+        "motion",
+        "gif",
+        "loop",
+        "local-first",
+        "pixels"
+      ]
+    },
+    {
+      "key": "profile-photo-mark",
+      "localPath": "assets/local/channels/profile/marca.png",
+      "identity": "core",
+      "kind": "channel-template",
+      "use": "Profile-photo mark. A specialized near-Urucum export; use only with profile-photo-system.md.",
+      "tags": [
+        "channel",
+        "profile",
+        "avatar",
+        "local-first"
+      ]
+    },
+    {
+      "key": "web-tokens-css",
+      "localPath": "assets/web/kunumi-tokens.css",
+      "identity": "shared",
+      "kind": "tokens",
+      "use": "Design tokens for web work: institutional palette, semantic roles, chart palette, type ramp, reduced-motion behavior.",
+      "tags": [
+        "web",
+        "css",
+        "tokens",
+        "local-first"
+      ]
+    },
+    {
+      "key": "web-template-preview",
+      "localPath": "assets/web/template-preview.html",
+      "identity": "shared",
+      "kind": "preview",
+      "use": "Self-contained four-slide preview proving the token layer end to end.",
+      "tags": [
+        "web",
+        "html",
+        "preview",
         "local-first"
       ]
     }

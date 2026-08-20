@@ -1,3 +1,15 @@
+/*
+ * Kunumi design tokens.
+ * Authority: Brandbook Kunumi Final (2025). Values mirror references/tokens.json.
+ *
+ * Two families, two jobs: the display face is for TITLES ONLY, always uppercase, tracked +3%.
+ * Figtree carries body and subtitles at 0 tracking. See references/typography.md.
+ *
+ * PP Neue Machina Inktrap is commercial (Pangram Pangram) and is NOT bundled. It is named first
+ * in the display stack so it is picked up when installed locally; Space Grotesk (OFL, bundled)
+ * is the offline default.
+ */
+
 @font-face {
   font-family: "Figtree";
   src: url("../local/fonts/Figtree/Figtree-VariableFont_wght.ttf") format("truetype");
@@ -14,58 +26,108 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../local/fonts/SpaceGrotesk/SpaceGrotesk%5Bwght%5D.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
 
-  /* Institutional palette from the supplied templates. */
+  /* ---- Institutional palette (PALETA PRINCIPAL) ------------------------------------------ */
+  /* Chumbo replaces black and Gelo replaces white. Pure black and white are not brand colors. */
   --kunumi-urucum: #f04e44;
   --kunumi-chumbo: #1c2127;
   --kunumi-grafite: #5e5e5e;
   --kunumi-concreto: #b4ada4;
   --kunumi-gelo: #f0f0f0;
-  --kunumi-white: #ffffff;
-  --kunumi-black: #000000;
 
-  /* Support palette. Use sparingly; Urucum remains the primary accent. */
+  /* Elevated card surface. The brandbook's own cards sit white on a Gelo ground. This is the
+     ONLY sanctioned use of white: never a page ground, never a text color. */
+  --kunumi-surface-raised: #ffffff;
+
+  /* ---- Semantic roles ------------------------------------------------------------------- */
+  --kunumi-ground: var(--kunumi-gelo);
+  --kunumi-ink: var(--kunumi-chumbo);
+  --kunumi-ink-muted: var(--kunumi-grafite);
+  --kunumi-border: var(--kunumi-concreto);
+  --kunumi-accent: var(--kunumi-urucum);
+  --kunumi-on-accent: var(--kunumi-gelo);
+
+  /* ---- Chart palette (PALETA PARA GRÁFICOS) --------------------------------------------- */
+  /* Data representation only. Not UI accents, not backgrounds, not brand colors. */
+  --kunumi-chart-blue: #4392d2;
+  --kunumi-chart-cyan: #2fb7cf;
+  --kunumi-chart-green: #62cca3;
+  --kunumi-chart-olive: #a0c068;
+  --kunumi-chart-yellow: #f0d449;
+
+  /* ---- Deck-derived support palette ----------------------------------------------------- */
+  /* From the 2026 slide templates, not the brandbook. Template fidelity only. */
   --kunumi-amarelo: #ff931e;
   --kunumi-laranja: #f26638;
   --kunumi-magenta: #d73e5f;
   --kunumi-violeta: #9355a0;
   --kunumi-indigo: #5a61b6;
 
-  /* Template-local spectrum stops used by Instituto graphics. */
+  /* Template-local spectrum stops used inside supplied Instituto graphics. */
   --kunumi-spectrum-orange: #ff9516;
   --kunumi-spectrum-coral: #ff6330;
 
-  /* Chart-only extended palette. */
-  --kunumi-chart-yellow-900: #481f00;
-  --kunumi-chart-yellow-700: #7d470a;
-  --kunumi-chart-yellow-100: #ffdfc1;
-  --kunumi-chart-indigo-900: #1a2052;
-  --kunumi-chart-indigo-600: #3a2fdf;
-  --kunumi-chart-indigo-100: #d6e0ff;
-  --kunumi-chart-green-900: #103c1f;
-  --kunumi-chart-green-700: #246a3c;
-  --kunumi-chart-green-400: #43f085;
-  --kunumi-chart-green-100: #adf3be;
-
+  /* ---- Typography ----------------------------------------------------------------------- */
+  --kunumi-font-display: "PP Neue Machina", "PP Neue Machina Inktrap", "Space Grotesk", "Figtree",
+    Arial, sans-serif;
   --kunumi-font: "Figtree", Arial, sans-serif;
+
   --kunumi-weight-light: 300;
   --kunumi-weight-regular: 400;
   --kunumi-weight-medium: 500;
   --kunumi-weight-semibold: 600;
+  --kunumi-weight-bold: 700;
   --kunumi-weight-extrabold: 800;
 
+  /* Tracking. The display face is tracked POSITIVE; never carry over negative display tracking. */
+  --kunumi-track-display: 0.03em;
+  --kunumi-track-menu: 0.1em;
+  --kunumi-track-text: 0;
+
+  /* Line heights, from the brandbook ranges (display 110-140%, body 140-175%).
+     Display sits at 1.2 rather than the variable's 1.1: Figma trims its text boxes, browsers do
+     not, so uppercase Portuguese diacritics (E-circumflex, A-tilde) clip against the line box at
+     1.1. 1.2 is inside the brandbook's stated display range; tokens.json keeps the exact 1.1. */
+  --kunumi-leading-display: 1.2;
+  --kunumi-leading-subtitle: 1.15;
+  --kunumi-leading-body: 1.75;
+  --kunumi-leading-body-tight: 1.6;
+
+  /* Size ramp, from the brandbook type variables at the 1920x1080 stage. */
+  --kunumi-text-menu: 0.8125rem;   /* 13   Cabecalho/Menu */
+  --kunumi-text-sm: 1.15625rem;    /* 18.5 Miolo/TextoMenor */
+  --kunumi-text-base: 1.25rem;     /* 20   Miolo/Texto */
+  --kunumi-text-subtitle: 1.3125rem; /* 21 Miolo/TextoMenorSubtitulo */
+  --kunumi-text-title: 1.375rem;   /* 22   Miolo/Título */
+  --kunumi-text-category: 2.1875rem; /* 35 Abertura/Categoria */
+  --kunumi-text-display: 11.25rem; /* 180  Abertura/Título */
+
+  /* ---- Space, shape, motion ------------------------------------------------------------- */
   --kunumi-space-1: 0.25rem;
   --kunumi-space-2: 0.5rem;
   --kunumi-space-3: 0.75rem;
   --kunumi-space-4: 1rem;
+  --kunumi-space-5: 1.25rem;
   --kunumi-space-6: 1.5rem;
   --kunumi-space-8: 2rem;
+  --kunumi-space-10: 2.5rem;
   --kunumi-space-12: 3rem;
   --kunumi-space-16: 4rem;
+
   --kunumi-radius-sm: 0.25rem;
+  --kunumi-radius-card: 0.625rem; /* 10px, the brandbook card and button radius */
   --kunumi-rule: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+
   --kunumi-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --kunumi-fast: 180ms;
   --kunumi-base: 480ms;
@@ -78,8 +140,8 @@
 
 html {
   font-family: var(--kunumi-font);
-  color: var(--kunumi-chumbo);
-  background: var(--kunumi-gelo);
+  color: var(--kunumi-ink);
+  background: var(--kunumi-ground);
 }
 
 body {
@@ -88,52 +150,116 @@ body {
 }
 
 .kunumi-theme-dark {
-  color: var(--kunumi-gelo);
-  background: var(--kunumi-chumbo);
+  --kunumi-ground: var(--kunumi-chumbo);
+  --kunumi-ink: var(--kunumi-gelo);
+  --kunumi-ink-muted: color-mix(in srgb, var(--kunumi-gelo) 72%, transparent);
+  --kunumi-surface-raised: color-mix(in srgb, var(--kunumi-gelo) 8%, var(--kunumi-chumbo));
+  color: var(--kunumi-ink);
+  background: var(--kunumi-ground);
 }
 
-.kunumi-kicker {
-  color: var(--kunumi-urucum);
-  font-size: 0.78rem;
+/* ---- Type primitives ------------------------------------------------------------------- */
+
+/* Titles: display face, ALWAYS uppercase, positive tracking. */
+.kunumi-display,
+.kunumi-title,
+.kunumi-category,
+.kunumi-menu {
+  font-family: var(--kunumi-font-display);
   font-weight: var(--kunumi-weight-semibold);
-  letter-spacing: 0.08em;
+  letter-spacing: var(--kunumi-track-display);
   text-transform: uppercase;
 }
 
 .kunumi-display {
   margin: 0;
-  max-width: 14ch;
-  font-size: clamp(2.7rem, 7vw, 6.8rem);
-  font-weight: var(--kunumi-weight-semibold);
-  letter-spacing: -0.055em;
-  line-height: 0.94;
+  /* Uppercase runs 15-20% wider than mixed case, so the measure is wider than a mixed-case
+     display would need, and long words may break rather than overflow a narrow viewport. */
+  max-width: 18ch;
+  font-size: clamp(2.5rem, 7vw, var(--kunumi-text-display));
+  line-height: var(--kunumi-leading-display);
+  /* break-word is the overflow safety net for long words on narrow viewports. Deliberately no
+     `hyphens: auto` - it hyphenates display titles mid-word, which reads as a typo in a headline. */
+  overflow-wrap: break-word;
 }
 
+.kunumi-category {
+  font-size: clamp(1.25rem, 2vw, var(--kunumi-text-category));
+  line-height: 1.2;
+}
+
+.kunumi-title {
+  font-size: var(--kunumi-text-title);
+  line-height: 1.55;
+}
+
+.kunumi-menu {
+  font-size: var(--kunumi-text-menu);
+  font-weight: var(--kunumi-weight-medium);
+  letter-spacing: var(--kunumi-track-menu);
+  line-height: var(--kunumi-leading-display);
+}
+
+/* Body: Figtree, no tracking, generous leading. */
 .kunumi-body {
   max-width: 58ch;
-  color: var(--kunumi-grafite);
-  font-size: clamp(1rem, 1.5vw, 1.3rem);
-  line-height: 1.45;
+  color: var(--kunumi-ink-muted);
+  font-family: var(--kunumi-font);
+  font-weight: var(--kunumi-weight-light);
+  font-size: clamp(1rem, 1.5vw, var(--kunumi-text-base));
+  letter-spacing: var(--kunumi-track-text);
+  line-height: var(--kunumi-leading-body);
 }
 
-.kunumi-theme-dark .kunumi-body {
-  color: color-mix(in srgb, var(--kunumi-gelo) 72%, transparent);
+.kunumi-subtitle {
+  font-family: var(--kunumi-font);
+  font-weight: var(--kunumi-weight-semibold);
+  font-size: var(--kunumi-text-subtitle);
+  line-height: var(--kunumi-leading-subtitle);
+}
+
+.kunumi-kicker {
+  color: var(--kunumi-accent);
+  font-family: var(--kunumi-font-display);
+  font-size: var(--kunumi-text-menu);
+  font-weight: var(--kunumi-weight-medium);
+  letter-spacing: var(--kunumi-track-menu);
+  text-transform: uppercase;
 }
 
 .kunumi-accent {
-  color: var(--kunumi-urucum);
+  color: var(--kunumi-accent);
+}
+
+/* Inline emphasis. Chumbo or Urucum only, and never on a title. */
+.kunumi-highlight {
+  background: var(--kunumi-accent);
+  color: var(--kunumi-gelo);
+  padding: 0 0.15em;
+  box-decoration-break: clone;
+}
+
+.kunumi-highlight--chumbo {
+  background: var(--kunumi-chumbo);
+  color: var(--kunumi-gelo);
+}
+
+/* Card. Use only when a card is genuinely warranted; hairlines are the default language. */
+.kunumi-card {
+  background: var(--kunumi-surface-raised);
+  border-radius: var(--kunumi-radius-card);
+  padding: var(--kunumi-space-8);
 }
 
 .kunumi-rule-spectrum {
   height: 3px;
-  background:
-    linear-gradient(
-      90deg,
-      var(--kunumi-black) 0 22%,
-      var(--kunumi-indigo) 22% 48%,
-      var(--kunumi-magenta) 48% 72%,
-      var(--kunumi-urucum) 72% 100%
-    );
+  background: linear-gradient(
+    90deg,
+    var(--kunumi-chumbo) 0 22%,
+    var(--kunumi-indigo) 22% 48%,
+    var(--kunumi-magenta) 48% 72%,
+    var(--kunumi-urucum) 72% 100%
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {

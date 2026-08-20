@@ -5,22 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
-import shutil
-import subprocess
-import xml.etree.ElementTree as ET
-import zipfile
-from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from PIL import Image
-
 
 SKILL_DIR = Path(__file__).resolve().parents[1]
-ASSETS_DIR = SKILL_DIR / "assets"
 REFERENCES_DIR = SKILL_DIR / "references"
-PPTX_PATH = ASSETS_DIR / "Kunumi - Template de Slides.pptx"
 
 SLIDE_ROWS = """
 1|instruction|light|Template cover and date|title,subtitle,date,brand-symbol|cover,instruction
@@ -171,351 +161,10 @@ def parse_ksequence_patterns() -> list[dict[str, Any]]:
     return patterns
 
 
-def ratio_label(width: int, height: int) -> str:
-    if not width or not height:
-        return "unknown"
-    from math import gcd
-
-    factor = gcd(width, height)
-    return f"{width // factor}:{height // factor}"
-
-
-def classify_asset(relative_path: str) -> tuple[str, str, str, list[str]]:
-    normalized = relative_path.replace("\\", "/")
-    name = Path(normalized).name.lower()
-    suffix = Path(normalized).suffix.lower().lstrip(".")
-    tags: list[str] = []
-    is_global_pattern = "/Global Visual Patterns/" in normalized
-
-    if is_global_pattern:
-        identity = "multi-identity"
-        tags.extend(["deck-extracted", "global", "ksequence"])
-    elif "/Instituto/" in normalized:
-        identity = "instituto"
-    elif "/Unlimited/" in normalized or "unltd" in name:
-        identity = "unlimited"
-    elif "/Ícone/" in normalized or "/Ícone/" in normalized:
-        identity = "shared-icon"
-    elif "/Kunumi/" in normalized:
-        identity = "core"
-    elif "Template de Slides" in normalized:
-        identity = "multi-identity"
-    else:
-        identity = "core-channel"
-
-    variant = "negative" if "negativo" in name else "positive" if "positivo" in name else "none"
-    if variant == "positive":
-        tags.extend(["positive", "light-background"])
-    elif variant == "negative":
-        tags.extend(["negative", "dark-background"])
-
-    if name in {"habits-background-art.png", "capability-background-art.png"}:
-        kind = "visual-pattern-atlas"
-        tags.extend(["atlas", "diagram", "transparent"])
-        tags.append("habits" if name.startswith("habits") else "capabilities")
-    elif suffix == "pptx":
-        kind = "slide-template"
-    elif suffix == "docx":
-        kind = "guide"
-    elif "linkedin" in name:
-        kind = "channel-template"
-        tags.extend(["linkedin", "wide"])
-    elif name == "marca.png":
-        kind = "profile-mark"
-        tags.extend(["profile-photo", "specialized"])
-    elif "/Estáticos/" in normalized or "/Estáticos/" in normalized:
-        kind = "static-background"
-        tags.append("static")
-    elif suffix == "gif":
-        kind = "motion-background"
-        tags.extend(["motion", "gif"])
-    elif suffix in {"mp4", "mov"}:
-        kind = "motion-background"
-        tags.extend(["motion", "video"])
-    elif "/Instituto - Marca/" in normalized or "logotipo" in name or "unltd" in name:
-        kind = "wordmark"
-    elif "ícone/" in normalized.lower() or "ícone/" in normalized.lower() or "icone" in name:
-        kind = "icon"
-    else:
-        kind = "image"
-
-    for token, tag in [
-        ("gradiente", "gradient"),
-        ("ondas", "gamma-wave"),
-        ("barras", "bars"),
-        ("pixels", "pixels"),
-        ("kaleido", "kaleidoscope"),
-        ("mapa_gama", "gamma-map"),
-        ("marca_", "brand-symbol"),
-    ]:
-        if token in name:
-            tags.append(tag)
-
-    if name.startswith("g-_shared-drives"):
-        tags.extend(["image-bank", "portrait", "photographic"])
-
-    return identity, kind, variant, sorted(set(tags))
-
-
-def asset_use(kind: str, identity: str, variant: str, name: str, tags: list[str]) -> str:
-    if kind in {"wordmark", "icon"}:
-        ground = "dark" if variant == "negative" else "light"
-        return f"Place the approved {identity} {kind} on a {ground} background."
-    if kind == "profile-mark":
-        return "Use only in the Kunumi IA profile-photo workflow."
-    if kind == "channel-template":
-        return "Use as the approved Kunumi LinkedIn header."
-    if kind == "visual-pattern-atlas":
-        subject = "operating-principle" if "habits" in tags else "capability"
-        return f"Crop one quadrant as supplied for a dark {subject} diagram; do not treat the full atlas as one composition."
-    if kind == "slide-template":
-        return "Duplicate source slides and edit inherited elements for Kunumi presentations."
-    if kind == "guide":
-        if "Slack" in name:
-            return "Use as a channel-specific document-design reference; do not reuse its policy copy."
-        return "Use as the authoritative Kunumi IA profile-photo workflow."
-    if kind == "static-background":
-        family = next(
-            (
-                tag
-                for tag in ["gamma-wave", "bars", "pixels", "kaleidoscope", "gamma-map", "gradient"]
-                if tag in tags
-            ),
-            "graphic",
-        )
-        return f"Use as supplied for Instituto {family} backgrounds, covers, or section moments."
-    if kind == "motion-background":
-        if "global" in tags:
-            return "Use as a restrained dark Kunumi transition or ambient background with a static fallback."
-        if "image-bank" in tags:
-            return "Use only when the portrait photographic subject fits the Instituto story."
-        if "brand-symbol" in tags:
-            return "Use as supplied for a square animated Instituto brand-symbol moment."
-        return "Use as supplied for an animated Instituto background or transition."
-    return "Use only for the channel or identity indicated by its source path."
-
-
-def inspect_image(path: Path) -> dict[str, Any]:
-    with Image.open(path) as image:
-        width, height = image.size
-        result: dict[str, Any] = {
-            "width": width,
-            "height": height,
-            "aspectRatio": ratio_label(width, height),
-            "colorMode": image.mode,
-            "hasAlpha": "A" in image.mode or "transparency" in image.info,
-        }
-        frames = getattr(image, "n_frames", 1)
-        if frames > 1:
-            duration_ms = 0
-            for frame in range(frames):
-                image.seek(frame)
-                duration_ms += int(image.info.get("duration", 0))
-            result["frames"] = frames
-            result["durationSeconds"] = round(duration_ms / 1000, 3)
-            if duration_ms:
-                result["averageFps"] = round(frames / (duration_ms / 1000), 3)
-        return result
-
-
-def inspect_svg(path: Path) -> dict[str, Any]:
-    root = ET.parse(path).getroot()
-    width = root.get("width")
-    height = root.get("height")
-    view_box = root.get("viewBox")
-    colors = sorted(
-        {
-            match.upper()
-            for match in re.findall(r"#[0-9a-fA-F]{6}", path.read_text(encoding="utf-8"))
-        }
-    )
-    result: dict[str, Any] = {"width": width, "height": height, "viewBox": view_box}
-    if colors:
-        result["colors"] = colors
-    return result
-
-
-def inspect_video(path: Path) -> dict[str, Any]:
-    ffprobe = shutil.which("ffprobe")
-    if not ffprobe:
-        return {"inspectionNote": "ffprobe unavailable"}
-    process = subprocess.run(
-        [
-            ffprobe,
-            "-v",
-            "error",
-            "-select_streams",
-            "v:0",
-            "-show_entries",
-            "stream=codec_name,pix_fmt,width,height,r_frame_rate,duration",
-            "-show_entries",
-            "format=duration",
-            "-of",
-            "json",
-            str(path),
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    payload = json.loads(process.stdout)
-    stream = payload.get("streams", [{}])[0]
-    width = int(stream.get("width", 0))
-    height = int(stream.get("height", 0))
-    frame_rate = stream.get("r_frame_rate", "0/1")
-    fps = float(Fraction(frame_rate)) if frame_rate != "0/0" else 0
-    duration = stream.get("duration") or payload.get("format", {}).get("duration")
-    return {
-        "width": width,
-        "height": height,
-        "aspectRatio": ratio_label(width, height),
-        "codec": stream.get("codec_name"),
-        "pixelFormat": stream.get("pix_fmt"),
-        "hasAlpha": "a" in str(stream.get("pix_fmt", "")).lower(),
-        "fps": round(fps, 3),
-        "durationSeconds": round(float(duration), 3) if duration else None,
-    }
-
-
-def inspect_package(path: Path) -> dict[str, Any]:
-    suffix = path.suffix.lower()
-    with zipfile.ZipFile(path) as archive:
-        names = archive.namelist()
-        if suffix == ".pptx":
-            presentation = ET.fromstring(archive.read("ppt/presentation.xml"))
-            ns = {"p": "http://schemas.openxmlformats.org/presentationml/2006/main"}
-            size = presentation.find("p:sldSz", ns)
-            fonts: set[str] = set()
-            for name in names:
-                if name.startswith("ppt/") and name.endswith(".xml"):
-                    text = archive.read(name).decode("utf-8", "ignore")
-                    fonts.update(re.findall(r'typeface="([^"]+)"', text))
-            return {
-                "slides": sum(
-                    bool(re.fullmatch(r"ppt/slides/slide\d+\.xml", name)) for name in names
-                ),
-                "layouts": sum(
-                    bool(re.fullmatch(r"ppt/slideLayouts/slideLayout\d+\.xml", name))
-                    for name in names
-                ),
-                "masters": sum(
-                    bool(re.fullmatch(r"ppt/slideMasters/slideMaster\d+\.xml", name))
-                    for name in names
-                ),
-                "embeddedMedia": sum(name.startswith("ppt/media/") for name in names),
-                "widthEmu": int(size.get("cx", 0)) if size is not None else None,
-                "heightEmu": int(size.get("cy", 0)) if size is not None else None,
-                "aspectRatio": "16:9",
-                "sourceFonts": sorted(font for font in fonts if font and not font.startswith("+")),
-            }
-        app_path = "docProps/app.xml"
-        pages = None
-        if app_path in names:
-            app = ET.fromstring(archive.read(app_path))
-            for child in app:
-                if child.tag.endswith("Pages") and child.text:
-                    pages = int(child.text)
-                    break
-        document = archive.read("word/document.xml").decode("utf-8", "ignore")
-        return {
-            "pages": pages,
-            "paragraphs": document.count("<w:p"),
-            "tables": document.count("<w:tbl>"),
-            "inlineDrawings": document.count("<w:drawing>"),
-        }
-
-
-def add_geometry_tags(entry: dict[str, Any]) -> None:
-    width = entry.get("width")
-    height = entry.get("height")
-    if not isinstance(width, int) or not isinstance(height, int):
-        return
-    if width == height:
-        entry["tags"].append("square")
-    elif width / height >= 1.5:
-        entry["tags"].append("wide")
-    elif height / width >= 1.5:
-        entry["tags"].append("portrait")
-    if entry.get("hasAlpha"):
-        entry["tags"].append("transparent")
-    entry["tags"] = sorted(set(entry["tags"]))
-
-
-def build_asset_index() -> dict[str, Any]:
-    entries: list[dict[str, Any]] = []
-    for path in sorted(ASSETS_DIR.rglob("*")):
-        if not path.is_file() or path.name in {".DS_Store", ".gitkeep"}:
-            continue
-        relative = path.relative_to(SKILL_DIR).as_posix()
-        identity, kind, variant, tags = classify_asset(relative)
-        entry: dict[str, Any] = {
-            "path": relative,
-            "name": path.name,
-            "format": path.suffix.lower().lstrip("."),
-            "bytes": path.stat().st_size,
-            "identity": identity,
-            "kind": kind,
-            "variant": variant,
-            "tags": tags,
-            "use": asset_use(kind, identity, variant, path.name, tags),
-        }
-        if "deck-extracted" in tags:
-            entry["provenance"] = (
-                "Copied unchanged from presentation-ksequence-cambio for global visual use."
-            )
-        suffix = path.suffix.lower()
-        try:
-            if suffix in {".png", ".gif", ".jpg", ".jpeg", ".webp"}:
-                entry.update(inspect_image(path))
-            elif suffix == ".svg":
-                entry.update(inspect_svg(path))
-            elif suffix in {".mp4", ".mov"}:
-                entry.update(inspect_video(path))
-            elif suffix in {".pptx", ".docx"}:
-                entry.update(inspect_package(path))
-        except Exception as error:  # Keep the index useful if one optional inspector fails.
-            entry["inspectionError"] = str(error)
-        add_geometry_tags(entry)
-        entries.append(entry)
-    return {
-        "schema": "kunumi.asset-index/v1",
-        "assetCount": len(entries),
-        "totalBytes": sum(entry["bytes"] for entry in entries),
-        "entries": entries,
-    }
-
-
-def slide_layout_relationships(path: Path) -> dict[int, str]:
-    relationships: dict[int, str] = {}
-    ns = {"r": "http://schemas.openxmlformats.org/package/2006/relationships"}
-    with zipfile.ZipFile(path) as archive:
-        for name in archive.namelist():
-            match = re.fullmatch(r"ppt/slides/_rels/slide(\d+)\.xml\.rels", name)
-            if not match:
-                continue
-            root = ET.fromstring(archive.read(name))
-            for relationship in root.findall("r:Relationship", ns):
-                if relationship.get("Type", "").endswith("/slideLayout"):
-                    relationships[int(match.group(1))] = Path(
-                        relationship.get("Target", "")
-                    ).name
-                    break
-    return relationships
-
-
 def build_slide_index() -> dict[str, Any]:
-    slides = parse_slide_rows()
-    relationships = slide_layout_relationships(PPTX_PATH)
-    package = inspect_package(PPTX_PATH)
-    if package.get("slides") != 76:
-        raise ValueError(f"Expected 76 slides, found {package.get('slides')}")
-    for entry in slides:
-        entry["source"] = "assets/Kunumi - Template de Slides.pptx"
-        entry["layoutXml"] = relationships.get(entry["slide"])
     return {
         "schema": "kunumi.slide-index/v1",
         "template": {
-            "path": "assets/Kunumi - Template de Slides.pptx",
             "slides": 76,
             "canvas": {"width": 1920, "height": 1080, "aspectRatio": "16:9"},
             "dominantBackgrounds": ["#F0F0F0", "#1C2127", "Instituto supplied artwork"],
@@ -527,9 +176,8 @@ def build_slide_index() -> dict[str, Any]:
                 "Figtree Light",
                 "Arial",
             ],
-            "package": package,
         },
-        "slides": slides,
+        "slides": parse_slide_rows(),
     }
 
 
@@ -556,7 +204,6 @@ def main() -> None:
     )
     args = parser.parse_args()
     outputs = {
-        REFERENCES_DIR / "asset-index.json": build_asset_index(),
         REFERENCES_DIR / "slide-index.json": build_slide_index(),
         REFERENCES_DIR / "visual-pattern-index.json": build_visual_pattern_index(),
     }

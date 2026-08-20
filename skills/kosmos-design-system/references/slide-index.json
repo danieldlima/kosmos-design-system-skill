@@ -1,7 +1,6 @@
 {
   "schema": "kunumi.slide-index/v1",
   "template": {
-    "path": "assets/Kunumi - Template de Slides.pptx",
     "slides": 76,
     "canvas": {
       "width": 1920,
@@ -20,58 +19,7 @@
       "Figtree",
       "Figtree Light",
       "Arial"
-    ],
-    "package": {
-      "slides": 76,
-      "layouts": 37,
-      "masters": 4,
-      "embeddedMedia": 93,
-      "widthEmu": 18288000,
-      "heightEmu": 10287000,
-      "aspectRatio": "16:9",
-      "sourceFonts": [
-        "Angsana New",
-        "Arial",
-        "Calibri",
-        "Cordia New",
-        "DaunPenh",
-        "DokChampa",
-        "Estrangelo Edessa",
-        "Euphemia",
-        "Figtree",
-        "Figtree ExtraBold",
-        "Figtree Light",
-        "Figtree Medium",
-        "Figtree SemiBold",
-        "Gautami",
-        "Helvetica Neue",
-        "Iskoola Pota",
-        "Kalinga",
-        "Kartika",
-        "Latha",
-        "MV Boli",
-        "Mangal",
-        "Microsoft Himalaya",
-        "Microsoft Uighur",
-        "Microsoft Yi Baiti",
-        "Mongolian Baiti",
-        "Montserrat SemiBold",
-        "MoolBoran",
-        "Nyala",
-        "Plantagenet Cherokee",
-        "Raavi",
-        "Shruti",
-        "Space Grotesk",
-        "Sylfaen",
-        "Times New Roman",
-        "Tunga",
-        "Vrinda",
-        "宋体",
-        "新細明體",
-        "맑은 고딕",
-        "ＭＳ Ｐゴシック"
-      ]
-    }
+    ]
   },
   "slides": [
     {
@@ -88,9 +36,7 @@
       "tags": [
         "cover",
         "instruction"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout27.xml"
+      ]
     },
     {
       "slide": 2,
@@ -103,9 +49,7 @@
       ],
       "tags": [
         "instruction"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout27.xml"
+      ]
     },
     {
       "slide": 3,
@@ -119,9 +63,7 @@
       "tags": [
         "identity",
         "comparison"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout23.xml"
+      ]
     },
     {
       "slide": 4,
@@ -136,9 +78,7 @@
       "tags": [
         "instruction",
         "layouts"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout37.xml"
+      ]
     },
     {
       "slide": 5,
@@ -153,9 +93,7 @@
       "tags": [
         "instruction",
         "grid"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout37.xml"
+      ]
     },
     {
       "slide": 6,
@@ -170,9 +108,7 @@
       "tags": [
         "colors",
         "reference"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout37.xml"
+      ]
     },
     {
       "slide": 7,
@@ -188,9 +124,7 @@
       "tags": [
         "cover",
         "title"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout27.xml"
+      ]
     },
     {
       "slide": 8,
@@ -204,9 +138,7 @@
       "tags": [
         "agenda",
         "section"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 9,
@@ -222,9 +154,7 @@
         "cover",
         "instituto",
         "gradient"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout27.xml"
+      ]
     },
     {
       "slide": 10,
@@ -240,9 +170,7 @@
         "cover",
         "dark",
         "pixels"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout27.xml"
+      ]
     },
     {
       "slide": 11,
@@ -256,9 +184,7 @@
       "tags": [
         "section",
         "progress"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 12,
@@ -272,9 +198,7 @@
       "tags": [
         "text",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 13,
@@ -288,9 +212,7 @@
       "tags": [
         "text",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 14,
@@ -305,9 +227,7 @@
       "tags": [
         "text",
         "three-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 15,
@@ -322,9 +242,7 @@
       "tags": [
         "identity",
         "visual"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 16,
@@ -339,9 +257,7 @@
       "tags": [
         "photo",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 17,
@@ -357,9 +273,7 @@
       "tags": [
         "photo",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout12.xml"
+      ]
     },
     {
       "slide": 18,
@@ -374,9 +288,7 @@
       "tags": [
         "photo",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout12.xml"
+      ]
     },
     {
       "slide": 19,
@@ -392,9 +304,7 @@
         "instituto",
         "gradient",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 20,
@@ -409,9 +319,7 @@
       "tags": [
         "dark",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 21,
@@ -427,9 +335,7 @@
         "photo",
         "texture",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 22,
@@ -444,9 +350,7 @@
       "tags": [
         "graphic",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 23,
@@ -462,9 +366,7 @@
         "graphic",
         "pixels",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 24,
@@ -480,9 +382,7 @@
         "photo",
         "texture",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 25,
@@ -497,9 +397,7 @@
       "tags": [
         "photo",
         "two-column"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout12.xml"
+      ]
     },
     {
       "slide": 26,
@@ -515,9 +413,7 @@
       "tags": [
         "photo",
         "mosaic"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout12.xml"
+      ]
     },
     {
       "slide": 27,
@@ -534,9 +430,7 @@
         "photo",
         "mosaic",
         "captions"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout12.xml"
+      ]
     },
     {
       "slide": 28,
@@ -551,9 +445,7 @@
         "photo",
         "mosaic",
         "grid"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 29,
@@ -568,9 +460,7 @@
         "photo",
         "mosaic",
         "grid"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 30,
@@ -585,9 +475,7 @@
       "tags": [
         "comparison",
         "media"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 31,
@@ -601,9 +489,7 @@
       "tags": [
         "photo",
         "full-bleed"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout17.xml"
+      ]
     },
     {
       "slide": 32,
@@ -618,9 +504,7 @@
       "tags": [
         "photo",
         "full-bleed"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout17.xml"
+      ]
     },
     {
       "slide": 33,
@@ -634,9 +518,7 @@
       ],
       "tags": [
         "quote"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 34,
@@ -652,9 +534,7 @@
         "quote",
         "instituto",
         "gradient"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 35,
@@ -668,9 +548,7 @@
       "tags": [
         "data",
         "kpi"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 36,
@@ -685,9 +563,7 @@
       "tags": [
         "data",
         "kpi"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 37,
@@ -703,9 +579,7 @@
       "tags": [
         "map",
         "data"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 38,
@@ -720,9 +594,7 @@
       "tags": [
         "map",
         "media"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 39,
@@ -738,9 +610,7 @@
       "tags": [
         "map",
         "data"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 40,
@@ -755,9 +625,7 @@
       "tags": [
         "map",
         "media"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 41,
@@ -772,9 +640,7 @@
       "tags": [
         "map",
         "data"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 42,
@@ -790,9 +656,7 @@
       "tags": [
         "chart",
         "data"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 43,
@@ -808,9 +672,7 @@
       "tags": [
         "chart",
         "data"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 44,
@@ -825,9 +687,7 @@
       "tags": [
         "timeline",
         "process"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 45,
@@ -842,9 +702,7 @@
       "tags": [
         "timeline",
         "roadmap"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 46,
@@ -859,9 +717,7 @@
       "tags": [
         "process",
         "diagram"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 47,
@@ -876,9 +732,7 @@
       "tags": [
         "process",
         "diagram"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 48,
@@ -895,9 +749,7 @@
         "timeline",
         "gantt",
         "data"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 49,
@@ -912,9 +764,7 @@
       "tags": [
         "table",
         "comparison"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 50,
@@ -929,9 +779,7 @@
       "tags": [
         "table",
         "data"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 51,
@@ -945,9 +793,7 @@
       "tags": [
         "table",
         "matrix"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout15.xml"
+      ]
     },
     {
       "slide": 52,
@@ -962,9 +808,7 @@
       "tags": [
         "table",
         "matrix"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 53,
@@ -979,9 +823,7 @@
         "agenda",
         "section",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 54,
@@ -996,9 +838,7 @@
         "section",
         "progress",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 55,
@@ -1013,9 +853,7 @@
         "text",
         "two-column",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 56,
@@ -1030,9 +868,7 @@
         "text",
         "two-column",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout18.xml"
+      ]
     },
     {
       "slide": 57,
@@ -1048,9 +884,7 @@
         "text",
         "three-column",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 58,
@@ -1066,9 +900,7 @@
         "identity",
         "visual",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 59,
@@ -1084,9 +916,7 @@
         "photo",
         "two-column",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 60,
@@ -1103,9 +933,7 @@
         "photo",
         "two-column",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 61,
@@ -1121,9 +949,7 @@
         "photo",
         "two-column",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 62,
@@ -1139,9 +965,7 @@
         "photo",
         "full-bleed",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout18.xml"
+      ]
     },
     {
       "slide": 63,
@@ -1156,9 +980,7 @@
         "data",
         "kpi",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout18.xml"
+      ]
     },
     {
       "slide": 64,
@@ -1174,9 +996,7 @@
         "data",
         "kpi",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout18.xml"
+      ]
     },
     {
       "slide": 65,
@@ -1191,9 +1011,7 @@
         "table",
         "matrix",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout17.xml"
+      ]
     },
     {
       "slide": 66,
@@ -1209,9 +1027,7 @@
         "table",
         "matrix",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout17.xml"
+      ]
     },
     {
       "slide": 67,
@@ -1226,9 +1042,7 @@
         "closing",
         "instituto",
         "gradient"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout18.xml"
+      ]
     },
     {
       "slide": 68,
@@ -1244,9 +1058,7 @@
       "tags": [
         "resource",
         "logo"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout14.xml"
+      ]
     },
     {
       "slide": 69,
@@ -1263,9 +1075,7 @@
         "resource",
         "logo",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout16.xml"
+      ]
     },
     {
       "slide": 70,
@@ -1278,9 +1088,7 @@
       "tags": [
         "resource",
         "symbol"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 71,
@@ -1294,9 +1102,7 @@
         "resource",
         "symbol",
         "dark"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout18.xml"
+      ]
     },
     {
       "slide": 72,
@@ -1310,9 +1116,7 @@
       "tags": [
         "resource",
         "icons"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 73,
@@ -1325,9 +1129,7 @@
       "tags": [
         "resource",
         "artwork"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout19.xml"
+      ]
     },
     {
       "slide": 74,
@@ -1341,9 +1143,7 @@
         "resource",
         "instituto",
         "static"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 75,
@@ -1357,9 +1157,7 @@
         "resource",
         "instituto",
         "motion"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     },
     {
       "slide": 76,
@@ -1373,9 +1171,7 @@
         "resource",
         "instituto",
         "motion"
-      ],
-      "source": "assets/Kunumi - Template de Slides.pptx",
-      "layoutXml": "slideLayout13.xml"
+      ]
     }
   ]
 }

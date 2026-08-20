@@ -1,4 +1,4 @@
-<img src="assets/kunumi-icon.png" alt="Kunumi" width="72">
+<img src="assets/kunumi-icon-urucum.png" alt="Kunumi" width="200">
 
 # Kosmos Design System
 

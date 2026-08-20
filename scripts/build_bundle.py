@@ -26,9 +26,12 @@ def build_standalone_bundle(destination: Path) -> None:
         ignore=shutil.ignore_patterns(
             ".git",
             ".github",
+            ".idea",
+            ".venv",
             ".DS_Store",
             "__pycache__",
             "*.pyc",
+            "DESIGNER_SKILL_PLAN.md",
         ),
     )
     print(f"Built standalone plugin: {destination}")

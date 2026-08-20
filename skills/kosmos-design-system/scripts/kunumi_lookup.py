@@ -61,7 +61,7 @@ def select_assets(args: argparse.Namespace) -> list[dict[str, Any]]:
     entries = []
     for source in load("semantic-index.json")["featuredSources"]:
         tags = source.get("tags", [])
-        path = source.get("localPath") or source["path"]
+        path = source["localPath"]
         entries.append(
             {
                 **source,
@@ -135,35 +135,11 @@ def select_sources(args: argparse.Namespace) -> list[dict[str, Any]]:
     entries = load("semantic-index.json")["featuredSources"]
     result = []
     for entry in entries:
-        if getattr(args, "access", None) and args.access not in entry.get("access", ""):
-            continue
         if getattr(args, "identity", None) and entry.get("identity") != args.identity:
             continue
         if getattr(args, "kind", None) and entry.get("kind") != args.kind:
             continue
         if not contains_tag(entry, getattr(args, "tag", [])):
-            continue
-        if not text_matches(entry, getattr(args, "search", None)):
-            continue
-        result.append(entry)
-    return result
-
-
-def select_folders(args: argparse.Namespace) -> list[dict[str, Any]]:
-    index = load("semantic-index.json")
-    entries = [
-        {
-            "path": root["label"],
-            "driveId": root["driveId"],
-            "semanticRole": root["summary"],
-            "root": root["key"],
-        }
-        for root in index["roots"]
-    ]
-    entries.extend(index["directories"])
-    result = []
-    for entry in entries:
-        if getattr(args, "root", None) and entry.get("root") != args.root:
             continue
         if not text_matches(entry, getattr(args, "search", None)):
             continue
@@ -213,31 +189,18 @@ def resolved_source(entry: dict[str, Any]) -> dict[str, Any]:
     if local_path:
         result["localExists"] = (SKILL_DIR / local_path).exists()
         result["absoluteLocalPath"] = str(SKILL_DIR / local_path)
-    result["driveUrl"] = f"https://drive.google.com/open?id={entry['driveId']}"
     return result
 
 
 def print_sources(entries: list[dict[str, Any]], limit: int) -> None:
     for source in (resolved_source(entry) for entry in entries[:limit]):
         print(
-            f"{source['key']} · {source['identity']} · {source['kind']} · "
-            f"{source['access']}\n"
+            f"{source['key']} · {source['identity']} · {source['kind']}\n"
             f"  {source['use']}"
         )
         if source.get("localPath"):
             availability = "ready" if source.get("localExists") else "missing"
             print(f"  local ({availability}): {source['absoluteLocalPath']}")
-        print(f"  drive: {source['driveId']}")
-    print(f"matches={len(entries)} shown={min(len(entries), limit)}")
-
-
-def print_folders(entries: list[dict[str, Any]], limit: int) -> None:
-    for entry in entries[:limit]:
-        print(
-            f"{entry['path']}\n"
-            f"  {entry['semanticRole']}\n"
-            f"  drive: {entry['driveId']}"
-        )
     print(f"matches={len(entries)} shown={min(len(entries), limit)}")
 
 
@@ -276,9 +239,8 @@ def main() -> None:
     add_common_filters(patterns_parser)
 
     sources_parser = subparsers.add_parser(
-        "sources", help="Find local and Drive-backed canonical sources."
+        "sources", help="Find approved bundled sources."
     )
-    sources_parser.add_argument("--access", choices=["local", "drive"])
     sources_parser.add_argument("--identity")
     sources_parser.add_argument("--kind")
     add_common_filters(sources_parser)
@@ -289,14 +251,6 @@ def main() -> None:
     resolve_parser.add_argument("query", help='For example: "Instituto gradient".')
     resolve_parser.add_argument("--limit", type=int, default=8)
     resolve_parser.add_argument("--json", action="store_true")
-
-    folders_parser = subparsers.add_parser(
-        "folders", help="Find where a category of material lives."
-    )
-    folders_parser.add_argument("--root")
-    folders_parser.add_argument("--search")
-    folders_parser.add_argument("--limit", type=int, default=20)
-    folders_parser.add_argument("--json", action="store_true")
 
     args = parser.parse_args()
     if args.command == "tokens":
@@ -339,16 +293,9 @@ def main() -> None:
     if args.command == "resolve":
         args.search = args.query
         args.tag = []
-        args.access = None
         args.identity = None
         args.kind = None
-        entries = sorted(
-            select_sources(args),
-            key=lambda entry: (
-                0 if "local" in entry.get("access", "") else 1,
-                entry["key"],
-            ),
-        )
+        entries = sorted(select_sources(args), key=lambda entry: entry["key"])
         if args.json:
             print(
                 json.dumps(
@@ -360,11 +307,7 @@ def main() -> None:
         else:
             print_sources(entries, args.limit)
         return
-    entries = select_folders(args)
-    if args.json:
-        print(json.dumps(entries, ensure_ascii=False, indent=2))
-    else:
-        print_folders(entries, args.limit)
+    parser.error(f"unknown command: {args.command}")
 
 
 if __name__ == "__main__":

@@ -1,383 +1,113 @@
 {
-  "schemaVersion": 1,
-  "snapshotDate": "2026-07-29",
-  "workspaceLabel": "Kunumi - Id.espensa",
+  "schemaVersion": 2,
   "policy": {
     "default": "local-first",
-    "local": "Approved marks, Figtree, static Instituto backgrounds, lightweight motion, social previews, and compact agent-ready slide templates work without authentication.",
-    "drive": "Use the optional Google Drive connection for canonical full decks, large motion/video, channel guides, portraits, historical templates, and the annual report.",
-    "cache": "Download Drive-only working files outside the repository unless the user explicitly asks to update the local bundle."
+    "local": "Approved marks, Figtree, static Instituto backgrounds, lightweight motion, and social previews work without authentication.",
+    "missing": "When a required source is not in the local bundle, ask the user to supply the approved file."
   },
-  "roots": [
-    {
-      "key": "brand-assets",
-      "label": "Ativos de Marca",
-      "driveId": "1y1jDTHLWMbyJUOdUqwOgN_L2fdag_gbK",
-      "url": "https://drive.google.com/drive/folders/1y1jDTHLWMbyJUOdUqwOgN_L2fdag_gbK",
-      "summary": "Approved marks plus Instituto static, GIF, and video artwork.",
-      "snapshot": {"folders": 25, "files": 44, "bytes": 376338371}
-    },
-    {
-      "key": "fonts",
-      "label": "Fonte",
-      "driveId": "1JRDsRN4tRPKSmdQ5Ln4ML7qf2DS01mnA",
-      "url": "https://drive.google.com/drive/folders/1JRDsRN4tRPKSmdQ5Ln4ML7qf2DS01mnA",
-      "semanticParent": "Ativos de Marca",
-      "summary": "Figtree variable and static font files plus license and readme.",
-      "snapshot": {"folders": 5, "files": 19, "bytes": 800974}
-    },
-    {
-      "key": "templates",
-      "label": "Templates",
-      "driveId": "1aITcGUYkFjazIYtFDMIGo5X0ydgtI8wj",
-      "url": "https://drive.google.com/drive/folders/1aITcGUYkFjazIYtFDMIGo5X0ydgtI8wj",
-      "summary": "Canonical Kunumi, Instituto, Unlimited, Metamáquina, and client-environment decks.",
-      "snapshot": {"folders": 9, "files": 19, "bytes": 787521159}
-    },
-    {
-      "key": "channels",
-      "label": "Canais e Redes Sociais",
-      "driveId": "1ZecSECeck8E-2PeUQoBB1nRFF9c_jdSF",
-      "url": "https://drive.google.com/drive/folders/1ZecSECeck8E-2PeUQoBB1nRFF9c_jdSF",
-      "summary": "Profile-photo system, Slack guidance, LinkedIn assets, and approved portraits.",
-      "snapshot": {"folders": 7, "files": 29, "bytes": 54067448}
-    },
-    {
-      "key": "report-2025",
-      "label": "Relatório Kunumi 2025",
-      "driveId": "1VJsW4BZUx82Dg2wp6pyUdJsf6nEy-ACO",
-      "url": "https://drive.google.com/drive/folders/1VJsW4BZUx82Dg2wp6pyUdJsf6nEy-ACO",
-      "summary": "Canonical 2025 annual-report PDF.",
-      "snapshot": {"folders": 1, "files": 1, "bytes": 32757737}
-    }
-  ],
-  "directories": [
-    {
-      "path": "Ativos de Marca/Versus",
-      "driveId": "15UTg-E_FrO2jrAn8gMtUvfwXK4I5hcc8",
-      "semanticRole": "Shared positive and negative icon signatures."
-    },
-    {
-      "path": "Ativos de Marca/Kunumi",
-      "driveId": "1KnspqWodNcJojyOBak7MSRkmgA18uOxe",
-      "semanticRole": "Core Kunumi positive and negative wordmarks."
-    },
-    {
-      "path": "Ativos de Marca/Unlimited",
-      "driveId": "1yxrrW-tO_aX2PbFQbrlrV2_F7wgV0sBh",
-      "semanticRole": "Kunumi Unlimited positive and negative marks."
-    },
-    {
-      "path": "Ativos de Marca/Instituto",
-      "driveId": "1RuYwXaDIM17lzn6d8xuc1Gdyaz5w5pZo",
-      "semanticRole": "Instituto Kunumi identity and expressive artwork."
-    },
-    {
-      "path": "Ativos de Marca/Instituto/Instituto - Marca/completa",
-      "driveId": "193jFR3bZCo5hU-U9eHMONDY9E7XJEb8v",
-      "semanticRole": "Complete Instituto positive and negative signatures in raster and SVG."
-    },
-    {
-      "path": "Ativos de Marca/Instituto/Instituto - Marca/completa/svg",
-      "driveId": "1IwABnC2ULZez9q4IuyAjsmSb5P1cAdly",
-      "semanticRole": "Vector Instituto complete signatures."
-    },
-    {
-      "path": "Ativos de Marca/Instituto/Instituto - Marca/logotipo",
-      "driveId": "1zSpsUOZh2xhUD41O1fFWiJ9ikGeDVTkG",
-      "semanticRole": "Instituto wordmarks without the complete signature."
-    },
-    {
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/Estáticos",
-      "driveId": "1V7O6MfBvibDo2vzFbMJwG_CS1NMOW9iA",
-      "semanticRole": "Approved gradient, wave, pixel, bar, kaleidoscope, and gamma-map PNG backgrounds."
-    },
-    {
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/GIFS",
-      "driveId": "1vuJhB_LQ8v67x2e8cfCa3WGpT7WbVsr9",
-      "semanticRole": "Approved animated Instituto backgrounds; several files are too large for normal Git use."
-    },
-    {
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/Vídeos",
-      "driveId": "1TacQeNr_gEQtuNkKxpzg0J52ToW_sJqA",
-      "semanticRole": "High-resolution Instituto motion loops and presentation/video backgrounds."
-    },
-    {
-      "path": "Fonte/Figtree",
-      "driveId": "1HnnOD2KuvGP-poGG9aBnoogtG18_EDW0",
-      "semanticRole": "Variable Figtree fonts, OFL license, readme, and static subfolder."
-    },
-    {
-      "path": "Fonte/Figtree/static",
-      "driveId": "1HrhlYDgAppq2XiKcUNVcdXpErshpglMd",
-      "semanticRole": "Static Figtree weights and italic companions."
-    },
-    {
-      "path": "Templates/Kunumi",
-      "driveId": "1ejLKRAMv57cSuRkapCGV8Lmnp4KLOC5-",
-      "semanticRole": "Canonical core deck, Metamáquina deck, and Keynote source."
-    },
-    {
-      "path": "Templates/Instituto",
-      "driveId": "1aA2e8KEDfv083lXvefZY29GU27qTiLBK",
-      "semanticRole": "Canonical Instituto slide system."
-    },
-    {
-      "path": "Templates/Unlimited",
-      "driveId": "10jD1gi0esQUjTxS87o_k-Nm-YxmzS5SO",
-      "semanticRole": "Kunumi Unlimited templates and client-environment variants."
-    },
-    {
-      "path": "Templates/Unlimited/Ambiente Bradesco",
-      "driveId": "1IRjDQw_NyhvWEYksGd8OBN5UNTLwQPjl",
-      "semanticRole": "Bradesco-specific Unlimited environment; do not generalize it as the master identity."
-    },
-    {
-      "path": "Canais e Redes Sociais/Foto de Perfil Kunumi IA",
-      "driveId": "1d0FYgDVP5dmW0FZIT5Js5VhQNtQrwy0w",
-      "semanticRole": "Profile-photo guide, framing mark, and portrait collection."
-    },
-    {
-      "path": "Canais e Redes Sociais/Foto de Perfil Kunumi IA/Kunumis Notáveis",
-      "driveId": "1LTMC_0yObAsQcjy02cuKRD1YD9gLtPXl",
-      "semanticRole": "Approved individual portraits; access only for a named-person task."
-    },
-    {
-      "path": "Canais e Redes Sociais/LinkedIn",
-      "driveId": "16Wszs-QiXVjxLS98bENUQv1KJA1htR1F",
-      "semanticRole": "LinkedIn header and channel-specific assets."
-    }
-  ],
   "featuredSources": [
     {
-      "key": "kunumi-agent-template",
-      "path": "Templates/Kunumi/Kunumi - Template de Slides",
-      "driveId": "1kxDDR609DqBYeIz4g4N69sxZDYrRsPDifdr3l_Da6IM",
-      "localPath": "assets/local/templates/Kunumi-Agent-Template.pptx",
-      "identity": "core",
-      "kind": "slide-template",
-      "access": "local+drive",
-      "canonical": "drive",
-      "use": "Use the 20-slide local edition by default; fetch the 76-slide canonical deck for an unrepresented layout or exact source fidelity.",
-      "tags": ["slides", "template", "figtree", "local-first"]
-    },
-    {
-      "key": "instituto-agent-template",
-      "path": "Templates/Instituto/Instituto - Template de Slides",
-      "driveId": "1SPeiFOHI7nz9e-hjiYfYDJ63s7dZbF4AL2M6x-7nQWc",
-      "localPath": "assets/local/templates/Instituto-Agent-Template.pptx",
-      "identity": "instituto",
-      "kind": "slide-template",
-      "access": "local+drive",
-      "canonical": "drive",
-      "use": "Use the 20-slide local edition by default; fetch the 75-slide canonical deck for an unrepresented layout or exact source fidelity.",
-      "tags": ["slides", "template", "gradient", "pixels", "local-first"]
-    },
-    {
-      "key": "metamaquina-template",
-      "path": "Templates/Kunumi/Metamaquina - Template de Slides",
-      "driveId": "1hg_qFsKCbidUNXWXIwVR2ARBsjMs9XoEFz9bIAZ4l1w",
-      "identity": "core",
-      "kind": "slide-template",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Use only when the user asks for Metamáquina or the source artifact uses this system.",
-      "tags": ["slides", "template", "metamaquina"]
-    },
-    {
-      "key": "kunumi-keynote-template",
-      "path": "Templates/Kunumi/Kunumi - Template de Slides.key",
-      "driveId": "1gGx95cF3l4_FupZlvLdufzrar8PR4U1G",
-      "identity": "core",
-      "kind": "slide-template",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Fetch for native Keynote work.",
-      "tags": ["slides", "template", "keynote"]
-    },
-    {
-      "key": "unlimited-template",
-      "path": "Templates/Unlimited/Unlimited - Template de Slides",
-      "driveId": "1mjQxDF89_CrYD9eimZv8CkYc3VW0uLv_Hh5mnOYjHaI",
-      "identity": "unlimited",
-      "kind": "slide-template",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Fetch for Kunumi Unlimited presentations.",
-      "tags": ["slides", "template", "unlimited"]
-    },
-    {
       "key": "figtree-variable",
-      "path": "Fonte/Figtree/Figtree-VariableFont_wght.ttf",
-      "driveId": "1JAbF8MEBKCef7tQi6pF9pDhwJvQ_UugA",
       "localPath": "assets/local/fonts/Figtree/Figtree-VariableFont_wght.ttf",
       "identity": "shared",
       "kind": "font",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "Default font source for web and variable-font-capable tools.",
-      "tags": ["font", "figtree", "local-first"]
+      "tags": [
+        "font",
+        "figtree",
+        "local-first"
+      ]
     },
     {
       "key": "kunumi-positive-wordmark",
-      "path": "Ativos de Marca/Kunumi/kunumi_logotipo_positivo_rgb.png",
-      "driveId": "118-UK6dPvIJjueq1n8hXVDr9hV0_3sh_",
       "localPath": "assets/local/brand-marks/core/kunumi_logotipo_positivo_rgb.png",
       "identity": "core",
       "kind": "wordmark",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "Core wordmark for light backgrounds.",
-      "tags": ["logo", "wordmark", "positive", "local-first"]
+      "tags": [
+        "logo",
+        "wordmark",
+        "positive",
+        "local-first"
+      ]
     },
     {
       "key": "kunumi-negative-wordmark",
-      "path": "Ativos de Marca/Kunumi/kunumi_logotipo_negativo_rgb.png",
-      "driveId": "1KqNA8FLPjqYRLUb0BmCGc0ZXo3tQTWCi",
       "localPath": "assets/local/brand-marks/core/kunumi_logotipo_negativo_rgb.png",
       "identity": "core",
       "kind": "wordmark",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "Core wordmark for dark backgrounds.",
-      "tags": ["logo", "wordmark", "negative", "local-first"]
+      "tags": [
+        "logo",
+        "wordmark",
+        "negative",
+        "local-first"
+      ]
     },
     {
       "key": "instituto-positive-complete-svg",
-      "path": "Ativos de Marca/Instituto/Instituto - Marca/completa/svg/kunumi_inst_positivo_rgb.svg",
-      "driveId": "1TzQJhqwDkdhUFddcYWPe_Cs3THczEeW1",
       "localPath": "assets/local/brand-marks/instituto/kunumi_inst_positivo_rgb.svg",
       "identity": "instituto",
       "kind": "complete-mark",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "Preferred Instituto vector signature on light backgrounds.",
-      "tags": ["logo", "svg", "positive", "local-first"]
+      "tags": [
+        "logo",
+        "svg",
+        "positive",
+        "local-first"
+      ]
     },
     {
       "key": "instituto-negative-complete-svg",
-      "path": "Ativos de Marca/Instituto/Instituto - Marca/completa/svg/kunumi_inst_negativo_rgb.svg",
-      "driveId": "1gikSPaQY_eilwnq5nEg9JrlecEHzYnmc",
       "localPath": "assets/local/brand-marks/instituto/kunumi_inst_negativo_rgb.svg",
       "identity": "instituto",
       "kind": "complete-mark",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "Preferred Instituto vector signature on dark or image backgrounds.",
-      "tags": ["logo", "svg", "negative", "local-first"]
+      "tags": [
+        "logo",
+        "svg",
+        "negative",
+        "local-first"
+      ]
     },
     {
       "key": "instituto-gradient-static",
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/Estáticos/kunuminst_gradiente_01.png",
-      "driveId": "1ge-BUKeEp7NZcTem3JfOINgDMQUu2KmF",
       "localPath": "assets/local/instituto/static/kunuminst_gradiente_01.png",
       "identity": "instituto",
       "kind": "background",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "High-impact static cover or chapter background; preserve crop and colors.",
-      "tags": ["background", "gradient", "static", "local-first"]
+      "tags": [
+        "background",
+        "gradient",
+        "static",
+        "local-first"
+      ]
     },
     {
       "key": "instituto-pixels-static",
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/Estáticos/kunuminst_assets_pixels.png",
-      "driveId": "1HRVv8UhvmKEw15nw5T2BXvKXQqDcqxNk",
       "localPath": "assets/local/instituto/static/kunuminst_assets_pixels.png",
       "identity": "instituto",
       "kind": "background",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "Stepped spectrum graphic for dark covers and section transitions.",
-      "tags": ["background", "pixels", "static", "local-first"]
-    },
-    {
-      "key": "instituto-symbol-gif-small",
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/GIFS/símbolo-small.gif",
-      "driveId": "1Om2kn5FHvl1OeRIIPxkJ-sgeYcOYFoLQ",
-      "identity": "instituto",
-      "kind": "motion",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Small approved animated Instituto symbol when motion is essential.",
-      "tags": ["gif", "motion", "symbol"]
-    },
-    {
-      "key": "instituto-symbol-gif-medium",
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/GIFS/símbolo-medium.gif",
-      "driveId": "12rCGcPengoRIIgFYVXNaU7GjayMhMSU1",
-      "identity": "instituto",
-      "kind": "motion",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Medium approved animated Instituto symbol; keep out of Git.",
-      "tags": ["gif", "motion", "symbol", "heavy"]
-    },
-    {
-      "key": "instituto-symbol-gif-large",
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/GIFS/símbolo-large.gif",
-      "driveId": "1e3UOycOJRpIP2ORyJ81NCviyrU9YPQDr",
-      "identity": "instituto",
-      "kind": "motion",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Large approved animated Instituto symbol; keep out of Git.",
-      "tags": ["gif", "motion", "symbol", "heavy"]
-    },
-    {
-      "key": "instituto-motion-master",
-      "path": "Ativos de Marca/Instituto/Instituto - Imagens e Fundos/Vídeos/Instituto-motion.mov",
-      "driveId": "13Yc2bHZzpA8zY9mFw0Tph_gakIHYTO_S",
-      "identity": "instituto",
-      "kind": "video",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "High-resolution presentation/video background; fetch only for motion output.",
-      "tags": ["video", "motion", "heavy"]
+      "tags": [
+        "background",
+        "pixels",
+        "static",
+        "local-first"
+      ]
     },
     {
       "key": "linkedin-header",
-      "path": "Canais e Redes Sociais/LinkedIn/[modelo]Cabeçalho_Linkedin-kunumi.png",
-      "driveId": "1zSKiTdfNSq19_RuKLC9E4vp8rQ4SfwXh",
       "localPath": "assets/local/channels/linkedin/[modelo]Cabeçalho_Linkedin-kunumi.png",
       "identity": "core",
       "kind": "channel-template",
-      "access": "local+drive",
-      "canonical": "drive",
       "use": "Starting point for a Kunumi LinkedIn header.",
-      "tags": ["linkedin", "social", "header", "local-first"]
-    },
-    {
-      "key": "profile-photo-guide",
-      "path": "Canais e Redes Sociais/Foto de Perfil Kunumi IA/Guia Foto de Perfil",
-      "driveId": "1B5L14plwNL35sIhQG4g-jdyfBOuBjslmbo9dXuHCqpg",
-      "identity": "core",
-      "kind": "guide",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Canonical instructions for profile portraits and crops.",
-      "tags": ["profile", "portrait", "guide"]
-    },
-    {
-      "key": "slack-guide",
-      "path": "Canais e Redes Sociais/Guia Slack 2026",
-      "driveId": "1TJYkttY1OlLOubkfP_yBzPcoL1cc0svacFmmEuuLmac",
-      "identity": "core",
-      "kind": "guide",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Canonical Slack channel and profile guidance.",
-      "tags": ["slack", "channel", "guide"]
-    },
-    {
-      "key": "annual-report-2025",
-      "path": "Relatório Kunumi 2025/Relatório Kunumi 2025.pdf",
-      "driveId": "1-mKEeltjkBcgzHKMzgMjD8HI8TPFCIwW",
-      "identity": "core",
-      "kind": "report",
-      "access": "drive",
-      "canonical": "drive",
-      "use": "Use for approved 2025 reporting content or visual precedent; do not treat facts as current without verification.",
-      "tags": ["report", "2025", "pdf"]
+      "tags": [
+        "linkedin",
+        "social",
+        "header",
+        "local-first"
+      ]
     }
   ]
 }

@@ -65,25 +65,44 @@ documented name but no documented mark; the skill asks rather than inventing one
 
 ## Install
 
-Local development — symlink the repository into the skills directory so it auto-loads as
-`kosmos-design-system@skills-dir`:
+Pick one of the two routes below — installing both leaves two copies of the same skill competing
+to trigger.
+
+### Local development
+
+Symlink the **skill package**, not the repository root, so the personal skill directory contains
+`SKILL.md` directly:
 
 ```bash
-ln -s "$PWD" ~/.claude/skills/kosmos-design-system
+ln -s "$PWD/skills/kosmos-design-system" ~/.claude/skills/kosmos-design-system
 ```
 
-Shareable install through the bundled marketplace:
+The link points at the working tree, so edits take effect in the next session with no reinstall.
+Verify the link resolves:
+
+```bash
+ls -l ~/.claude/skills/kosmos-design-system/SKILL.md
+```
+
+### Shareable install
 
 ```bash
 claude plugin marketplace add .
 claude plugin install kosmos-design-system@kosmos-design-system
 ```
 
-Start a new session after installing so the skill is discovered. Verify with:
+This route copies the plugin into `~/.claude/plugins/cache/<marketplace>/<plugin>/<version>/`, so
+it captures a snapshot: later edits to the repository do not appear until the version is bumped and
+the plugin reinstalled. Prefer the symlink while developing the skill. Verify with:
 
 ```bash
 claude plugin details kosmos-design-system
 ```
+
+`claude plugin details` only knows about plugins — it reports "not found" for a symlinked personal
+skill even when that skill is installed and working.
+
+Start a new session after either route so the skill is discovered.
 
 ## Use
 

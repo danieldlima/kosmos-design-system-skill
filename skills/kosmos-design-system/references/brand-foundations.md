@@ -44,9 +44,15 @@ Do not mix lockups or expressive systems unless the user explicitly requests co-
 Chumbo replaces black. Gelo replaces white. This applies to page grounds, body and display text,
 graphic resources, rules, and chart ink.
 
-**One observed exception:** the brandbook's own card components sit a white surface on a Gelo
-ground. So white is available *only* as an elevated surface on Gelo — never a page ground, never a
-text color, never a brand color. Black has no exception.
+**Two documented exceptions, and only two:**
+
+- **White** — the brandbook's own card components sit a white surface on a Gelo ground. White is
+  available *only* as an elevated surface on Gelo. Token: `--kunumi-surface-raised`.
+- **Black** — `#000000` is the terminus of the Instituto signature gradient
+  (`brandbook/instituto/cor`, slide 05). Token: `--kunumi-instituto-black`.
+
+Neither is ever a page ground, a text color, or a brand color. `validate-skills.py` enforces both:
+each may appear exactly once in `kunumi-tokens.css`, and only alongside its named token.
 
 ### Chart palette — PALETA PARA GRÁFICOS
 
@@ -65,12 +71,34 @@ example chart plots blue, cyan, yellow, green top-to-bottom, but does not state 
 This **supersedes** the older ten-step chart palette extracted from the 2026 decks. That set is
 kept in `tokens.json` under `supersededChart` only for reading existing template charts.
 
+### Instituto signature gradient — brandbook, not deck
+
+`brandbook/instituto/cor` slide 05 defines the Instituto gradient as seven stops, measured as bands
+of a 1918 px bar:
+
+| Stop | Hex | Band | Centre |
+| --- | --- | --- | --- |
+| 1 | `#FF9516` | 200 | 5.2% |
+| 2 | `#FF6330` | 200 | 15.6% |
+| 3 | **`#F04E44`** | **542** | 35.0% |
+| 4 | `#D73E5F` | 244 | 55.5% |
+| 5 | `#9355A0` | 244 | 68.2% |
+| 6 | `#5A61B6` | 244 | 80.9% |
+| 7 | `#000000` | 244 | 93.6% |
+
+The ramp is **urucum-dominant** — Urucum alone is 28% of the bar, nearly triple any other stop. It
+is not seven equal steps, and it is **not a general-purpose accent palette**: it belongs to Instituto
+Kunumi, and core Kunumi and Unlimited stay restrained. Ready-made as
+`--kunumi-gradient-gamma-ray`.
+
+Five of these hexes were previously filed as deck-derived. They are brandbook. `#FF931E` (amarelo)
+and `#F26638` (laranja) really are deck-only and remain so.
+
 ### Deck-derived colors
 
-The support palette (`#FF931E`, `#F26638`, `#D73E5F`, `#9355A0`, `#5A61B6`) and the Instituto
-spectrum stops (`#FF9516`, `#FF6330`) come from the 2026 templates, **not** the brandbook. Use
-them only for fidelity inside template-based work, and never in place of the institutional
-palette.
+The deck support palette — `#FF931E` (amarelo) and `#F26638` (laranja) — comes from the 2026
+templates, **not** the brandbook. Use it only for fidelity inside template-based work, and never in
+place of the institutional palette.
 
 Near-Urucum values such as `#FF4A3D` and `#FF4B3E` belong to specific exported files. Preserve
 them in place; never replace `#F04E44` globally. Instituto artwork carries its own gradients —

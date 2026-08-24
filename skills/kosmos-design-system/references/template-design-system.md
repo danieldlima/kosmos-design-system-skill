@@ -60,8 +60,12 @@ identify the exact layout to duplicate.
 `assets/web/kunumi-tokens.css` is the reusable implementation:
 
 - institutional and support color tokens;
-- the brandbook chart palette for data, plus the superseded extended colors for legacy charts;
+- the brandbook chart palette for data. The superseded extended colors are **not** in the CSS;
+  they live only in `references/tokens.json` under `color.supersededChart`, for reading legacy
+  template charts;
 - local Figtree and Space Grotesk variable font faces;
-- typography weights, spacing, timing, and reduced-motion behavior.
+- typography weights, the 4px product spacing scale, the brandbook card geometry
+  (`--kunumi-card-padding`, `--kunumi-card-gap`, `--kunumi-text-column`), timing, and
+  reduced-motion behavior.
 
 Use these tokens as a foundation, then follow the target medium’s composition rules. CSS tokens do not authorize recoloring supplied logos or Instituto art.

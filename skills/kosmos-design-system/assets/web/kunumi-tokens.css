@@ -69,13 +69,34 @@
   /* From the 2026 slide templates, not the brandbook. Template fidelity only. */
   --kunumi-amarelo: #ff931e;
   --kunumi-laranja: #f26638;
-  --kunumi-magenta: #d73e5f;
-  --kunumi-violeta: #9355a0;
-  --kunumi-indigo: #5a61b6;
 
-  /* Template-local spectrum stops used inside supplied Instituto graphics. */
-  --kunumi-spectrum-orange: #ff9516;
-  --kunumi-spectrum-coral: #ff6330;
+  /* ---- Instituto Kunumi: signature gradient ---------------------------------------------- */
+  /* BRANDBOOK, chapter brandbook/instituto/cor slide 05. Instituto only - core Kunumi and
+     Unlimited stay restrained. These were previously mis-filed as deck-derived.
+     Band widths off a 1918px bar: 200 / 200 / 542 / 244 / 244 / 244 / 244. The ramp is
+     URUCUM-DOMINANT - urucum alone is 28% of the bar. */
+  --kunumi-spectrum-orange: #ff9516; /*   5.2% */
+  --kunumi-spectrum-coral: #ff6330;  /*  15.6% */
+  /* urucum #f04e44 is the 35.0% stop - see --kunumi-urucum above */
+  --kunumi-magenta: #d73e5f;         /*  55.5% */
+  --kunumi-violeta: #9355a0;         /*  68.2% */
+  --kunumi-indigo: #5a61b6;          /*  80.9% */
+  /* The ONLY sanctioned use of pure black: the terminus of this gradient. Never a page ground,
+     never a text colour, never a brand colour. Mirrors the white raised-surface exception. */
+  --kunumi-instituto-black: #000000; /*  93.6% */
+
+  --kunumi-gradient-gamma-ray: linear-gradient(
+    90deg,
+    var(--kunumi-spectrum-orange) 0%,
+    var(--kunumi-spectrum-orange) 5.2%,
+    var(--kunumi-spectrum-coral) 15.6%,
+    var(--kunumi-urucum) 35%,
+    var(--kunumi-magenta) 55.5%,
+    var(--kunumi-violeta) 68.2%,
+    var(--kunumi-indigo) 80.9%,
+    var(--kunumi-instituto-black) 93.6%,
+    var(--kunumi-instituto-black) 100%
+  );
 
   /* ---- Typography ----------------------------------------------------------------------- */
   --kunumi-font-display: "PP Neue Machina", "PP Neue Machina Inktrap", "Space Grotesk", "Figtree",
@@ -113,19 +134,31 @@
   --kunumi-text-display: 11.25rem; /* 180  Abertura/Título */
 
   /* ---- Space, shape, motion ------------------------------------------------------------- */
-  --kunumi-space-1: 0.25rem;
-  --kunumi-space-2: 0.5rem;
-  --kunumi-space-3: 0.75rem;
-  --kunumi-space-4: 1rem;
-  --kunumi-space-5: 1.25rem;
-  --kunumi-space-6: 1.5rem;
-  --kunumi-space-8: 2rem;
-  --kunumi-space-10: 2.5rem;
-  --kunumi-space-12: 3rem;
-  --kunumi-space-16: 4rem;
+  /* Product spacing scale. --kunumi-space-<n> where n = px / 4.
+     The Figma library names the same steps by pixel value (space/24 is 24px);
+     tokens.json geometry.spacing carries the mapping. */
+  --kunumi-space-0: 0;
+  --kunumi-space-1: 0.25rem;   /*   4 */
+  --kunumi-space-2: 0.5rem;    /*   8 */
+  --kunumi-space-3: 0.75rem;   /*  12 */
+  --kunumi-space-4: 1rem;      /*  16 */
+  --kunumi-space-5: 1.25rem;   /*  20 */
+  --kunumi-space-6: 1.5rem;    /*  24 */
+  --kunumi-space-8: 2rem;      /*  32 */
+  --kunumi-space-10: 2.5rem;   /*  40 */
+  --kunumi-space-12: 3rem;     /*  48 */
+  --kunumi-space-16: 4rem;     /*  64 */
+  --kunumi-space-24: 6rem;     /*  96 */
+  --kunumi-space-32: 8rem;     /* 128 */
 
-  --kunumi-radius-sm: 0.25rem;
+  --kunumi-radius-sm: 0.25rem;    /* 4px, small controls; product layer */
   --kunumi-radius-card: 0.625rem; /* 10px, the brandbook card and button radius */
+
+  /* Brandbook geometry. 30px sits off the 4px scale on purpose - do not round to 32px. */
+  --kunumi-card-padding: 1.875rem; /*  30 */
+  --kunumi-card-gap: 1.875rem;     /*  30 */
+  --kunumi-text-column: 22.5rem;   /* 360 */
+
   --kunumi-rule: 1px solid color-mix(in srgb, currentColor 18%, transparent);
 
   --kunumi-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -248,7 +281,7 @@ body {
 .kunumi-card {
   background: var(--kunumi-surface-raised);
   border-radius: var(--kunumi-radius-card);
-  padding: var(--kunumi-space-8);
+  padding: var(--kunumi-card-padding);
 }
 
 .kunumi-rule-spectrum {

@@ -85,13 +85,22 @@ def validate_tokens(skill_dir: Path) -> list[str]:
                     f"{skill_dir.name}: {hex_value} ({group}) absent from brand-foundations.md"
                 )
 
-    # Black is prohibited outright; white survives only as the documented raised surface.
+    # Black and white each survive only as one documented exception:
+    # white as the raised card surface, black as the Instituto gradient terminus.
     if css:
-        for banned in ("#000000", "#000 ", "#000;"):
-            if banned in css.lower():
-                errors.append(
-                    f"{skill_dir.name}: prohibited pure black {banned.strip()} in kunumi-tokens.css"
-                )
+        lowered = css.lower()
+        terminus = "--kunumi-instituto-black"
+        black_hits = sum(lowered.count(b) for b in ("#000000", "#000 ", "#000;"))
+        if black_hits and terminus not in lowered:
+            errors.append(
+                f"{skill_dir.name}: pure black used in kunumi-tokens.css without the documented "
+                f"{terminus} exception (brandbook/instituto/cor, gradient terminus)"
+            )
+        if black_hits > 1:
+            errors.append(
+                f"{skill_dir.name}: black appears {black_hits} times in kunumi-tokens.css; "
+                "only the Instituto gradient terminus may use it"
+            )
         surface = "--kunumi-surface-raised"
         white_hits = css.lower().count("#ffffff")
         if white_hits and surface not in css:

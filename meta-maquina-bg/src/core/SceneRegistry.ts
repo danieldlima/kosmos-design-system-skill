@@ -1,18 +1,18 @@
 import type { BackgroundScene } from "./BackgroundScene";
-import { MachineScene } from "../scenes/MachineScene";
+import { ScanScene } from "../scenes/ScanScene";
 import { IntelligenceScene } from "../scenes/IntelligenceScene";
 
-export type BackgroundName = "machine" | "intelligence";
+export type BackgroundName = "scan" | "intelligence";
 
-export const DEFAULT_BACKGROUND: BackgroundName = "machine";
+export const DEFAULT_BACKGROUND: BackgroundName = "scan";
 
 const factories: Record<BackgroundName, () => BackgroundScene> = {
-  machine: () => new MachineScene(),
+  scan: () => new ScanScene(),
   intelligence: () => new IntelligenceScene(),
 };
 
 export function isBackgroundName(value: string | null): value is BackgroundName {
-  return value === "machine" || value === "intelligence";
+  return value === "scan" || value === "intelligence";
 }
 
 export function createScene(name: BackgroundName): BackgroundScene {

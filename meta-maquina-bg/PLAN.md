@@ -11,11 +11,11 @@ Em vez de escolher uma leitura, o plano cobre as duas como **variantes intercamb
 mesmo sistema de background**, selecionáveis por query string:
 
 ```
-index.html?bg=machine#/         → variante 1: Mecanismo (engrenagens/linkages)
+index.html?bg=scan#/            → variante 1: Scan (painel de instrumentação técnica)
 index.html?bg=intelligence#/    → variante 2: Rede/Inteligência (nós e sinapses)
 ```
 
-`bg` ausente ou inválido cai no default (`machine`). O `#/` fica reservado para o roteamento
+`bg` ausente ou inválido cai no default (`scan`). O `#/` fica reservado para o roteamento
 da aplicação-mãe (a plataforma Meta-máquina em si); o background não depende dele, só não
 deve quebrar quando presente.
 
@@ -41,8 +41,10 @@ meta-maquina-bg/
       SceneRegistry.ts       # mapa nome→factory de cena
       BackgroundScene.ts      # interface comum que as duas variantes implementam
     scenes/
-      MachineScene.ts        # variante 1
+      ScanScene.ts            # variante 1
       IntelligenceScene.ts    # variante 2
+      glyphs.ts                # geometrias procedurais dos glifos técnicos (linha fina)
+      scanShaders.ts            # shaders do dither de fundo e do glow do ponteiro
     utils/
       palette.ts             # cores extraídas de kosmos tokens.json
       perf.ts                # DPR clamp, FPS watchdog, prefers-reduced-motion
@@ -57,9 +59,11 @@ Reaproveitar os tokens já validados em `skills/kosmos-design-system/references/
 em vez de inventar cores novas:
 
 - Fundo: `chumbo` `#1C2127` (ground escuro institucional).
-- Variante **Machine**: linhas/nós em `concreto` `#B4ADA4` (estrutura inativa) com destaque
-  `urucum` `#F04E44` nos pontos sob influência do ponteiro — reforça leitura "mecânica,
-  neutra, que acende sob comando".
+- Variante **Scan**: glifos em `concreto` `#B4ADA4` (estrutura inativa) com destaque
+  `urucum` `#F04E44` nos glifos sob influência do ponteiro — a mesma leitura "neutro que
+  acende sob comando" da versão anterior (gears), mas expressa em linguagem de
+  instrumentação técnica em vez de mecanismo. Usa só paleta institucional sem restrição
+  de escopo (`chumbo`/`concreto`/`grafite`/`urucum`) — sem o gradiente Instituto.
 - Variante **Intelligence**: gradiente-assinatura do Instituto (`spectrum-orange → coral →
   urucum → magenta → violeta → indigo`) nas conexões que "disparam" perto do ponteiro —
   é literalmente a única paleta multi-stop que a marca aprova, e casa com a ideia de
@@ -95,20 +99,41 @@ interface BackgroundScene {
 Isso mantém `Renderer.ts` agnóstico de qual variante está montada — trocar `?bg=` troca só
 a implementação, o loop e o pointer handling são únicos.
 
-## 5. Variante 1 — Machine (mecanismo)
+## 5. Variante 1 — Scan (painel de instrumentação técnica)
 
-- **Elementos**: clusters de "engrenagens" — grupos de nós dispostos em círculo, ligados por
-  linhas (via `THREE.LineSegments` com `BufferGeometry` atualizada por frame, não uma linha
-  por par — isso é o que permite escalar a centenas de nós).
-- **Movimento base**: cada cluster gira lentamente em torno do próprio centro (velocidades
-  levemente distintas por cluster, para não parecer sincronizado/artificial).
-- **Reação ao ponteiro**: nós dentro de um raio de influência são "puxados" para fora de
-  sua órbita (repulsão radial), e a linha que os liga ao centro do cluster muda de
-  `concreto` para `urucum`. Ao soltar/o ponteiro se afastar, retornam à órbita com easing.
-- **Clique**: pulso de repulsão mais forte, como se a "máquina" tivesse levado um impacto —
-  todos os nós próximos saltam e voltam.
-- **Performance**: `InstancedMesh` para os nós (uma draw call para todos), `LineSegments`
-  único para as conexões. Alvo: 300–800 nós no desktop, densidade reduzida em mobile.
+Substituiu uma primeira versão baseada em engrenagens ("Machine"), descartada por feedback
+direto: gears não comunicam nada de "Meta-máquina" nem de tecnologia. A referência visual
+trazida (ícones de linha fina — radar, mira, onda, silhueta anatômica, grid, waveform —
+gradientes com dither e glow desfocado) aponta para uma linguagem de instrumentação
+científica/HUD, não de mecanismo.
+
+- **Elementos**: ~130 glifos técnicos em linha fina, espalhados como um painel de
+  instrumentos — mira (crosshair), radar (anéis concêntricos), onda senoidal, zigue-zague,
+  sparkle/asterisco, viewfinder (cantos de mira), barras ascendentes, grid com ponto,
+  globo wireframe, octaedro. Cada tipo é uma `THREE.BufferGeometry` desenhada
+  proceduralmente (não uma cópia das imagens de referência) e reaproveitada por todas as
+  instâncias daquele tipo — só a transformação (posição/rotação/escala) e o material
+  variam por instância, então o custo fica em ~130 draw calls simples, não em geometria
+  duplicada. Ver `src/scenes/glyphs.ts`.
+- **Movimento base**: cada glifo gira lentamente em torno do próprio centro em velocidade
+  levemente aleatória — um painel "vivo" mas estável, sem deriva posicional (ao contrário
+  da Intelligence, que flui). Essa quietude reforça a leitura de instrumento fixo, não de
+  partícula orgânica.
+- **Reação ao ponteiro**: um glow radial (plano com `ShaderMaterial` de gradiente suave,
+  blend aditivo) segue o ponteiro; glifos dentro do raio de atenção clareiam de `concreto`
+  para `urucum` e ganham um leve aumento de escala.
+- **Clique**: dispara um anel de radar (`THREE.LineLoop`) que se expande a partir do ponto
+  clicado e ativa (acende) os glifos que atravessa enquanto viaja — a peça que mais
+  referencia o glifo de radar da imagem de inspiração.
+- **Fundo**: uma textura de dither muito discreta (`src/scenes/scanShaders.ts`) — um
+  gradiente diagonal lento entre dois tons quase idênticos ao `chumbo`, com um ruído
+  monocromático (mesmo offset nos três canais RGB) seguindo um padrão Bayer 4×4, dando
+  grão técnico sem competir com os glifos. Uma primeira versão quantizava cada canal RGB
+  de forma independente e produzia franjas de cor (pontos azuis/roxos aparecendo em meio
+  ao vermelho) — corrigido trocando por ruído aditivo monocromático de amplitude pequena.
+- **Performance**: geometria compartilhada por tipo de glifo (10 no total), material
+  clonado por instância (leve, sem texturas). `degrade()` reduz a contagem visível de
+  glifos sob FPS sustentado baixo.
 
 ## 6. Variante 2 — Intelligence (rede/IA)
 
@@ -144,12 +169,15 @@ a implementação, o loop e o pointer handling são únicos.
 
 1. **Scaffold** — Vite + TS + Three, `Renderer`/`Pointer`/`SceneRegistry`, cena vazia
    renderizando fundo `chumbo` e lendo `?bg=`. *(este commit)*
-2. **Machine v1** — clusters estáticos girando, sem interação ainda.
-3. **Machine v2** — repulsão por ponteiro + pulso de clique.
-4. **Intelligence v1** — nuvem de partículas com drift, sem grafo.
-5. **Intelligence v2** — grafo de vizinhos + propagação de sinal por ponteiro/clique.
-6. **Perf pass** — DPR clamp, reduced-motion, FPS watchdog, teste em mobile real.
-7. **Empacotamento** — decidir com a plataforma-mãe se isso vira script standalone,
+2. **Intelligence v1** — nuvem de partículas com drift, sem grafo.
+3. **Intelligence v2** — grafo de vizinhos + propagação de sinal por ponteiro/clique.
+4. **Machine (descartada)** — primeira tentativa em engrenagens; substituída por feedback
+   direto de que não comunicava "Meta-máquina"/tecnologia.
+5. **Scan v1** — campo de glifos técnicos girando, sem interação.
+6. **Scan v2** — glow do ponteiro, ativação por proximidade, anel de radar no clique,
+   fundo com dither sutil (e correção da franja de cor do primeiro shader).
+7. **Perf pass** — DPR clamp, reduced-motion, FPS watchdog, teste em mobile real.
+8. **Empacotamento** — decidir com a plataforma-mãe se isso vira script standalone,
    web component ou pacote npm interno; hoje entrega como app Vite standalone.
 
 ## 9. Em aberto (preciso de você para avançar além do scaffold)

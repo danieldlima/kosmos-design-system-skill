@@ -10,9 +10,11 @@ npm install
 npm run dev
 ```
 
-- `http://localhost:5173/?bg=scan` — painel de glifos técnicos (radar, mira, onda, grid...)
-  em linha fina; o ponteiro projeta um glow que acende os glifos próximos, e o clique
-  dispara um anel de radar que se expande e ativa os glifos que atravessa.
+- `http://localhost:5173/?bg=scan` — campo de coordenadas: grid de hairlines, nós
+  grid-snapped e anéis orbitais finos, na linguagem já documentada em
+  `references/visual-behavior.md`/`visual-patterns.md`. O ponteiro acende os nós próximos
+  com um glow contido e traça conectores finos até eles; o clique dispara um anel que
+  percorre a cena.
 - `http://localhost:5173/?bg=intelligence` — rede de partículas com drift orgânico; o
   ponteiro acende a "atenção" das partículas próximas, e o clique propaga um sinal pelo
   grafo de vizinhança (gradiente Instituto Kunumi).
@@ -33,5 +35,7 @@ aberto até sabermos a stack real da plataforma Meta-máquina.
 
 As cores vêm de `skills/kosmos-design-system/references/tokens.json` (fonte única de
 verdade da marca Kunumi), espelhadas em `src/utils/palette.ts`. A variante `scan` usa só a
-paleta institucional sem restrição de escopo (chumbo/concreto/grafite/urucum); o gradiente
-Instituto usado na variante `intelligence` é um placeholder — ver "Em aberto" no `PLAN.md`.
+paleta institucional sem restrição de escopo (chumbo/concreto/urucum) e segue o
+comportamento visual documentado em `references/visual-behavior.md` (hairlines precisas,
+urucum como acento seletivo). O gradiente Instituto usado na variante `intelligence` é um
+placeholder — ver "Em aberto" no `PLAN.md`.

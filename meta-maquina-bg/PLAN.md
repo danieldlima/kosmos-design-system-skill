@@ -43,8 +43,7 @@ meta-maquina-bg/
     scenes/
       ScanScene.ts            # variante 1
       IntelligenceScene.ts    # variante 2
-      glyphs.ts                # geometrias procedurais dos glifos técnicos (linha fina)
-      scanShaders.ts            # shaders do dither de fundo e do glow do ponteiro
+      scanShaders.ts           # shaders do grid de hairlines e do glow do ponteiro
     utils/
       palette.ts             # cores extraídas de kosmos tokens.json
       perf.ts                # DPR clamp, FPS watchdog, prefers-reduced-motion
@@ -99,41 +98,56 @@ interface BackgroundScene {
 Isso mantém `Renderer.ts` agnóstico de qual variante está montada — trocar `?bg=` troca só
 a implementação, o loop e o pointer handling são únicos.
 
-## 5. Variante 1 — Scan (painel de instrumentação técnica)
+## 5. Variante 1 — Scan (campo de coordenadas)
 
-Substituiu uma primeira versão baseada em engrenagens ("Machine"), descartada por feedback
-direto: gears não comunicam nada de "Meta-máquina" nem de tecnologia. A referência visual
-trazida (ícones de linha fina — radar, mira, onda, silhueta anatômica, grid, waveform —
-gradientes com dither e glow desfocado) aponta para uma linguagem de instrumentação
-científica/HUD, não de mecanismo.
+Passou por duas rejeições antes deste desenho, ambas por feedback direto:
 
-- **Elementos**: ~130 glifos técnicos em linha fina, espalhados como um painel de
-  instrumentos — mira (crosshair), radar (anéis concêntricos), onda senoidal, zigue-zague,
-  sparkle/asterisco, viewfinder (cantos de mira), barras ascendentes, grid com ponto,
-  globo wireframe, octaedro. Cada tipo é uma `THREE.BufferGeometry` desenhada
-  proceduralmente (não uma cópia das imagens de referência) e reaproveitada por todas as
-  instâncias daquele tipo — só a transformação (posição/rotação/escala) e o material
-  variam por instância, então o custo fica em ~130 draw calls simples, não em geometria
-  duplicada. Ver `src/scenes/glyphs.ts`.
-- **Movimento base**: cada glifo gira lentamente em torno do próprio centro em velocidade
-  levemente aleatória — um painel "vivo" mas estável, sem deriva posicional (ao contrário
-  da Intelligence, que flui). Essa quietude reforça a leitura de instrumento fixo, não de
-  partícula orgânica.
-- **Reação ao ponteiro**: um glow radial (plano com `ShaderMaterial` de gradiente suave,
-  blend aditivo) segue o ponteiro; glifos dentro do raio de atenção clareiam de `concreto`
-  para `urucum` e ganham um leve aumento de escala.
-- **Clique**: dispara um anel de radar (`THREE.LineLoop`) que se expande a partir do ponto
-  clicado e ativa (acende) os glifos que atravessa enquanto viaja — a peça que mais
-  referencia o glifo de radar da imagem de inspiração.
-- **Fundo**: uma textura de dither muito discreta (`src/scenes/scanShaders.ts`) — um
-  gradiente diagonal lento entre dois tons quase idênticos ao `chumbo`, com um ruído
-  monocromático (mesmo offset nos três canais RGB) seguindo um padrão Bayer 4×4, dando
-  grão técnico sem competir com os glifos. Uma primeira versão quantizava cada canal RGB
-  de forma independente e produzia franjas de cor (pontos azuis/roxos aparecendo em meio
-  ao vermelho) — corrigido trocando por ruído aditivo monocromático de amplitude pequena.
-- **Performance**: geometria compartilhada por tipo de glifo (10 no total), material
-  clonado por instância (leve, sem texturas). `degrade()` reduz a contagem visível de
-  glifos sob FPS sustentado baixo.
+1. Uma primeira versão em engrenagens ("Machine") não comunicava nada de "Meta-máquina"
+   nem de tecnologia.
+2. Uma segunda versão em ícones de linha fina soltos (mira, radar, sparkle, viewfinder...)
+   espalhados com rotação/escala aleatórias, sobre um fundo com textura de dither, foi
+   classificada como "infantil e amadora" — clip-art solto, não um sistema.
+
+Este desenho parte de `references/visual-behavior.md` e `references/visual-patterns.md`
+(que já documentam a linguagem gráfica real da Kunumi para superfícies escuras) em vez de
+inventar formas livres:
+
+- "Hairline rules and precise edge alignment carry the structure" — nada aqui tem rotação
+  ou posição aleatória; todo elemento está encaixado numa grade.
+- "Urucum is a reading accent, used selectively — not an all-over fill" — o acento urucum
+  só aparece pequeno e pontual (nós ativos, conector, glow contido), nunca como preenchimento.
+- O motivo `dark-hero-orbit` ("thin orbital lines, peripheral glow") e a receita documentada
+  de grid sutil para fundos escuros ("1 px line every 44–68 px at ~3.5% opacity") foram
+  usados como precedente direto, não como inspiração livre.
+
+- **Fundo**: grid de hairlines preciso (`src/scenes/scanShaders.ts`, `gridFragmentShader`) —
+  linhas retas anti-aliased a intervalo regular no espaço do mundo (não em UV, para não
+  distorcer com o aspect ratio), `concreto` sobre `chumbo` a ~7% de opacidade constante.
+  Sem ruído, sem quantização — a primeira versão (dither dividido por canal RGB) produzia
+  franjas de cor; esta é matematicamente neutra por construção.
+- **Elementos**: uma grade de pontos menores (`THREE.InstancedMesh`, uma draw call, ~300+
+  instâncias) marca cada interseção da grade — é aqui que mora o "muitos elementos" que
+  justifica Three.js. Um subconjunto mais esparso dessas interseções (a cada 3 linhas)
+  recebe um nó maior: um anel fino idêntico em todos os pontos — sem variação de forma,
+  tamanho ou rotação por instância. Uniformidade é o objetivo, não ornamento.
+- **Anéis orbitais**: 4 círculos grandes, finos, concêntricos, girando lentamente
+  (24–46s por volta, os valores de "large orbit / background rings" do motion grammar
+  documentado) — o motivo `dark-hero-orbit`, como pano de fundo estrutural, independente
+  do ponteiro.
+- **Reação ao ponteiro**: um glow pequeno e contido (não um blob grande) segue o ponteiro;
+  nós dentro do raio de atenção clareiam de `concreto` para `urucum`. Linhas finas
+  (`LineSegments`, no máximo 4 segmentos ativos) conectam o ponteiro aos nós mais próximos —
+  o uso documentado da rampa expressiva como "thin progress rails, connectors, data-flow
+  paths", nada além disso.
+- **Clique**: um anel fino (`THREE.LineLoop`) se expande a partir do ponto clicado e ativa
+  os nós que atravessa.
+- **Paleta**: só tokens institucionais sem restrição de escopo (`chumbo`/`concreto`/`urucum`),
+  sem gradiente Instituto e sem a rampa expressiva do deck (`#FF6A3D`/`#7765DF`) — mantém a
+  variante inteiramente dentro do léxico canônico do `tokens.json`, sem depender da camada
+  "deck-derived, subordinada".
+- **Performance**: grid de pontos menores em uma única draw call; nós maiores e anéis
+  compartilham geometria entre instâncias (só material clonado varia). `degrade()` reduz
+  os anéis orbitais ambientes primeiro, sem quebrar a continuidade da grade principal.
 
 ## 6. Variante 2 — Intelligence (rede/IA)
 
@@ -141,8 +155,8 @@ científica/HUD, não de mecanismo.
   "nós de processamento". Conexões são geradas dinamicamente por proximidade (grafo de
   vizinhos próximos, recalculado a cada N frames — não todo frame, para custo controlado).
 - **Movimento base**: drift lento tipo *flow field* (ruído simplex aplicado à velocidade de
-  cada partícula) — mais orgânico que a variante Machine, sugerindo "pensamento" em vez de
-  "mecanismo".
+  cada partícula) — deliberadamente mais orgânico e fluido que a quietude alinhada à grade
+  da variante Scan, sugerindo "pensamento" em vez de "instrumento".
 - **Reação ao ponteiro**: partículas próximas ao ponteiro entram em um raio de "atenção" —
   suas conexões acendem com o gradiente Instituto e pulsam (opacidade oscilante), simulando
   um sinal se propagando pela rede a partir do ponto tocado. É diferente da Machine: aqui a
@@ -173,9 +187,12 @@ científica/HUD, não de mecanismo.
 3. **Intelligence v2** — grafo de vizinhos + propagação de sinal por ponteiro/clique.
 4. **Machine (descartada)** — primeira tentativa em engrenagens; substituída por feedback
    direto de que não comunicava "Meta-máquina"/tecnologia.
-5. **Scan v1** — campo de glifos técnicos girando, sem interação.
-6. **Scan v2** — glow do ponteiro, ativação por proximidade, anel de radar no clique,
-   fundo com dither sutil (e correção da franja de cor do primeiro shader).
+5. **Scan v1, ícones soltos (descartada)** — campo de glifos técnicos (radar, mira,
+   sparkle...) com rotação/escala aleatórias sobre um fundo com dither; substituída por
+   feedback direto de que lia como clip-art amador, não como sistema de marca.
+6. **Scan v2, campo de coordenadas** — reconstrução a partir de `visual-behavior.md` e
+   `visual-patterns.md`: grid de hairlines preciso, nós grid-snapped uniformes, anéis
+   orbitais finos, glow e conectores contidos como acento seletivo. Ver seção 5.
 7. **Perf pass** — DPR clamp, reduced-motion, FPS watchdog, teste em mobile real.
 8. **Empacotamento** — decidir com a plataforma-mãe se isso vira script standalone,
    web component ou pacote npm interno; hoje entrega como app Vite standalone.

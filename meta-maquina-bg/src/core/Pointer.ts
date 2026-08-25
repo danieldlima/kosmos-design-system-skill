@@ -17,6 +17,7 @@ export class Pointer {
   readonly smoothed = new THREE.Vector2(0, 0);
   readonly velocity = new THREE.Vector2(0, 0);
   isDown = false;
+  private hasMoved = false;
   private readonly listeners = new Set<PointerListener>();
   private readonly el: HTMLElement;
   private readonly continuousOnTouch: boolean;
@@ -39,8 +40,12 @@ export class Pointer {
     this.listeners.delete(listener);
   }
 
-  /** Call once per frame; lerps the smoothed position and recomputes velocity. */
+  /** Call once per frame; lerps the smoothed position and recomputes velocity. Stays
+   * silent until the pointer has actually moved once, so scenes don't treat the
+   * default (0, 0) target as a real cursor sitting at screen centre on load. */
   update(): void {
+    if (!this.hasMoved) return;
+
     const prevX = this.smoothed.x;
     const prevY = this.smoothed.y;
     this.smoothed.lerp(this.target, 0.18);
@@ -68,11 +73,13 @@ export class Pointer {
   private readonly handlePointerMove = (event: PointerEvent): void => {
     if (event.pointerType === "touch" && !this.continuousOnTouch && !this.isDown) return;
     this.toNdc(event.clientX, event.clientY);
+    this.hasMoved = true;
   };
 
   private readonly handlePointerDown = (event: PointerEvent): void => {
     this.isDown = true;
     this.toNdc(event.clientX, event.clientY);
+    this.hasMoved = true;
     for (const listener of this.listeners) listener.onDown?.(this.target);
   };
 

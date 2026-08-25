@@ -26,8 +26,18 @@ const RING_MAX_RADIUS = 3.4;
 const RING_DURATION = 0.9;
 const RING_BAND = 0.3;
 
-const ORBIT_RADII = [4.2, 6.6, 9.0, 11.4];
-const ORBIT_PERIOD_SECONDS = [46, 36, 28, 24]; // slow ambient rings, per motion-grammar guidance
+// The 4 orbits double as the "universe has movement" layer: each carries one planet
+// that travels the ring as it slowly rotates, per the documented large-orbit timing
+// (24-46s per revolution for background rings).
+const ORBIT_RADII = [3.6, 5.6, 7.8, 9.8];
+const ORBIT_PERIOD_SECONDS = [46, 36, 28, 24];
+const PLANET_RADIUS = 0.15;
+const PLANET_HALO_SCALE = 6;
+
+// Stars twinkle between a dim and a per-star peak brightness — subtle, staggered,
+// never fully off, so the field never reads as static.
+const STAR_TWINKLE_SPEED = [0.35, 1.1] as const;
+const STAR_PEAK_BRIGHTNESS = [0.35, 0.95] as const;
 
 const chumbo = new THREE.Color(palette.chumbo);
 const concreto = new THREE.Color(palette.concreto);
@@ -49,11 +59,16 @@ interface RingPulse {
   material: THREE.LineBasicMaterial;
 }
 
+function randomBetween([min, max]: readonly [number, number]): number {
+  return min + Math.random() * (max - min);
+}
+
 /**
- * Variante "Scan": um campo de coordenadas — grid de hairlines, nós alinhados à grade e
- * anéis orbitais finos, na linguagem que o brandbook já documenta para superfícies escuras
- * (hairlines precisas, urucum como acento seletivo, glow contido). O ponteiro acende os nós
- * próximos e traça conectores finos até eles; o clique dispara um anel que percorre a cena.
+ * Variante "Scan": um campo de coordenadas lido como universo — grid de hairlines fixo
+ * (a "carta estelar"), estrelas grid-snapped que cintilam, e 4 órbitas finas com planetas
+ * em movimento lento. O ponteiro acende os nós próximos e traça conectores finos até eles;
+ * o clique dispara um anel que percorre a cena. Sem glow seguindo o cursor — o movimento
+ * ambiente das órbitas e das estrelas carrega a cena sozinho.
  */
 export class ScanScene implements BackgroundScene {
   readonly object = new THREE.Group();
@@ -61,15 +76,18 @@ export class ScanScene implements BackgroundScene {
   private readonly background: THREE.Mesh;
   private readonly gridMaterial: THREE.ShaderMaterial;
 
-  private readonly minorDots: THREE.InstancedMesh;
+  private readonly stars: THREE.InstancedMesh;
+  private readonly starCount: number;
+  private readonly starPeak: Float32Array;
+  private readonly starSpeed: Float32Array;
+  private readonly starPhase: Float32Array;
+  private readonly starColor = new THREE.Color();
+
   private readonly majors: MajorNode[] = [];
   private readonly orbits: THREE.LineLoop[] = [];
 
   private readonly connectors: THREE.LineSegments;
   private readonly connectorPositions: THREE.BufferAttribute;
-
-  private readonly glow: THREE.Mesh;
-  private readonly glowMaterial: THREE.ShaderMaterial;
   private readonly rings: RingPulse[] = [];
 
   private camera: THREE.PerspectiveCamera | null = null;
@@ -93,29 +111,38 @@ export class ScanScene implements BackgroundScene {
     this.background.position.z = -6;
     this.object.add(this.background);
 
-    // Minor grid points: one InstancedMesh, one draw call, purely structural (no
-    // per-instance state) — the "many elements" budget goes here, not into ornament.
-    const dotGeometry = new THREE.CircleGeometry(0.035, 8);
-    const dotMaterial = new THREE.MeshBasicMaterial({
-      color: concreto,
-      transparent: true,
-      opacity: 0.22,
-    });
+    // Stars: one InstancedMesh, one draw call — the "many elements" budget lives here.
+    // Grid-snapped like everything else; only brightness animates, never position.
+    const starGeometry = new THREE.CircleGeometry(0.035, 8);
+    const starMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
     const cols = Math.floor((FIELD_X * 2) / MINOR_SPACING);
     const rows = Math.floor((FIELD_Y * 2) / MINOR_SPACING);
-    this.minorDots = new THREE.InstancedMesh(dotGeometry, dotMaterial, cols * rows);
+    this.starCount = cols * rows;
+    this.stars = new THREE.InstancedMesh(starGeometry, starMaterial, this.starCount);
+    this.stars.instanceColor = new THREE.InstancedBufferAttribute(
+      new Float32Array(this.starCount * 3),
+      3,
+    );
+    this.starPeak = new Float32Array(this.starCount);
+    this.starSpeed = new Float32Array(this.starCount);
+    this.starPhase = new Float32Array(this.starCount);
+
     const dummy = new THREE.Object3D();
-    let dotIndex = 0;
+    let starIndex = 0;
     for (let ix = 0; ix < cols; ix++) {
       for (let iy = 0; iy < rows; iy++) {
         const x = -FIELD_X + ix * MINOR_SPACING;
         const y = -FIELD_Y + iy * MINOR_SPACING;
         dummy.position.set(x, y, 0);
         dummy.updateMatrix();
-        this.minorDots.setMatrixAt(dotIndex++, dummy.matrix);
+        this.stars.setMatrixAt(starIndex, dummy.matrix);
+        this.starPeak[starIndex] = randomBetween(STAR_PEAK_BRIGHTNESS);
+        this.starSpeed[starIndex] = randomBetween(STAR_TWINKLE_SPEED);
+        this.starPhase[starIndex] = Math.random() * Math.PI * 2;
+        starIndex++;
       }
     }
-    this.object.add(this.minorDots);
+    this.object.add(this.stars);
 
     // Major nodes: a thin ring outline, identical size, grid-snapped — the interactive
     // layer. Uniformity is the point; variety would read as decoration again.
@@ -147,8 +174,10 @@ export class ScanScene implements BackgroundScene {
       }
     }
 
-    // Orbit rings: the brandbook's own "thin orbital lines, peripheral glow" motif —
-    // slow, ambient, independent of the pointer.
+    // Orbits: the brandbook's own "thin orbital lines, peripheral glow" motif, now doing
+    // double duty as the scene's ambient motion. Each ring carries one planet (a filled
+    // dot plus a soft halo) as a child, so rotating the ring is all it takes to move the
+    // planet along its path — no per-planet position math needed.
     const orbitSegments = 96;
     const orbitPoints: number[] = [];
     for (let i = 0; i < orbitSegments; i++) {
@@ -157,15 +186,47 @@ export class ScanScene implements BackgroundScene {
     }
     const orbitGeometry = new THREE.BufferGeometry();
     orbitGeometry.setAttribute("position", new THREE.Float32BufferAttribute(orbitPoints, 3));
+
+    const planetGeometry = new THREE.CircleGeometry(1, 20);
+    const haloGeometry = new THREE.PlaneGeometry(1, 1);
+
     for (const radius of ORBIT_RADII) {
       const material = new THREE.LineBasicMaterial({
         color: concreto,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.18,
       });
       const ring = new THREE.LineLoop(orbitGeometry, material);
       ring.scale.setScalar(radius);
       ring.position.z = -1;
+      ring.rotation.z = Math.random() * Math.PI * 2;
+
+      const planetMaterial = new THREE.MeshBasicMaterial({
+        color: urucum,
+        transparent: true,
+        opacity: 0.85,
+      });
+      const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+      planet.position.set(1, 0, 0.01);
+      planet.scale.setScalar(PLANET_RADIUS / radius);
+      ring.add(planet);
+
+      const haloMaterial = new THREE.ShaderMaterial({
+        vertexShader: glowVertexShader,
+        fragmentShader: glowFragmentShader,
+        uniforms: {
+          uColor: { value: urucum.clone() },
+          uIntensity: { value: 0.35 },
+        },
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const halo = new THREE.Mesh(haloGeometry, haloMaterial);
+      halo.position.set(1, 0, 0);
+      halo.scale.setScalar((PLANET_RADIUS * PLANET_HALO_SCALE) / radius);
+      ring.add(halo);
+
       this.object.add(ring);
       this.orbits.push(ring);
     }
@@ -187,24 +248,6 @@ export class ScanScene implements BackgroundScene {
     this.connectors = new THREE.LineSegments(connectorGeometry, connectorMaterial);
     this.connectors.geometry.setDrawRange(0, 0);
     this.object.add(this.connectors);
-
-    // Pointer focus: a small, tight glow — urucum used as a selective reading accent,
-    // never an all-over fill.
-    this.glowMaterial = new THREE.ShaderMaterial({
-      vertexShader: glowVertexShader,
-      fragmentShader: glowFragmentShader,
-      uniforms: {
-        uColor: { value: urucum.clone() },
-        uIntensity: { value: 0.4 },
-      },
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    });
-    this.glow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), this.glowMaterial);
-    this.glow.position.z = -0.2;
-    this.glow.scale.setScalar(ATTENTION_RADIUS * 1.1);
-    this.object.add(this.glow);
 
     const ringGeometry = new THREE.BufferGeometry();
     const ringPoints: number[] = [];
@@ -232,6 +275,16 @@ export class ScanScene implements BackgroundScene {
     const distance = this.camera.position.z - z;
     const height = 2 * distance * Math.tan((this.camera.fov * Math.PI) / 360);
     return { width: height * this.camera.aspect, height };
+  }
+
+  private updateStars(): void {
+    for (let i = 0; i < this.starCount; i++) {
+      const twinkle = 0.5 + 0.5 * Math.sin(this.elapsed * this.starSpeed[i] + this.starPhase[i]);
+      const brightness = this.starPeak[i] * (0.5 + 0.5 * twinkle);
+      this.starColor.copy(chumbo).lerp(concreto, brightness);
+      this.stars.setColorAt(i, this.starColor);
+    }
+    if (this.stars.instanceColor) this.stars.instanceColor.needsUpdate = true;
   }
 
   private updateMajors(): void {
@@ -308,8 +361,6 @@ export class ScanScene implements BackgroundScene {
   onPointerMove(ndc: THREE.Vector2): void {
     if (!this.camera) return;
     ndcToWorldPlane(ndc, this.camera, 0, this.pointerWorld);
-    this.glow.position.x = this.pointerWorld.x;
-    this.glow.position.y = this.pointerWorld.y;
   }
 
   onPointerDown(ndc: THREE.Vector2): void {
@@ -324,6 +375,7 @@ export class ScanScene implements BackgroundScene {
 
   update(dt: number): void {
     this.elapsed += dt;
+    this.updateStars();
     this.updateMajors();
     this.updateConnectors();
     this.updateOrbits(dt);
@@ -337,8 +389,8 @@ export class ScanScene implements BackgroundScene {
   }
 
   degrade(): void {
-    // The minor grid is a single draw call already; degrading further would break the
-    // grid's continuity, so instead thin out the ambient orbit rings first.
+    // The star field is a single draw call already; degrading further would break its
+    // continuity, so instead drop ambient orbits (and their planets) first.
     for (const ring of this.orbits.splice(1)) {
       this.object.remove(ring);
     }
@@ -347,16 +399,22 @@ export class ScanScene implements BackgroundScene {
   dispose(): void {
     this.background.geometry.dispose();
     this.gridMaterial.dispose();
-    this.minorDots.geometry.dispose();
-    (this.minorDots.material as THREE.Material).dispose();
+    this.stars.geometry.dispose();
+    (this.stars.material as THREE.Material).dispose();
     for (const node of this.majors) node.material.dispose();
     if (this.majors[0]) this.majors[0].mesh.geometry.dispose();
-    for (const ring of this.orbits) (ring.material as THREE.Material).dispose();
+    for (const ring of this.orbits) {
+      (ring.material as THREE.Material).dispose();
+      for (const child of ring.children) {
+        if (child instanceof THREE.Mesh) {
+          child.geometry.dispose();
+          (child.material as THREE.Material).dispose();
+        }
+      }
+    }
     if (this.orbits[0]) this.orbits[0].geometry.dispose();
     this.connectors.geometry.dispose();
     (this.connectors.material as THREE.Material).dispose();
-    this.glow.geometry.dispose();
-    this.glowMaterial.dispose();
     for (const ring of this.rings) ring.material.dispose();
     if (this.rings[0]) this.rings[0].mesh.geometry.dispose();
   }

@@ -10,11 +10,12 @@ npm install
 npm run dev
 ```
 
-- `http://localhost:5173/?bg=scan` — campo de coordenadas: grid de hairlines, nós
-  grid-snapped e anéis orbitais finos, na linguagem já documentada em
-  `references/visual-behavior.md`/`visual-patterns.md`. O ponteiro acende os nós próximos
-  com um glow contido e traça conectores finos até eles; o clique dispara um anel que
-  percorre a cena.
+- `http://localhost:5173/?bg=scan` — campo de coordenadas lido como universo: grid de
+  hairlines fixo, estrelas grid-snapped que cintilam sutilmente, e 4 órbitas finas cada
+  uma com um planeta em movimento lento — na linguagem já documentada em
+  `references/visual-behavior.md`/`visual-patterns.md`. O ponteiro acende os nós próximos e
+  traça conectores finos até eles (sem glow seguindo o cursor); o clique dispara um anel
+  que percorre a cena.
 - `http://localhost:5173/?bg=intelligence` — rede de partículas com drift orgânico; o
   ponteiro acende a "atenção" das partículas próximas, e o clique propaga um sinal pelo
   grafo de vizinhança (gradiente Instituto Kunumi).

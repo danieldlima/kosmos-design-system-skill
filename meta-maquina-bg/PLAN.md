@@ -126,28 +126,45 @@ inventar formas livres:
   Sem ruído, sem quantização — a primeira versão (dither dividido por canal RGB) produzia
   franjas de cor; esta é matematicamente neutra por construção.
 - **Elementos**: uma grade de pontos menores (`THREE.InstancedMesh`, uma draw call, ~300+
-  instâncias) marca cada interseção da grade — é aqui que mora o "muitos elementos" que
-  justifica Three.js. Um subconjunto mais esparso dessas interseções (a cada 3 linhas)
-  recebe um nó maior: um anel fino idêntico em todos os pontos — sem variação de forma,
-  tamanho ou rotação por instância. Uniformidade é o objetivo, não ornamento.
-- **Anéis orbitais**: 4 círculos grandes, finos, concêntricos, girando lentamente
-  (24–46s por volta, os valores de "large orbit / background rings" do motion grammar
-  documentado) — o motivo `dark-hero-orbit`, como pano de fundo estrutural, independente
-  do ponteiro.
-- **Reação ao ponteiro**: um glow pequeno e contido (não um blob grande) segue o ponteiro;
-  nós dentro do raio de atenção clareiam de `concreto` para `urucum`. Linhas finas
-  (`LineSegments`, no máximo 4 segmentos ativos) conectam o ponteiro aos nós mais próximos —
-  o uso documentado da rampa expressiva como "thin progress rails, connectors, data-flow
-  paths", nada além disso.
+  instâncias) marca cada interseção da grade e é lida como campo de estrelas — é aqui que
+  mora o "muitos elementos" que justifica Three.js. Um subconjunto mais esparso dessas
+  interseções (a cada 3 linhas) recebe um nó maior: um anel fino idêntico em todos os
+  pontos — sem variação de forma, tamanho ou rotação por instância. Uniformidade é o
+  objetivo, não ornamento.
+- **Estrelas com cintilação**: cada estrela tem um brilho de pico, uma velocidade e uma
+  fase aleatórios (`starPeak`/`starSpeed`/`starPhase`, três `Float32Array` paralelos ao
+  índice do `InstancedMesh`), e a cor da instância (`chumbo` → `concreto`, nunca preto/branco
+  puro) é recalculada por frame com uma senoide. O resultado é um piscar sutil e
+  dessincronizado — a posição nunca muda, só o brilho.
+- **Anéis orbitais como órbitas**: 4 círculos grandes, finos, concêntricos, girando
+  lentamente (24–46s por volta, os valores de "large orbit / background rings" do motion
+  grammar documentado) — o motivo `dark-hero-orbit`, como pano de fundo estrutural,
+  independente do ponteiro. Cada anel carrega um "planeta" (disco preenchido + halo suave)
+  como filho de si mesmo, posicionado no raio do círculo unitário — girar o anel-pai já move
+  o planeta ao longo da órbita, sem cálculo de posição por planeta a cada frame. É a fonte
+  principal de "o universo tem movimento".
+- **Reação ao ponteiro**: nós dentro do raio de atenção clareiam de `concreto` para
+  `urucum`. Linhas finas (`LineSegments`, no máximo 4 segmentos ativos) conectam o
+  ponteiro aos nós mais próximos — o uso documentado da rampa expressiva como "thin
+  progress rails, connectors, data-flow paths", nada além disso. Não há mais glow seguindo
+  o cursor (removido por feedback: o movimento ambiente das órbitas e das estrelas já
+  carrega a cena, o cursor não precisa de um destaque próprio).
 - **Clique**: um anel fino (`THREE.LineLoop`) se expande a partir do ponto clicado e ativa
   os nós que atravessa.
 - **Paleta**: só tokens institucionais sem restrição de escopo (`chumbo`/`concreto`/`urucum`),
   sem gradiente Instituto e sem a rampa expressiva do deck (`#FF6A3D`/`#7765DF`) — mantém a
   variante inteiramente dentro do léxico canônico do `tokens.json`, sem depender da camada
-  "deck-derived, subordinada".
-- **Performance**: grid de pontos menores em uma única draw call; nós maiores e anéis
-  compartilham geometria entre instâncias (só material clonado varia). `degrade()` reduz
-  os anéis orbitais ambientes primeiro, sem quebrar a continuidade da grade principal.
+  "deck-derived, subordinada". Os planetas usam `urucum` (a única cor não-neutra da cena,
+  em 4 pontos minúsculos) — leitura literalmente cósmica do "acento seletivo" da marca.
+- **Performance**: grid de estrelas em uma única draw call (cor recalculada por frame, ~300
+  instâncias — no mesmo orçamento das outras cenas); nós maiores, órbitas, planetas e halos
+  compartilham geometria entre instâncias (só material clonado varia, exceto pela cor da
+  estrela, que é por instância). `degrade()` reduz os anéis orbitais (e seus planetas)
+  primeiro, sem quebrar a continuidade do campo de estrelas.
+- **Pointer "fantasma" corrigido**: `core/Pointer.ts` só notifica os listeners depois do
+  primeiro movimento real (`hasMoved`); antes disso o alvo padrão em `(0, 0)` NDC fazia a
+  cena tratar o centro da tela como se houvesse um cursor ali desde o carregamento,
+  acendendo nós e desenhando um conector "fantasma" antes de qualquer interação.
 
 ## 6. Variante 2 — Intelligence (rede/IA)
 

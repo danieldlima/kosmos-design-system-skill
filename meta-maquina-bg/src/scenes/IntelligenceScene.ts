@@ -8,6 +8,11 @@ const BOUNDS = { x: 16, y: 9, z: 4 };
 const NEIGHBOR_RADIUS = 2.1;
 const NEIGHBOR_RADIUS_SQ = NEIGHBOR_RADIUS * NEIGHBOR_RADIUS;
 const CELL_SIZE = NEIGHBOR_RADIUS;
+// Edges are only rebuilt every REGRAPH_INTERVAL; a particle can wrap across the
+// bounds (teleport to the opposite side) in between rebuilds. Any edge stretched
+// past this is a stale one bridging the wrap, not a real neighbor link — drop it
+// for the frame instead of drawing a line across the whole scene.
+const MAX_EDGE_DRAW_DIST_SQ = (NEIGHBOR_RADIUS * 1.5) ** 2;
 const REGRAPH_INTERVAL = 0.12; // seconds; the neighbor graph is not rebuilt every frame
 const ATTENTION_RADIUS = 3.5;
 const MAX_HOPS = 2;
@@ -301,15 +306,28 @@ export class IntelligenceScene implements BackgroundScene {
     const maxEdges = linePositions.count / 2;
     const edgeCount = Math.min(this.edges.length, maxEdges);
 
+    let writeCount = 0;
     for (let e = 0; e < edgeCount; e++) {
       const { a, b } = this.edges[e];
-      const base = e * 6;
-      linePositions.array[base] = this.positions[a * 3];
-      linePositions.array[base + 1] = this.positions[a * 3 + 1];
-      linePositions.array[base + 2] = this.positions[a * 3 + 2];
-      linePositions.array[base + 3] = this.positions[b * 3];
-      linePositions.array[base + 4] = this.positions[b * 3 + 1];
-      linePositions.array[base + 5] = this.positions[b * 3 + 2];
+      const ax = this.positions[a * 3];
+      const ay = this.positions[a * 3 + 1];
+      const az = this.positions[a * 3 + 2];
+      const bx = this.positions[b * 3];
+      const by = this.positions[b * 3 + 1];
+      const bz = this.positions[b * 3 + 2];
+
+      const dx = ax - bx;
+      const dy = ay - by;
+      const dz = az - bz;
+      if (dx * dx + dy * dy + dz * dz > MAX_EDGE_DRAW_DIST_SQ) continue;
+
+      const base = writeCount * 6;
+      linePositions.array[base] = ax;
+      linePositions.array[base + 1] = ay;
+      linePositions.array[base + 2] = az;
+      linePositions.array[base + 3] = bx;
+      linePositions.array[base + 4] = by;
+      linePositions.array[base + 5] = bz;
 
       const edgeAttention = Math.max(this.attention[a], this.attention[b]);
       this.dummyColor.copy(grafite).lerp(
@@ -322,9 +340,10 @@ export class IntelligenceScene implements BackgroundScene {
       lineColors.array[base + 3] = this.dummyColor.r;
       lineColors.array[base + 4] = this.dummyColor.g;
       lineColors.array[base + 5] = this.dummyColor.b;
+      writeCount++;
     }
 
-    this.lineGeometry.setDrawRange(0, edgeCount * 2);
+    this.lineGeometry.setDrawRange(0, writeCount * 2);
     linePositions.needsUpdate = true;
     lineColors.needsUpdate = true;
 

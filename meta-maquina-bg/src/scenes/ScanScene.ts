@@ -114,7 +114,11 @@ export class ScanScene implements BackgroundScene {
     // Stars: one InstancedMesh, one draw call — the "many elements" budget lives here.
     // Grid-snapped like everything else; only brightness animates, never position.
     const starGeometry = new THREE.CircleGeometry(0.035, 8);
-    const starMaterial = new THREE.MeshBasicMaterial({ vertexColors: true });
+    // No `vertexColors: true` here: that flag pulls in a per-vertex `color` geometry
+    // attribute that CircleGeometry doesn't have, which zeroed the output before the
+    // instance color even applied (every star rendered solid black). Assigning
+    // `instanceColor` below is enough on its own to enable per-instance color.
+    const starMaterial = new THREE.MeshBasicMaterial();
     const cols = Math.floor((FIELD_X * 2) / MINOR_SPACING);
     const rows = Math.floor((FIELD_Y * 2) / MINOR_SPACING);
     this.starCount = cols * rows;
